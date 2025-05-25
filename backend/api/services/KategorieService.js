@@ -56,19 +56,15 @@ module.exports = {
   deleteKategorie: async function (req) {
     const id = req.params.id;
 
-    if (!id) {
-      throw new errors.BadRequestError('Kategorie-ID ist erforderlich.');
-    }
+  if (!id) throw new Error('ID fehlt');
 
-    const kategorie = await Kategorie.findOne({ id });
-    if (!kategorie) {
-      throw new errors.NotFoundError('Kategorie nicht gefunden.');
-    }
+  const deleted = await Kategorie.destroyOne({ id });
 
-    // Produkte dieser Kategorie könnten erhalten bleiben, aber du kannst auch:
-    // await Produkt.update({ kategorie: id }).set({ kategorie: null });
+  if (!deleted) {
+    throw new Error('Kategorie nicht gefunden oder konnte nicht gelöscht werden');
+  }
 
-    await Kategorie.destroyOne({ id });
+  return deleted;
   }
 
 };

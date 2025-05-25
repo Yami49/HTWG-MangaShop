@@ -59,16 +59,15 @@ module.exports = {
    * Kategorie löschen
    */
   destroy: async function (req, res) {
-    try {
-      await KategorieService.deleteKategorie(req);
-      return res.ok();
-    } catch (err) {
-      sails.log.error('❌ Kategorie löschen fehlgeschlagen:', err.message);
-      if (err instanceof errors.CustomError) {
-        return res.status(err.status).json({ error: err.message });
-      }
-      return res.serverError({ error: 'Ein unerwarteter Fehler ist aufgetreten.' });
-    }
+  console.log('🧪 DELETE params:', req.params)
+
+  try {
+    await KategorieService.deleteKategorie(req);
+    return res.ok();
+  } catch (err) {
+    sails.log.error('❌ Kategorie löschen fehlgeschlagen:', err.message);
+    return res.serverError({ error: err.message });
   }
+}
 
 };

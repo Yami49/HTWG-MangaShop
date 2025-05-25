@@ -137,24 +137,19 @@ const saveEdit = async (id) => {
 }
 
 const deleteKategorie = async (id) => {
-  const result = await Swal.fire({
-    title: 'Kategorie löschen?',
-    text: 'Diese Aktion kann nicht rückgängig gemacht werden.',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Ja, löschen',
-    cancelButtonText: 'Abbrechen'
-  })
+  const confirmed = confirm('Kategorie wirklich löschen?')
 
-  if (result.isConfirmed) {
+  if (confirmed) {
     try {
       await axios.delete(`/kategorie/${id}`)
       await loadKategorien()
     } catch (err) {
       console.error('❌ Fehler beim Löschen:', err)
+      alert('Fehler beim Löschen der Kategorie.')
     }
   }
 }
+
 </script>
 
   

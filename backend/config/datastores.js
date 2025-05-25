@@ -50,8 +50,12 @@ module.exports.datastores = {
     ***************************************************************************/
     // adapter: 'sails-mysql',
     // url: 'mysql://user:password@host:port/database',
-
+    //adapter: "sails-mysql",
+    //host: "193.196.53.194",
+    //port: 33061,
+    //user: "user10_test",
+    //database: "nicopick_test",
+    adapter: 'sails-mongo',
+    url: 'mongodb://localhost:27017/mangashop',
   },
-
-
 };

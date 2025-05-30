@@ -41,6 +41,16 @@ module.exports.routes = {
   'GET    /kategorie'      : 'KategorieController.find',
   'PATCH  /kategorie/:id'  : 'KategorieController.patch',
   'DELETE /kategorie/:id'  : 'KategorieController.destroy',
+
+  // -------------------------
+  // Nachrichten-Routen
+  // -------------------------
+
+  'POST /kontakt'         : 'NachrichtController.create',
+  'GET /nachrichten'      : 'NachrichtController.find',
+  'GET /nachrichten/:id'  : 'NachrichtController.findOne',
+  'DELETE /nachrichten/:id' : 'NachrichtController.destroy',
+
   
   /***************************************************************************
   *                                                                          *

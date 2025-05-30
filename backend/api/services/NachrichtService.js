@@ -37,7 +37,7 @@ module.exports = {
       throw new errors.BadRequestError('Nachricht ist erforderlich.');
     }
 
-    return await ContactMessage.create({
+    return await Nachricht.create({
       name,
       email,
       nachricht
@@ -53,7 +53,7 @@ module.exports = {
    * @returns {Promise<Array>} Liste aller Kontakt-Nachrichten
    */
   findAll: async function () {
-    return await ContactMessage.find();
+    return await Nachricht.find();
   },
 
   /**
@@ -68,7 +68,7 @@ module.exports = {
    */
   findOne: async function (req) {
     const { id } = req.params;
-    const nachricht = await ContactMessage.findOne({ id });
+    const nachricht = await Nachricht.findOne({ id });
 
     if (!nachricht) {
       throw new errors.NotFoundError('Nachricht nicht gefunden.');
@@ -89,7 +89,7 @@ module.exports = {
    */
   destroy: async function (req) {
     const { id } = req.params;
-    const deleted = await ContactMessage.destroyOne({ id });
+    const deleted = await Nachricht.destroyOne({ id });
 
     if (!deleted) {
       throw new errors.NotFoundError('Nachricht konnte nicht gelöscht werden (nicht gefunden).');

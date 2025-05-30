@@ -123,6 +123,28 @@ module.exports = {
       }
       return res.serverError({ error: err.message || 'Registrierung fehlgeschlagen.' });
     }
+  },
+
+  /**
+   * `BenutzerController.login()`
+   *
+   * @description
+   * Meldet einen Benutzer mit E-Mail und Passwort an.
+   * Speichert Benutzer-ID und Benutzerobjekt in der Session.
+   */
+  login: async function (req, res) {
+    try {
+      const benutzer = await BenutzerService.login(req);
+
+      // Session setzen
+      req.session.userId = benutzer.id;
+      req.session.user = benutzer;
+
+      return res.json({ data: benutzer });
+    } catch (err) {
+      sails.log.error('❌ Fehler in BenutzerController.login:', err.message);
+      return res.status(401).json({ error: err.message || 'Login fehlgeschlagen.' });
+    }
   }
 
 };

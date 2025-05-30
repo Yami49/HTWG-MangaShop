@@ -171,7 +171,32 @@ module.exports = {
    */
   count: async function () {
     return await Benutzer.count();
-  }
+  },
+
+    /**
+   * Meldet einen Benutzer mit E-Mail und Passwort an
+   */
+  login: async function (req) {
+    const { email, passwort } = req.body;
+
+    if (!email || !passwort) {
+      throw new errors.BadRequestError('E-Mail und Passwort sind erforderlich.');
+    }
+
+    const benutzer = await Benutzer.findOne({ email });
+    if (!benutzer) {
+      throw new errors.NotFoundError('Benutzer nicht gefunden.');
+    }
+
+    const korrekt = await sails.helpers.passwords.checkPassword(passwort, benutzer.passwort);
+    if (!korrekt) {
+      throw new errors.UnauthorizedError('Ungültige Anmeldedaten.');
+    }
+
+    delete benutzer.passwort;
+    return benutzer;
+  },
+
 };
 
 /**

@@ -10,6 +10,14 @@ module.exports = {
   attributes: {
 
     /**
+     * @description MongoDB-kompatibler Primärschlüssel
+     */
+    id: {
+      type: 'string',
+      columnName: '_id'
+    },
+
+    /**
      * @description E-Mail-Adresse des Benutzers (Login-Name)
      * @type {string}
      * @example lisa@example.com
@@ -31,7 +39,7 @@ module.exports = {
     passwort: {
       type: 'string',
       required: true,
-      protect: true, // verhindert Rückgabe bei JSON-Ausgabe
+      protect: true,
       description: 'Gehashtes Passwort (z. B. via bcrypt).',
       example: '$2a$10$7Xb...'
     },
@@ -67,7 +75,6 @@ module.exports = {
      */
     istAdmin: {
       type: 'boolean',
-      required: true,
       defaultsTo: false,
       description: 'Flag, ob der Benutzer Administrator ist.'
     }

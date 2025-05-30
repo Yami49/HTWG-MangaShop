@@ -61,6 +61,8 @@ module.exports.routes = {
   'PATCH /benutzer/:id'     : 'BenutzerController.patch',
   'DELETE /benutzer/:id'    : 'BenutzerController.destroy',
   'GET /benutzer-count'     : 'BenutzerController.count',
+  'POST /login': 'BenutzerController.login',
+
 
   
   /***************************************************************************

@@ -1,100 +1,211 @@
-/**
- * BenutzerController
- *
- * @description :: Aktionen zur Benutzerverwaltung.
- */
 const errors = require('../utils/errors');
 
+/**
+ * BenutzerService
+ *
+ * @description :: Server-side Funktionen zur Verwaltung von Benutzern.
+ */
 module.exports = {
-  find: async function (req, res) {
-    try {
-      const result = await BenutzerService.findAll(req);
-      return res.json(result);
-    } catch (err) {
-      sails.log.error('❌ Fehler in BenutzerController.find:', err);
-      return res.status(err.status || 500).json({ error: err.message || 'Fehler beim Laden der Benutzer.' });
+
+  /**
+   * Registrierung eines neuen Benutzers
+   */
+  register: async function (req) {
+    const { email, passwort, vorname, nachname } = req.body;
+
+    if (!email || !passwort || !vorname || !nachname) {
+      throw new errors.BadRequestError('Alle Felder sind erforderlich.');
     }
+
+    const existiert = await Benutzer.findOne({ email });
+    if (existiert) {
+      throw new errors.ConflictError('E-Mail wird bereits verwendet.');
+    }
+
+    const hashed = await sails.helpers.passwords.hashPassword(passwort);
+
+    const neuerBenutzer = await Benutzer.create({
+      email,
+      passwort: hashed,
+      vorname,
+      nachname,
+      istAdmin: false
+    }).fetch();
+
+    delete neuerBenutzer.passwort;
+    return neuerBenutzer;
   },
 
-  findOne: async function (req, res) {
-    try {
-      const benutzer = await BenutzerService.findById(req);
-      return res.json({ data: benutzer });
-    } catch (err) {
-      sails.log.error('❌ Fehler in BenutzerController.findOne:', err);
-      return res.status(err.status || 500).json({ error: err.message || 'Benutzer konnte nicht geladen werden.' });
+  /**
+   * Ruft einen Benutzer anhand seiner ID ab
+   */
+  findById: async function (req) {
+    const id = req.params.id;
+
+    if (!id) {
+      throw new errors.BadRequestError('Benutzer-ID ist erforderlich.');
     }
+
+    const benutzer = await Benutzer.findOne({ id });
+
+    if (!benutzer) {
+      throw new errors.NotFoundError('Benutzer nicht gefunden.');
+    }
+
+    delete benutzer.passwort;
+    return benutzer;
   },
 
-  count: async function (req, res) {
-    try {
-      const anzahl = await BenutzerService.count();
-      return res.json({ count: anzahl });
-    } catch (err) {
-      sails.log.error('❌ Fehler in BenutzerController.count:', err);
-      return res.status(err.status || 500).json({ error: err.message || 'Zählen fehlgeschlagen.' });
+  /**
+   * Gibt alle Benutzer zurück (optional mit Filter/Pagination)
+   */
+  findAll: async function (req) {
+    const { search, page, size } = extractUserFilters(req);
+
+    const criteria = {
+      where: {},
+      sort: 'id ASC'
+    };
+
+    if (search) {
+      criteria.where.or = [
+        { vorname: { contains: search } },
+        { nachname: { contains: search } },
+        { email: { contains: search } }
+      ];
     }
+
+    if (page && size) {
+      criteria.limit = size;
+      criteria.skip = (page - 1) * size;
+    }
+
+    const benutzer = await Benutzer.find(criteria);
+    const bereinigt = benutzer.map(b => {
+      delete b.passwort;
+      return b;
+    });
+
+    if (page && size) {
+      const total = await Benutzer.count(criteria.where);
+      return {
+        benutzer: bereinigt,
+        total,
+        totalPages: Math.ceil(total / size),
+        currentPage: page,
+        hasMore: page < Math.ceil(total / size)
+      };
+    }
+
+    return { benutzer: bereinigt, total: bereinigt.length };
   },
 
-  patch: async function (req, res) {
-    try {
-      const aktualisiert = await BenutzerService.update(req);
-      return res.json({ data: aktualisiert });
-    } catch (err) {
-      sails.log.error('❌ Fehler in BenutzerController.patch:', err);
-      return res.status(err.status || 500).json({ error: err.message || 'Aktualisierung fehlgeschlagen.' });
-    }
-  },
+  /**
+   * Aktualisiert einen bestehenden Benutzer anhand seiner ID
+   */
+  update: async function (req) {
+    const id = req.params.id;
 
-  destroy: async function (req, res) {
-    try {
-      await BenutzerService.delete(req);
-      return res.ok();
-    } catch (err) {
-      sails.log.error('❌ Fehler in BenutzerController.destroy:', err);
-      return res.status(err.status || 500).json({ error: err.message || 'Löschen fehlgeschlagen.' });
+    if (!id) {
+      throw new errors.BadRequestError('Benutzer-ID ist erforderlich.');
     }
-  },
 
-  register: async function (req, res) {
-    try {
-      const benutzer = await BenutzerService.register(req);
-      return res.status(201).json({ data: benutzer });
-    } catch (err) {
-      sails.log.error('❌ Fehler in BenutzerController.register:', err);
-      return res.status(err.status || 500).json({ error: err.message || 'Registrierung fehlgeschlagen.' });
+    const existierenderBenutzer = await Benutzer.findOne({ id });
+    if (!existierenderBenutzer) {
+      throw new errors.NotFoundError('Benutzer nicht gefunden.');
     }
-  },
 
-  login: async function (req, res) {
-    try {
-      const benutzer = await BenutzerService.login(req);
-      req.session.userId = benutzer.id;
-      req.session.user = benutzer;
-      return res.json({ data: benutzer });
-    } catch (err) {
-      sails.log.error('❌ Fehler in BenutzerController.login:', err);
-      return res.status(401).json({ error: err.message || 'Login fehlgeschlagen.' });
-    }
-  },
+    const {
+      email,
+      passwort,
+      vorname,
+      nachname,
+      istAdmin
+    } = req.body;
 
-  profil: async function (req, res) {
-    try {
-      const id = req.session.userId;
-      if (!id) {
-        return res.status(401).json({ error: 'Nicht eingeloggt.' });
+    // E-Mail-Check (wenn geändert)
+    if (email && email !== existierenderBenutzer.email) {
+      const duplicate = await Benutzer.findOne({ email });
+      if (duplicate) {
+        throw new errors.ConflictError('E-Mail wird bereits verwendet.');
       }
-
-      const benutzer = await Benutzer.findOne({ id });
-      if (!benutzer) {
-        return res.status(404).json({ error: 'Benutzer nicht gefunden.' });
-      }
-
-      delete benutzer.passwort;
-      return res.json({ data: benutzer });
-    } catch (err) {
-      sails.log.error('❌ Fehler in BenutzerController.profil:', err);
-      return res.status(500).json({ error: 'Profil konnte nicht geladen werden.' });
     }
-  }
+
+    let neuesPasswort = existierenderBenutzer.passwort;
+    if (passwort) {
+      neuesPasswort = await sails.helpers.passwords.hashPassword(passwort);
+    }
+
+    const aktualisiert = await Benutzer.updateOne({ id }).set({
+      email: email || existierenderBenutzer.email,
+      passwort: neuesPasswort,
+      vorname: vorname || existierenderBenutzer.vorname,
+      nachname: nachname || existierenderBenutzer.nachname,
+      istAdmin: typeof istAdmin === 'boolean' ? istAdmin : existierenderBenutzer.istAdmin
+    });
+
+    delete aktualisiert.passwort;
+    return aktualisiert;
+  },
+
+  /**
+   * Löscht einen Benutzer anhand seiner ID
+   */
+  delete: async function (req) {
+    const id = req.params.id;
+
+    if (!id) {
+      throw new errors.BadRequestError('Benutzer-ID ist erforderlich.');
+    }
+
+    const existiert = await Benutzer.findOne({ id });
+    if (!existiert) {
+      throw new errors.NotFoundError('Benutzer nicht gefunden.');
+    }
+
+    await Benutzer.destroyOne({ id });
+  },
+
+  /**
+   * Zählt alle Benutzer in der Datenbank
+   */
+  count: async function () {
+    return await Benutzer.count();
+  },
+
+    /**
+   * Meldet einen Benutzer mit E-Mail und Passwort an
+   */
+  login: async function (req) {
+    const { email, passwort } = req.body;
+
+    if (!email || !passwort) {
+      throw new errors.BadRequestError('E-Mail und Passwort sind erforderlich.');
+    }
+
+    const benutzer = await Benutzer.findOne({ email });
+    if (!benutzer) {
+      throw new errors.NotFoundError('Benutzer nicht gefunden.');
+    }
+
+    const korrekt = await sails.helpers.passwords.checkPassword(passwort, benutzer.passwort);
+    if (!korrekt) {
+      throw new errors.UnauthorizedError('Ungültige Anmeldedaten.');
+    }
+
+    delete benutzer.passwort;
+    return benutzer;
+  },
+
 };
+
+/**
+ * Hilfsfunktion zur Extraktion von Such- und Paginierungsparametern
+ */
+function extractUserFilters(req) {
+  const search = req.query.search ? req.query.search.trim() : null;
+  const page = req.query.page ? parseInt(req.query.page, 10) : null;
+  const size = req.query.size ? parseInt(req.query.size, 10) : null;
+
+  return { search, page, size };
+}

@@ -145,6 +145,34 @@ module.exports = {
       sails.log.error('❌ Fehler in BenutzerController.login:', err.message);
       return res.status(401).json({ error: err.message || 'Login fehlgeschlagen.' });
     }
-  }
+  },
+
+    /**
+   * `BenutzerController.profil()`
+   *
+   * @description
+   * Gibt das eingeloggte Benutzerprofil aus der Session zurück.
+   */
+  profil: async function (req, res) {
+    try {
+      const id = req.session.userId;
+      if (!id) {
+        return res.status(401).json({ error: 'Nicht eingeloggt.' });
+      }
+
+      const benutzer = await Benutzer.findOne({ id });
+      if (!benutzer) {
+        return res.status(404).json({ error: 'Benutzer nicht gefunden.' });
+      }
+
+      delete benutzer.passwort;
+      return res.json({ data: benutzer });
+
+    } catch (err) {
+      sails.log.error('❌ Fehler in BenutzerController.profil:', err);
+      return res.status(500).json({ error: 'Profil konnte nicht geladen werden.' });
+    }
+  },
+
 
 };

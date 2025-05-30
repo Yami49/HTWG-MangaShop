@@ -51,6 +51,16 @@ module.exports.routes = {
   'GET /nachrichten/:id'  : 'NachrichtController.findOne',
   'DELETE /nachrichten/:id' : 'NachrichtController.destroy',
 
+  // -------------------------
+  // Benutzer-Routen
+  // -------------------------
+
+  'GET /benutzer'           : 'BenutzerController.find',
+  'GET /benutzer/:id'       : 'BenutzerController.findOne',
+  'PATCH /benutzer/:id'     : 'BenutzerController.patch',
+  'DELETE /benutzer/:id'    : 'BenutzerController.destroy',
+  'GET /benutzer-count'     : 'BenutzerController.count',
+
   
   /***************************************************************************
   *                                                                          *

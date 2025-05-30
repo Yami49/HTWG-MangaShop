@@ -30,6 +30,31 @@ const routes = [
     name: 'ProduktDetail',
     component: ProduktDetailView,
     props: true
+  },
+  {
+    path: '/impressum',
+    name: 'Impressum',
+    component: () => import('@/views/ImpressumView.vue')
+  },
+  {
+    path: '/datenschutz',
+    name: 'Datenschutz',
+    component: () => import('@/views/DatenschutzView.vue')
+  },
+  {
+    path: '/kontakt',
+    name: 'Kontakt',
+    component: () => import('@/views/KontaktView.vue')
+  },
+  {
+    path: '/nachrichten',
+    name: 'NachrichtenListe',
+    component: () => import('@/views/NachrichtenListeView.vue')
+  },
+  {
+    path: '/nachrichten/:id',
+    name: 'NachrichtDetail',
+    component: () => import('@/views/NachrichtDetailView.vue')
   }
 ]
 

@@ -55,6 +55,7 @@ module.exports.routes = {
   // Benutzer-Routen
   // -------------------------
 
+  'POST /register'         : 'BenutzerController.register',
   'GET /benutzer'           : 'BenutzerController.find',
   'GET /benutzer/:id'       : 'BenutzerController.findOne',
   'PATCH /benutzer/:id'     : 'BenutzerController.patch',

@@ -55,6 +55,35 @@ const routes = [
     path: '/nachrichten/:id',
     name: 'NachrichtDetail',
     component: () => import('@/views/NachrichtDetailView.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/LoginView.vue')
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('@/views/RegisterView.vue')
+  },
+  {
+    path: '/profil',
+    name: 'Profil',
+    component: () => import('@/views/ProfilView.vue')
+  },
+  {
+    path: '/admin/benutzer',
+    name: 'BenutzerListe',
+    component: () => import('@/views/BenutzerListeView.vue')
+  },
+  {
+    path: '/admin/benutzer/:id',
+    name: 'BenutzerDetail',
+    component: () => import('@/views/BenutzerDetailView.vue')
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/login'
   }
 ]
 

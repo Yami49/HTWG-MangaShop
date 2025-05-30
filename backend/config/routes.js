@@ -62,6 +62,7 @@ module.exports.routes = {
   'DELETE /benutzer/:id'    : 'BenutzerController.destroy',
   'GET /benutzer-count'     : 'BenutzerController.count',
   'POST /login': 'BenutzerController.login',
+  'GET /profil': 'BenutzerController.profil',
 
 
   

@@ -28,7 +28,7 @@
 
     <p v-else>Keine Blogbeiträge gefunden.</p>
 
-    <router-link to="/admin/blog-erstellen" class="btn btn-new">➕ Neuer Beitrag</router-link>
+    <router-link to="/admin/blog/neu" class="btn btn-new">➕ Neuer Beitrag</router-link>
   </div>
 </template>
 
@@ -84,6 +84,7 @@ th, td {
 
 th {
   background-color: #f5f5f5;
+  color: #333;
 }
 
 .btn {

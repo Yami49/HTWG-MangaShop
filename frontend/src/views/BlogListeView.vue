@@ -39,5 +39,6 @@ onMounted(async () => {
   padding: 1rem;
   margin-bottom: 1.5rem;
   background: #f9f9f9;
+  color: #333;
 }
 </style>

@@ -75,7 +75,18 @@ module.exports.routes = {
   'PATCH /admin/blog/:id': 'BlogController.update',
   'DELETE /admin/blog/:id': 'BlogController.delete',
 
-  
+  /***************************************************************************
+  *                              WARENKORB ROUTEN                            *
+  ***************************************************************************/
+
+  // Warenkorb-Routen
+  'GET /warenkorb': 'WarenkorbController.getCart',
+  'POST /warenkorb': 'WarenkorbController.addItem',
+  'PATCH /warenkorb/:produktId': 'WarenkorbController.updateItem',
+  'DELETE /warenkorb/:produktId': 'WarenkorbController.removeItem',
+  'DELETE /warenkorb': 'WarenkorbController.clearCart',
+
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

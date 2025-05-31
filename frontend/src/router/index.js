@@ -125,6 +125,12 @@ const routes = [
     props: true
   },
   {
+    path: '/warenkorb',
+    name: 'Warenkorb',
+    component: () => import('@/views/WarenkorbView.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/:pathMatch(.*)*',
     redirect: '/',
   },

@@ -48,9 +48,9 @@ module.exports.bootstrap = async function () {
   const produktCount = await Produkt.count();
   if (produktCount === 0) {
     await Produkt.createEach(
-      mangaNamen.map(name => ({
-        name,
-        description: `${name} ist ein beliebter Manga-Titel.`,
+      mangaNamen.map(titel => ({
+        titel,
+        description: `${titel} ist ein beliebter Manga-Titel.`,
         price: (Math.random() * 20 + 5).toFixed(2),
         quantity: 50
       }))

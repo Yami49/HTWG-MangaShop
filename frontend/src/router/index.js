@@ -84,12 +84,42 @@ const routes = [
   {
     path: '/:pathMatch(.*)*',
     redirect: '/login'
+  },
+  {
+    path: '/admin/benutzer',
+    name: 'AdminDashboard',
+    component: () => import('@/views/AdminDashboardView.vue'),
+    meta: { requiresAuth: true, requiresAdmin: true }
+  },
+  {
+    path: '/admin/benutzer/:id',
+    name: 'BenutzerBearbeiten',
+    component: () => import('@/views/BenutzerBearbeitenView.vue'),
+    meta: { requiresAuth: true, requiresAdmin: true }
   }
+
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore()
+  const user = userStore.user
+
+  // Schutz für geschützte Seiten
+  if (to.meta.requiresAuth && !user) {
+    return next('/login')
+  }
+
+  // Schutz für Admin-Seiten
+  if (to.meta.requiresAdmin && !user?.istAdmin) {
+    return next('/profil') // oder z. B. '/403'
+  }
+
+  next()
 })
 
 export default router

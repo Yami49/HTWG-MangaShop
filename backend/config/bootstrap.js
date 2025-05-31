@@ -51,7 +51,7 @@ module.exports.bootstrap = async function () {
       mangaNamen.map(titel => ({
         titel,
         description: `${titel} ist ein beliebter Manga-Titel.`,
-        price: (Math.random() * 20 + 5).toFixed(2),
+        preis: (Math.random() * 20 + 5).toFixed(2),
         quantity: 50
       }))
     );

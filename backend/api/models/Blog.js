@@ -55,14 +55,14 @@ module.exports = {
     },
 
     /**
-     * @description Erstellungszeitpunkt
+     * @description Erstellungszeitpunkt (muss beim Erstellen manuell gesetzt werden)
      * @type {ref} datetime
      * @example 2025-06-01T12:34:56Z
      */
     erstelltAm: {
       type: 'ref',
       columnType: 'datetime',
-      defaultsTo: () => new Date(),
+      required: true,
       description: 'Zeitpunkt der Erstellung des Blogeintrags.'
     }
   }

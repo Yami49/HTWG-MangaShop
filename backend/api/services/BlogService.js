@@ -4,62 +4,101 @@
  * @description :: Serverseitige Logik für Blogoperationen, ausgelagert aus dem Controller.
  */
 
+const errors = require('../utils/errors');
+
 module.exports = {
   /**
-   * Alle aktiven Blogbeiträge (für User)
+   * Alle Blogbeiträge abrufen (je nach Sichtbarkeit)
+   * @param {Object} options - { includeInactive: boolean }
    */
-  findActive: async () => {
-    return await Blog.find({ aktiv: true }).sort('erstelltAm DESC');
+  findAll: async ({ includeInactive = false } = {}) => {
+    const criteria = includeInactive ? {} : { aktiv: true };
+    return await Blog.find(criteria).sort('erstelltAm DESC');
   },
 
   /**
-   * Alle Blogbeiträge (Admin)
+   * Einzelnen Blogeintrag anhand der ID finden
    */
-  findAll: async () => {
-    return await Blog.find().sort('erstelltAm DESC');
+  findById: async (id) => {
+    const blog = await Blog.findOne({ id });
+    if (!blog) {
+      throw new errors.NotFoundError('Blogeintrag nicht gefunden.');
+    }
+    return blog;
   },
 
   /**
-   * Einzelnen Beitrag erstellen
+   * Neuen Blogeintrag erstellen
    */
   create: async ({ titel, inhalt, aktiv }) => {
     if (!titel || !inhalt) {
-      throw new Error('Titel und Inhalt sind erforderlich.');
+      throw new errors.BadRequestError('Titel und Inhalt sind erforderlich.');
     }
 
-    return await Blog.create({
+    if (titel.length > 150) {
+      throw new errors.BadRequestError('Titel darf maximal 150 Zeichen lang sein.');
+    }
+
+    if (inhalt.length > 1000) {
+      throw new errors.BadRequestError('Inhalt darf maximal 1000 Zeichen lang sein.');
+    }
+
+    const neuerBlog = await Blog.create({
       titel,
       inhalt,
       aktiv: aktiv !== undefined ? aktiv : true,
-      erstelltAm: new Date(),
+      erstelltAm: new Date()
     }).fetch();
+
+    return neuerBlog;
   },
 
   /**
-   * Beitrag aktualisieren
+   * Vorhandenen Blogeintrag aktualisieren
    */
   update: async (id, { titel, inhalt, aktiv }) => {
-    const updated = await Blog.updateOne({ id }).set({
-      ...(titel && { titel }),
-      ...(inhalt && { inhalt }),
-      ...(aktiv !== undefined && { aktiv }),
-    });
-
-    if (!updated) {
-      throw new Error('Beitrag nicht gefunden.');
+    const blog = await Blog.findOne({ id });
+    if (!blog) {
+      throw new errors.NotFoundError('Blogeintrag nicht gefunden.');
     }
 
-    return updated;
+    const payload = {};
+
+    if (titel !== undefined) {
+      if (titel.length > 150) {
+        throw new errors.BadRequestError('Titel darf maximal 150 Zeichen lang sein.');
+      }
+      payload.titel = titel;
+    }
+
+    if (inhalt !== undefined) {
+      if (inhalt.length > 1000) {
+        throw new errors.BadRequestError('Inhalt darf maximal 1000 Zeichen lang sein.');
+      }
+      payload.inhalt = inhalt;
+    }
+
+    if (aktiv !== undefined) {
+      payload.aktiv = aktiv;
+    }
+
+    const aktualisiert = await Blog.updateOne({ id }).set(payload);
+
+    if (!aktualisiert) {
+      throw new errors.NotFoundError('Blogeintrag konnte nicht aktualisiert werden.');
+    }
+
+    return aktualisiert;
   },
 
   /**
-   * Beitrag löschen
+   * Blogeintrag löschen
    */
-  destroy: async (id) => {
-    const deleted = await Blog.destroyOne({ id });
-    if (!deleted) {
-      throw new Error('Beitrag nicht gefunden.');
+  remove: async (id) => {
+    const gelöscht = await Blog.destroyOne({ id });
+    if (!gelöscht) {
+      throw new errors.NotFoundError('Blogeintrag konnte nicht gelöscht werden.');
     }
-    return deleted;
+    return gelöscht;
   }
 };

@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require('uuid'); // Für Produkt-IDs
+
 module.exports.bootstrap = async function () {
   sails.log.info('🔧 MangaShop: Bootstrap läuft...');
 
@@ -47,7 +49,7 @@ module.exports.bootstrap = async function () {
 
   const produktCount = await Produkt.count();
   if (produktCount === 0) {
-    const kategorien = await Kategorie.find(); // echte Kategorien laden
+    const kategorien = await Kategorie.find(); // Echte Kategorien abrufen
     if (kategorien.length === 0) {
       sails.log.error('❌ Keine Kategorien gefunden – Produkte können nicht erstellt werden.');
       return;
@@ -56,6 +58,7 @@ module.exports.bootstrap = async function () {
     for (const titel of mangaNamen) {
       const zufallsKategorie = kategorien[Math.floor(Math.random() * kategorien.length)];
       await Produkt.create({
+        produktId: uuidv4(), // Manuell UUID setzen
         titel,
         beschreibung: `${titel} ist ein beliebter Manga-Titel.`,
         preis: parseFloat((Math.random() * 20 + 5).toFixed(2)),

@@ -64,6 +64,16 @@ module.exports.routes = {
   'POST /login': 'BenutzerController.login',
   'GET /profil': 'BenutzerController.profil',
 
+  // Blog-API für normale Nutzer (nur aktive Beiträge sichtbar)
+  'GET /blog': 'BlogController.findPublic',
+  'GET /blog/:id': 'BlogController.findOnePublic',
+  'POST /blog': 'BlogController.create',
+
+  // Blog-API für Admins
+  'GET /admin/blog': 'BlogController.findAll',
+  'POST /admin/blog': 'BlogController.create',
+  'PATCH /admin/blog/:id': 'BlogController.update',
+  'DELETE /admin/blog/:id': 'BlogController.delete',
 
   
   /***************************************************************************

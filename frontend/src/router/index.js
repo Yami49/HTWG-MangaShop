@@ -95,6 +95,36 @@ const routes = [
     meta: { requiresAuth: true, requiresAdmin: true },
   },
   {
+    path: '/blog',
+    name: 'BlogListe',
+    component: () => import('@/views/BlogListeView.vue')
+  },
+  {
+    path: '/blog/:id',
+    name: 'BlogDetail',
+    component: () => import('@/views/BlogDetailView.vue'),
+    props: true
+  },
+  {
+    path: '/admin/blog',
+    name: 'BlogAdminListe',
+    component: () => import('@/views/BlogAdminListeView.vue'),
+    meta: { requiresAuth: true, requiresAdmin: true }
+  },
+  {
+    path: '/admin/blog/neu',
+    name: 'BlogErstellen',
+    component: () => import('@/views/BlogErstellenView.vue'),
+    meta: { requiresAuth: true, requiresAdmin: true }
+  },
+  {
+    path: '/admin/blog/:id',
+    name: 'BlogBearbeiten',
+    component: () => import('@/views/BlogBearbeitenView.vue'),
+    meta: { requiresAuth: true, requiresAdmin: true },
+    props: true
+  },
+  {
     path: '/:pathMatch(.*)*',
     redirect: '/',
   },

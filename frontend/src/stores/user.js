@@ -2,7 +2,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import router from '@/router'
-import Swal from 'sweetalert2'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -13,11 +12,11 @@ export const useUserStore = defineStore('user', {
     async fetchUser() {
       if (!this.user) {
         try {
-          const response = await axios.get('/profil') // → angepasst
+          const response = await axios.get('/profil')
           this.user = response.data?.data || null
           return this.user
         } catch (error) {
-          console.error('Fehler beim Laden des Benutzerprofils:', error)
+          console.error('❌ Fehler beim Laden des Benutzerprofils:', error)
           this.user = null
           return null
         }
@@ -35,13 +34,7 @@ export const useUserStore = defineStore('user', {
           router.push('/profil')
         }
       } catch (error) {
-        Swal.fire({
-          title: 'Login fehlgeschlagen',
-          text: error.response?.data?.error || 'Unbekannter Fehler.',
-          icon: 'error',
-          confirmButtonText: 'Okay',
-          confirmButtonColor: '#4a5043',
-        })
+        console.error('❌ Login fehlgeschlagen:', error.response?.data?.error || error.message)
       }
     },
 
@@ -56,12 +49,7 @@ export const useUserStore = defineStore('user', {
         this.user = response.data?.data || null
         router.push('/profil')
       } catch (error) {
-        Swal.fire({
-          title: 'Registrierung fehlgeschlagen',
-          text: error.response?.data?.error || 'Unbekannter Fehler.',
-          icon: 'error',
-          confirmButtonText: 'Okay',
-        })
+        console.error('❌ Registrierung fehlgeschlagen:', error.response?.data?.error || error.message)
       }
     },
 
@@ -69,7 +57,7 @@ export const useUserStore = defineStore('user', {
       try {
         await axios.get('/logout')
       } catch (err) {
-        console.warn('Logout fehlgeschlagen:', err)
+        console.warn('⚠️ Logout fehlgeschlagen:', err)
       }
       this.user = null
       router.push('/login')

@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useUserStore } from '@/stores/user'
+
 import HomeView from '@/views/HomeView.vue'
 import CreateProduktView from '@/views/CreateProduktView.vue'
 import KategorieVerwaltenView from '@/views/KategorieVerwaltenView.vue'
@@ -8,114 +10,119 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: HomeView
+    component: HomeView,
   },
   {
     path: '/produkt-erstellen',
     name: 'ProduktErstellen',
-    component: CreateProduktView
+    component: CreateProduktView,
+    meta: { requiresAuth: true, requiresAdmin: true },
   },
   {
     path: '/kategorien',
     name: 'KategorienVerwalten',
-    component: KategorieVerwaltenView
+    component: KategorieVerwaltenView,
+    meta: { requiresAuth: true, requiresAdmin: true },
   },
   {
     path: '/produkt',
     name: 'ProduktListe',
-    component: () => import('@/views/ProduktListeView.vue')
-  },  
+    component: () => import('@/views/ProduktListeView.vue'),
+  },
   {
     path: '/produkt/:id',
     name: 'ProduktDetail',
     component: ProduktDetailView,
-    props: true
+    props: true,
   },
   {
     path: '/impressum',
     name: 'Impressum',
-    component: () => import('@/views/ImpressumView.vue')
+    component: () => import('@/views/ImpressumView.vue'),
   },
   {
     path: '/datenschutz',
     name: 'Datenschutz',
-    component: () => import('@/views/DatenschutzView.vue')
+    component: () => import('@/views/DatenschutzView.vue'),
   },
   {
     path: '/kontakt',
     name: 'Kontakt',
-    component: () => import('@/views/KontaktView.vue')
+    component: () => import('@/views/KontaktView.vue'),
   },
   {
     path: '/nachrichten',
     name: 'NachrichtenListe',
-    component: () => import('@/views/NachrichtenListeView.vue')
+    component: () => import('@/views/NachrichtenListeView.vue'),
   },
   {
     path: '/nachrichten/:id',
     name: 'NachrichtDetail',
-    component: () => import('@/views/NachrichtDetailView.vue')
+    component: () => import('@/views/NachrichtDetailView.vue'),
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/LoginView.vue')
+    component: () => import('@/views/LoginView.vue'),
   },
   {
     path: '/register',
     name: 'Register',
-    component: () => import('@/views/RegisterView.vue')
+    component: () => import('@/views/RegisterView.vue'),
   },
   {
     path: '/profil',
     name: 'Profil',
-    component: () => import('@/views/ProfilView.vue')
-  },
-  {
-    path: '/admin/benutzer',
-    name: 'BenutzerListe',
-    component: () => import('@/views/BenutzerListeView.vue')
-  },
-  {
-    path: '/admin/benutzer/:id',
-    name: 'BenutzerDetail',
-    component: () => import('@/views/BenutzerDetailView.vue')
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    redirect: '/login'
+    component: () => import('@/views/ProfilView.vue'),
+    meta: { requiresAuth: true },
   },
   {
     path: '/admin/dashboard',
     name: 'AdminDashboard',
     component: () => import('@/views/AdminDashboardView.vue'),
-    meta: { requiresAuth: true, requiresAdmin: true }
+    meta: { requiresAuth: true, requiresAdmin: true },
   },
   {
     path: '/admin/benutzer',
     name: 'BenutzerListe',
     component: () => import('@/views/BenutzerListeView.vue'),
-    meta: { requiresAuth: true, requiresAdmin: true }
-  }
+    meta: { requiresAuth: true, requiresAdmin: true },
+  },
+  {
+    path: '/admin/benutzer/:id',
+    name: 'BenutzerBearbeiten',
+    component: () => import('@/views/BenutzerBearbeitenView.vue'),
+    meta: { requiresAuth: true, requiresAdmin: true },
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/',
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore()
+
+  // Nutzer ggf. nachladen
+  if (!userStore.user && to.meta.requiresAuth) {
+    await userStore.fetchUser()
+  }
+
   const user = userStore.user
 
-  // Schutz für geschützte Seiten
+  // Authentifizierung erforderlich
   if (to.meta.requiresAuth && !user) {
     return next('/login')
   }
 
-  // Schutz für Admin-Seiten
+  // Adminrechte erforderlich
   if (to.meta.requiresAdmin && !user?.istAdmin) {
-    return next('/profil') // oder z. B. '/403'
+    return next('/profil')
   }
 
   next()

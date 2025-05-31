@@ -51,7 +51,6 @@ module.exports.bootstrap = async function () {
       mangaNamen.map(name => ({
         name,
         description: `${name} ist ein beliebter Manga-Titel.`,
-        image: `/assets/mangas/${name.toLowerCase().replace(/\s/g, '-')}.jpg`,
         price: (Math.random() * 20 + 5).toFixed(2),
         quantity: 50
       }))

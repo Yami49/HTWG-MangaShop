@@ -26,10 +26,10 @@ module.exports.bootstrap = async function () {
   }
 
   // Kategorien prüfen und erstellen
-  const kategorien = ['Shonen', 'Seinen', 'Shojo', 'Slice of Life', 'Thriller', 'Action'];
+  const kategorienNamen = ['Shonen', 'Seinen', 'Shojo', 'Slice of Life', 'Thriller', 'Action'];
   const vorhandeneKategorien = await Kategorie.count();
   if (vorhandeneKategorien === 0) {
-    await Kategorie.createEach(kategorien.map(name => ({ name })));
+    await Kategorie.createEach(kategorienNamen.map(name => ({ name })));
     sails.log.info('📚 Standard-Kategorien wurden erstellt.');
   } else {
     sails.log.info('📚 Kategorien existieren bereits.');
@@ -47,14 +47,23 @@ module.exports.bootstrap = async function () {
 
   const produktCount = await Produkt.count();
   if (produktCount === 0) {
-    await Produkt.createEach(
-      mangaNamen.map(titel => ({
+    const kategorien = await Kategorie.find(); // echte Kategorien laden
+    if (kategorien.length === 0) {
+      sails.log.error('❌ Keine Kategorien gefunden – Produkte können nicht erstellt werden.');
+      return;
+    }
+
+    for (const titel of mangaNamen) {
+      const zufallsKategorie = kategorien[Math.floor(Math.random() * kategorien.length)];
+      await Produkt.create({
         titel,
-        description: `${titel} ist ein beliebter Manga-Titel.`,
-        preis: (Math.random() * 20 + 5).toFixed(2),
+        beschreibung: `${titel} ist ein beliebter Manga-Titel.`,
+        preis: parseFloat((Math.random() * 20 + 5).toFixed(2)),
+        kategorie: zufallsKategorie.id,
         quantity: 50
-      }))
-    );
+      });
+    }
+
     sails.log.info('📦 Standard-Produkte wurden erstellt.');
   } else {
     sails.log.info('📦 Produkte existieren bereits.');

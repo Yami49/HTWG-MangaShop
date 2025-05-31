@@ -86,18 +86,17 @@ const routes = [
     redirect: '/login'
   },
   {
-    path: '/admin/benutzer',
+    path: '/admin/dashboard',
     name: 'AdminDashboard',
     component: () => import('@/views/AdminDashboardView.vue'),
     meta: { requiresAuth: true, requiresAdmin: true }
   },
   {
-    path: '/admin/benutzer/:id',
-    name: 'BenutzerBearbeiten',
-    component: () => import('@/views/BenutzerBearbeitenView.vue'),
+    path: '/admin/benutzer',
+    name: 'BenutzerListe',
+    component: () => import('@/views/BenutzerListeView.vue'),
     meta: { requiresAuth: true, requiresAdmin: true }
   }
-
 ]
 
 const router = createRouter({

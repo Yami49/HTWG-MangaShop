@@ -1,31 +1,63 @@
-/**
- * Seed Function
- * (sails.config.bootstrap)
- *
- * A function that runs just before your Sails app gets lifted.
- * > Need more flexibility?  You can also create a hook.
- *
- * For more information on seeding your app with fake data, check out:
- * https://sailsjs.com/config/bootstrap
- */
+module.exports.bootstrap = async function () {
+  sails.log.info('🔧 MangaShop: Bootstrap läuft...');
 
-module.exports.bootstrap = async function() {
+  // Benutzer prüfen und erstellen
+  const benutzerCount = await Benutzer.count();
+  if (benutzerCount === 0) {
+    await Benutzer.createEach([
+      {
+        email: 'admin@admin.com',
+        passwort: await sails.helpers.passwords.hashPassword('admin'),
+        vorname: 'Admin',
+        nachname: 'User',
+        istAdmin: true
+      },
+      {
+        email: 'user@user.com',
+        passwort: await sails.helpers.passwords.hashPassword('user'),
+        vorname: 'Standard',
+        nachname: 'Benutzer',
+        istAdmin: false
+      }
+    ]);
+    sails.log.info('👤 Standard-Benutzer wurden erstellt.');
+  } else {
+    sails.log.info('👤 Benutzer existieren bereits.');
+  }
 
-  // By convention, this is a good place to set up fake data during development.
-  //
-  // For example:
-  // ```
-  // // Set up fake development data (or if we already have some, avast)
-  // if (await User.count() > 0) {
-  //   return;
-  // }
-  //
-  // await User.createEach([
-  //   { emailAddress: 'ry@example.com', fullName: 'Ryan Dahl', },
-  //   { emailAddress: 'rachael@example.com', fullName: 'Rachael Shaw', },
-  //   // etc.
-  // ]);
-  // ```
-  require('dotenv').config();
+  // Kategorien prüfen und erstellen
+  const kategorien = ['Shonen', 'Seinen', 'Shojo', 'Slice of Life', 'Thriller', 'Action'];
+  const vorhandeneKategorien = await Kategorie.count();
+  if (vorhandeneKategorien === 0) {
+    await Kategorie.createEach(kategorien.map(name => ({ name })));
+    sails.log.info('📚 Standard-Kategorien wurden erstellt.');
+  } else {
+    sails.log.info('📚 Kategorien existieren bereits.');
+  }
 
+  // Produkte prüfen und erstellen
+  const mangaNamen = [
+    'One Piece',
+    'Naruto',
+    'Bleach',
+    'Dragon Ball',
+    'Vinland Saga',
+    'Code Geass'
+  ];
+
+  const produktCount = await Produkt.count();
+  if (produktCount === 0) {
+    await Produkt.createEach(
+      mangaNamen.map(name => ({
+        name,
+        description: `${name} ist ein beliebter Manga-Titel.`,
+        image: `/assets/mangas/${name.toLowerCase().replace(/\s/g, '-')}.jpg`,
+        price: (Math.random() * 20 + 5).toFixed(2),
+        quantity: 50
+      }))
+    );
+    sails.log.info('📦 Standard-Produkte wurden erstellt.');
+  } else {
+    sails.log.info('📦 Produkte existieren bereits.');
+  }
 };

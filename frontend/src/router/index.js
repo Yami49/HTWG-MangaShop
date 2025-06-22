@@ -131,6 +131,16 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/versand-und-zahlung',
+    name: 'VersandUndZahlung',
+    component: () => import('@/views/VersandUndZahlungView.vue')
+  },
+  {
+    path: '/bestellung-erfolgreich',
+    name: 'OrderSuccess',
+    component: () => import('@/views/OrderSuccess.vue')
+  },
+  {
     path: '/:pathMatch(.*)*',
     redirect: '/',
   },

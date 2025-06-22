@@ -8,9 +8,10 @@
 
 module.exports = {
   attributes: {
+
     /**
      * @description Zugehöriger Warenkorb
-     * @type {ref}
+     * @type {model}
      */
     warenkorb: {
       model: 'warenkorb',
@@ -20,7 +21,7 @@ module.exports = {
 
     /**
      * @description Das Produkt
-     * @type {ref}
+     * @type {model}
      */
     produkt: {
       model: 'produkt',
@@ -40,6 +41,26 @@ module.exports = {
       max: 1000,
       custom: (value) => Number.isInteger(value),
       description: 'Anzahl des Produkts im Warenkorb.'
+    },
+
+    /**
+     * @description Erstellungszeitpunkt
+     * @type {ref}
+     */
+    erstelltAm: {
+      type: 'ref',
+      columnType: 'datetime',
+      autoCreatedAt: true
+    },
+
+    /**
+     * @description Letzte Aktualisierung
+     * @type {ref}
+     */
+    aktualisiertAm: {
+      type: 'ref',
+      columnType: 'datetime',
+      autoUpdatedAt: true
     }
   }
 };

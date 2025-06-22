@@ -8,14 +8,14 @@
     </div>
 
     <div v-else class="cart-content">
-      <table class="cart-table">
+      <table class="cart-table" role="table">
         <thead>
           <tr>
-            <th>Produkt</th>
-            <th>Menge</th>
-            <th>Einzelpreis (€)</th>
-            <th>Gesamt (€)</th>
-            <th>Aktion</th>
+            <th scope="col">Produkt</th>
+            <th scope="col">Menge</th>
+            <th scope="col">Einzelpreis (€)</th>
+            <th scope="col">Gesamt (€)</th>
+            <th scope="col">Aktion</th>
           </tr>
         </thead>
         <tbody>
@@ -29,27 +29,34 @@
                 max="1000"
                 @change="handleQuantityChange(item)"
                 class="quantity-input"
+                aria-label="Menge ändern"
               />
             </td>
-            <td>{{ item.preis.toFixed(2) }}</td>
-            <td>{{ (item.preis * item.menge).toFixed(2) }}</td>
+            <td>{{ (item.preis ?? 0).toFixed(2) }}</td>
+            <td>{{ ((item.preis ?? 0) * item.menge).toFixed(2) }}</td>
             <td>
-              <button class="btn btn-secondary" @click="remove(item.id)">Entfernen</button>
+              <button class="btn btn-secondary" @click="remove(item.id)" aria-label="Entfernen">Entfernen</button>
             </td>
           </tr>
         </tbody>
       </table>
 
       <div class="cart-summary">
-        <p>Gesamt: <strong>{{ warenkorb.totalAmount.toFixed(2) }} €</strong></p>
-        <button class="btn btn-primary" @click="goToCheckout" :disabled="warenkorb.totalAmount <= 0">Zur Kasse</button>
-        <button class="btn btn-danger" @click="warenkorb.clearCart()">Warenkorb leeren</button>
+        <p>Gesamt: <strong>{{ totalAmount.toFixed(2) }} €</strong></p>
+        <button class="btn btn-primary" @click="goToCheckout" :disabled="totalAmount <= 0">Zur Kasse</button>
+        <button
+          class="btn btn-danger"
+          @click="confirm('Warenkorb wirklich leeren?') && warenkorb.clearCart()"
+        >
+          Warenkorb leeren
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useWarenkorbStore } from '@/stores/warenkorb'
 import { useRouter } from 'vue-router'
 
@@ -72,6 +79,11 @@ const handleQuantityChange = (item) => {
 const goToCheckout = () => {
   router.push('/checkout')
 }
+
+// Fallback falls warenkorb.totalAmount im Store nicht vorhanden ist
+const totalAmount = computed(() =>
+  warenkorb.items.reduce((sum, item) => sum + (item.preis ?? 0) * item.menge, 0)
+)
 </script>
 
 <style scoped>

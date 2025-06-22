@@ -1,5 +1,5 @@
 /**
- * WarenkorbService.js
+ * api/services/WarenkorbService.js
  *
  * @description :: Geschäftslogik für die Verwaltung von Warenkörben.
  */
@@ -10,38 +10,46 @@ module.exports = {
   /**
    * Ruft den Warenkorb eines Benutzers ab oder erstellt ihn, wenn nicht vorhanden.
    */
-  getOrCreateCartForUser: async (userId) => {
-    if (!userId) throw new errors.BadRequestError('Benutzer nicht angemeldet.');
+  getOrCreateCartForUser: async (benutzerId) => {
+    if (!benutzerId) throw new errors.BadRequestError('Benutzer nicht angemeldet.');
 
-    let cart = await Warenkorb.findOne({ user: userId }).populate('items');
+    let cart = await Warenkorb.findOne({ benutzer: benutzerId }).populate('produkte');
 
     if (!cart) {
-      cart = await Warenkorb.create({ user: userId }).fetch();
+      cart = await Warenkorb.create({ benutzer: benutzerId }).fetch();
     }
 
-    return await Warenkorb.findOne({ id: cart.id }).populate('items');
+    return await Warenkorb.findOne({ id: cart.id }).populate('produkte');
+  },
+
+  /**
+   * Gibt den Warenkorb für einen Request zurück.
+   */
+  getCart: async (req) => {
+    const benutzerId = req.session.userId;
+    return await module.exports.getOrCreateCartForUser(benutzerId);
   },
 
   /**
    * Fügt ein Produkt zum Warenkorb hinzu oder erhöht die Menge.
    */
-  addItemToCart: async (userId, { produkt, menge }) => {
-    if (!userId || !produkt || !menge || menge <= 0) {
+  addItem: async (req) => {
+    const benutzerId = req.session.userId;
+    const { produkt, menge } = req.body;
+
+    if (!benutzerId || !produkt || !menge || menge <= 0) {
       throw new errors.BadRequestError('Ungültige Daten für Warenkorbposition.');
     }
 
-    const cart = await module.exports.getOrCreateCartForUser(userId);
+    const cart = await module.exports.getOrCreateCartForUser(benutzerId);
 
-    // Prüfen, ob das Produkt bereits im Warenkorb vorhanden ist
     let item = await CartItem.findOne({ warenkorb: cart.id, produkt });
 
     if (item) {
-      // Menge erhöhen
       item = await CartItem.updateOne({ id: item.id }).set({
         menge: item.menge + menge
       });
     } else {
-      // Neue Position erstellen
       item = await CartItem.create({
         warenkorb: cart.id,
         produkt,
@@ -49,49 +57,60 @@ module.exports = {
       }).fetch();
     }
 
-    return item;
+    return await module.exports.getOrCreateCartForUser(benutzerId);
   },
 
   /**
    * Aktualisiert die Menge eines Items im Warenkorb.
    */
-  updateItemQuantity: async (userId, itemId, menge) => {
-    if (!userId || !itemId || menge < 1) {
+  updateQuantity: async (req) => {
+    const benutzerId = req.session.userId;
+    const { itemId, menge } = req.body;
+
+    if (!benutzerId || !itemId || menge < 1) {
       throw new errors.BadRequestError('Ungültige Daten.');
     }
 
-    const cart = await Warenkorb.findOne({ user: userId });
+    const cart = await Warenkorb.findOne({ benutzer: benutzerId });
     const item = await CartItem.findOne({ id: itemId });
 
-    if (!cart || !item || item.warenkorb !== cart.id) {
-      throw new errors.BadRequestError('Zugriff verweigert.');
+    if (!cart || !item || String(item.warenkorb) !== String(cart.id)) {
+      throw new errors.ForbiddenError('Zugriff verweigert.');
     }
 
-    return await CartItem.updateOne({ id: item.id }).set({ menge });
+    await CartItem.updateOne({ id: item.id }).set({ menge });
+
+    return await module.exports.getOrCreateCartForUser(benutzerId);
   },
 
   /**
    * Entfernt ein Item aus dem Warenkorb.
    */
-  removeItemFromCart: async (userId, itemId) => {
-    const cart = await Warenkorb.findOne({ user: userId });
+  removeItem: async (req) => {
+    const benutzerId = req.session.userId;
+    const { itemId } = req.params;
+
+    const cart = await Warenkorb.findOne({ benutzer: benutzerId });
     const item = await CartItem.findOne({ id: itemId });
 
-    if (!cart || !item || item.warenkorb !== cart.id) {
-      throw new errors.BadRequestError('Nicht gefunden oder nicht berechtigt.');
+    if (!cart || !item || String(item.warenkorb) !== String(cart.id)) {
+      throw new errors.ForbiddenError('Nicht gefunden oder nicht berechtigt.');
     }
 
     await CartItem.destroyOne({ id: item.id });
+
+    return await module.exports.getOrCreateCartForUser(benutzerId);
   },
 
   /**
    * Leert den gesamten Warenkorb eines Benutzers.
    */
-  clearCart: async (userId) => {
-    const cart = await Warenkorb.findOne({ user: userId });
+  clearCart: async (req) => {
+    const benutzerId = req.session.userId;
+    const cart = await Warenkorb.findOne({ benutzer: benutzerId });
 
     if (!cart) {
-      throw new errors.BadRequestError('Warenkorb nicht gefunden.');
+      throw new errors.NotFoundError('Warenkorb nicht gefunden.');
     }
 
     await CartItem.destroy({ warenkorb: cart.id });

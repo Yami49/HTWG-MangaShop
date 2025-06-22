@@ -8,9 +8,6 @@ const WarenkorbService = require('../services/WarenkorbService');
 const errors = require('../utils/errors');
 
 module.exports = {
-  /**
-   * Gibt den aktuellen Warenkorb des eingeloggten Benutzers zurück
-   */
   getCart: async function (req, res) {
     try {
       const cart = await WarenkorbService.getCart(req);
@@ -21,9 +18,6 @@ module.exports = {
     }
   },
 
-  /**
-   * Fügt ein Produkt zum Warenkorb hinzu
-   */
   addItem: async function (req, res) {
     try {
       const cart = await WarenkorbService.addItem(req);
@@ -34,9 +28,6 @@ module.exports = {
     }
   },
 
-  /**
-   * Aktualisiert die Menge eines Produktes im Warenkorb
-   */
   updateItem: async function (req, res) {
     try {
       const cart = await WarenkorbService.updateQuantity(req);
@@ -47,9 +38,6 @@ module.exports = {
     }
   },
 
-  /**
-   * Entfernt ein Produkt aus dem Warenkorb
-   */
   removeItem: async function (req, res) {
     try {
       const cart = await WarenkorbService.removeItem(req);
@@ -60,9 +48,6 @@ module.exports = {
     }
   },
 
-  /**
-   * Leert den Warenkorb des aktuellen Benutzers
-   */
   clearCart: async function (req, res) {
     try {
       await WarenkorbService.clearCart(req);

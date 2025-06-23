@@ -83,10 +83,6 @@ sails lift
 
 ```
 
-✅ **Fertig zur Verwendung auf GitHub!**
-
-Du kannst diese Datei direkt als `README.md` in deinem Projekt-Root speichern.  
-Wenn du willst, erstelle ich dir zusätzlich ein `docs/`-Verzeichnis mit einer PDF-Dokumentation im selben Stil.
-
-Bereit dafür?
-
+Dieses Projekt wurde zu Studienzwecken an der HTWG Konstanz entwickelt.
+Alle Inhalte, Texte und Strukturen unterliegen – sofern nicht anders angegeben – dem Urheberrecht des Autors.
+Alle Rechte vorbehalten. Eine kommerzielle Nutzung oder Weiterverbreitung ist ohne ausdrückliche Genehmigung nicht gestattet.

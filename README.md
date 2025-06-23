@@ -8,8 +8,8 @@ Willkommen beim **HTWG MangaShop** – einer vollständigen Webanwendung zur Pr�
 
 | Rolle   | E-Mail               | Passwort  |
 |---------|----------------------|-----------|
-| Admin   | admin@example.com    | admin     |
-| Nutzer  | user@example.com     | user      |
+| Admin   | admin@admin.com      | admin     |
+| Benutzer  | user@user.com        | user      |
 
 ---
 
@@ -72,6 +72,8 @@ cd frontend
 npm install
 npm run dev
 
+```
+
 ### Backend starten
 
 ```bash
@@ -79,7 +81,7 @@ cd backend
 npm install
 sails lift
 
----
+```
 
 ✅ **Fertig zur Verwendung auf GitHub!**
 

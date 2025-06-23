@@ -11,13 +11,13 @@ module.exports.bootstrap = async function () {
         email: 'admin@admin.com',
         passwort: await sails.helpers.passwords.hashPassword('admin'),
         vorname: 'Admin',
-        nachname: 'User',
+        nachname: 'Admin',
         istAdmin: true
       },
       {
         email: 'user@user.com',
         passwort: await sails.helpers.passwords.hashPassword('user'),
-        vorname: 'Standard',
+        vorname: 'Benutzer',
         nachname: 'Benutzer',
         istAdmin: false
       }

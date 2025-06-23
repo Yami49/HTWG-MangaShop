@@ -1,0 +1,27 @@
+# Allgemeine Anweisungen für alle Crawler
+User-agent: *
+
+# Schließe sensible Routen aus
+Disallow: /admin/
+Disallow: /login/
+Disallow: /user/
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /search/
+Disallow: /api/
+
+# Optional: Reduziere die Crawling-Frequenz
+Crawl-delay: 10
+
+# Sitemap für bessere Indexierung
+Sitemap: https://htwg-mangashop.onrender.com/sitemap.xml
+
+# Blockiere bekannte Spam-Bots
+User-agent: BadBot
+Disallow: /
+
+User-agent: Twitterbot
+Disallow:
+
+# Empfohlene Domain
+Host: https://htwg-mangashop.onrender.com

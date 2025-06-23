@@ -61,6 +61,33 @@
       </ul>
       <p v-else>Keine Kategorien gefunden.</p>
     </section>
+
+    <section>
+  <h2>Blogbeiträge</h2>
+  <input v-model="blogSearch" @input="fetchBlogs" class="form-control" placeholder="Nach Blogtitel suchen" />
+  <table v-if="blogs.length" class="data-table">
+    <thead>
+      <tr>
+        <th>Titel</th>
+        <th>Aktiv</th>
+        <th>Erstellt am</th>
+        <th>Aktion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="b in blogs" :key="b.id">
+        <td>{{ b.titel }}</td>
+        <td>{{ b.aktiv ? '✅' : '❌' }}</td>
+        <td>{{ new Date(b.erstelltAm).toLocaleDateString() }}</td>
+        <td>
+          <router-link :to="`/admin/blog/${b.id}`" class="btn">Bearbeiten</router-link>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p v-else>Keine Blogeinträge gefunden.</p>
+</section>
+
   </div>
 </template>
 
@@ -72,6 +99,19 @@ const users = ref([])
 const produkte = ref([])
 const kategorien = ref([])
 const search = ref('')
+const blogs = ref([])
+const blogSearch = ref('')
+
+const fetchBlogs = async () => {
+  try {
+    const res = await axios.get('/admin/blog')
+    blogs.value = res.data.filter(blog =>
+      blog.titel.toLowerCase().includes(blogSearch.value.toLowerCase())
+    )
+  } catch (err) {
+    console.error('❌ Fehler beim Laden der Blogeinträge:', err)
+  }
+}
 
 const fetchUsers = async () => {
   try {
@@ -106,6 +146,7 @@ onMounted(() => {
   fetchUsers()
   fetchProdukte()
   fetchKategorien()
+  fetchBlogs()
 })
 </script>
 

@@ -73,6 +73,7 @@ module.exports.routes = {
   'POST /admin/blog': 'BlogController.create',
   'PATCH /admin/blog/:id': 'BlogController.update',
   'DELETE /admin/blog/:id': 'BlogController.delete',
+  'GET /admin/blog/:id': 'BlogController.findOne',
 
   /***************************************************************************
   *                              WARENKORB ROUTEN                            *

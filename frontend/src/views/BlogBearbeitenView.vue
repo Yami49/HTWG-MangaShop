@@ -48,8 +48,8 @@ const router = useRouter()
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get(`/blog/${route.params.id}`)
-    blog.value = data.data
+    const { data } = await axios.get(`/admin/blog/${route.params.id}`)
+    blog.value = data
   } catch (err) {
     console.error('❌ Fehler beim Laden des Beitrags:', err)
   }
@@ -57,7 +57,7 @@ onMounted(async () => {
 
 const updateBlog = async () => {
   try {
-    await axios.patch(`/blog/${blog.value.id}`, blog.value)
+    await axios.patch(`/admin/blog/${blog.value.id}`, blog.value)
     router.push('/admin/blog')
   } catch (err) {
     console.error('❌ Fehler beim Aktualisieren:', err)
@@ -67,7 +67,7 @@ const updateBlog = async () => {
 const deleteBlog = async () => {
   if (!confirm('Diesen Beitrag wirklich löschen?')) return
   try {
-    await axios.delete(`/blog/${blog.value.id}`)
+    await axios.delete(`/admin/blog/${blog.value.id}`)
     router.push('/admin/blog')
   } catch (err) {
     console.error('❌ Fehler beim Löschen:', err)

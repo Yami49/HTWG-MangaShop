@@ -60,7 +60,7 @@ module.exports.bootstrap = async function () {
         preis: 6.99,
         kategorie: 'Shonen',
         quantity: 100,
-        bild: '/images/onepiece1.png'
+        bild: 'http://localhost:1337/images/onepiece1.png'
       },
       {
         titel: 'Attack on Titan Vol. 1',
@@ -68,7 +68,7 @@ module.exports.bootstrap = async function () {
         preis: 7.99,
         kategorie: 'Seinen',
         quantity: 80,
-        bild: '/images/aot1.png'
+        bild: 'http://localhost:1337/images/aot1.png'
       },
       {
         titel: 'Naruto Vol. 1',
@@ -76,7 +76,7 @@ module.exports.bootstrap = async function () {
         preis: 6.50,
         kategorie: 'Shonen',
         quantity: 90,
-        bild: '/images/naruto1.png'
+        bild: 'http://localhost:1337/images/naruto1.png'
       },
       {
         titel: 'Death Note Vol. 1',
@@ -84,7 +84,7 @@ module.exports.bootstrap = async function () {
         preis: 8.50,
         kategorie: 'Thriller',
         quantity: 70,
-        bild: '/images/deathnote1.png'
+        bild: 'http://localhost:1337/images/deathnote1.png'
       },
       {
         titel: 'Demon Slayer Vol. 1',
@@ -92,7 +92,7 @@ module.exports.bootstrap = async function () {
         preis: 7.50,
         kategorie: 'Action',
         quantity: 60,
-        bild: '/images/demonslayer1.png'
+        bild: 'http://localhost:1337/images/demonslayer1.png'
       },
       {
         titel: 'My Hero Academia Vol. 1',
@@ -100,7 +100,7 @@ module.exports.bootstrap = async function () {
         preis: 6.75,
         kategorie: 'Shonen',
         quantity: 100,
-        bild: '/images/mha1.png'
+        bild: 'http://localhost:1337/images/mha1.png'
       },
       {
         titel: 'Tokyo Ghoul Vol. 1',
@@ -108,7 +108,7 @@ module.exports.bootstrap = async function () {
         preis: 8.25,
         kategorie: 'Seinen',
         quantity: 50,
-        bild: '/images/tokyoghoul1.png'
+        bild: 'http://localhost:1337/images/tokyoghoul1.png'
       },
       {
         titel: 'Chainsaw Man Vol. 1',
@@ -116,7 +116,7 @@ module.exports.bootstrap = async function () {
         preis: 7.80,
         kategorie: 'Action',
         quantity: 75,
-        bild: '/images/chainsawman1.png'
+        bild: 'http://localhost:1337/images/chainsawman1.png'
       }
     ];
 
@@ -142,4 +142,33 @@ module.exports.bootstrap = async function () {
   } else {
     sails.log.info('📦 Produkte existieren bereits.');
   }
+
+    // Blogbeiträge prüfen und erstellen
+  const blogCount = await Blog.count();
+  if (blogCount === 0) {
+    await Blog.createEach([
+      {
+        titel: '📚 One Piece jetzt im Sortiment!',
+        inhalt: 'Endlich bei uns erhältlich: Die Abenteuer von Ruffy, dem angehenden Piratenkönig. Jetzt stöbern!',
+        aktiv: true,
+        erstelltAm: new Date('2024-06-01T10:00:00Z')
+      },
+      {
+        titel: '✨ Demon Slayer – Bestseller des Monats!',
+        inhalt: 'Tanjiros Kampf gegen Dämonen begeistert die Manga-Community. Jetzt Band 1 bis 5 erhältlich.',
+        aktiv: true,
+        erstelltAm: new Date('2024-06-05T12:30:00Z')
+      },
+      {
+        titel: '📰 Neue Kategorien im Shop verfügbar',
+        inhalt: 'Du findest ab sofort auch Thriller und Slice of Life! Entdecke neue Lieblingsgenres.',
+        aktiv: true,
+        erstelltAm: new Date('2024-06-10T08:15:00Z')
+      }
+    ]);
+    sails.log.info('📝 Drei öffentliche Blogbeiträge wurden erstellt.');
+  } else {
+    sails.log.info('📝 Blogeinträge existieren bereits.');
+  }
+
 };

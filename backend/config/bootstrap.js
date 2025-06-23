@@ -111,22 +111,6 @@ module.exports.bootstrap = async function () {
         bild: '/images/tokyoghoul1.jpg'
       },
       {
-        titel: 'Blue Period Vol. 1',
-        beschreibung: 'Ein Jugendlicher entdeckt seine Leidenschaft für Kunst.',
-        preis: 9.20,
-        kategorie: 'Slice of Life',
-        quantity: 40,
-        bild: '/images/blueperiod1.jpg'
-      },
-      {
-        titel: 'Fruits Basket Vol. 1',
-        beschreibung: 'Ein Mädchen trifft auf eine Familie mit einem geheimnisvollen Tierfluch.',
-        preis: 7.20,
-        kategorie: 'Shojo',
-        quantity: 60,
-        bild: '/images/fruitsbasket1.jpg'
-      },
-      {
         titel: 'Chainsaw Man Vol. 1',
         beschreibung: 'Ein Teufelsjäger mit einer Motorsäge als Herz kämpft ums Überleben.',
         preis: 7.80,

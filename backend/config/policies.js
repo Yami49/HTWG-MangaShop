@@ -20,11 +20,15 @@ module.exports.policies = {
   },
 
   BlogController: {
-    find: true,         // öffentlich
-    findOne: true,      // öffentlich
+    // Admin-only Operationen
     create: 'isAdmin',
     update: 'isAdmin',
     delete: 'isAdmin',
+    findAll: 'isAdmin',
+
+    // Öffentlich freigegebene Lesefunktionen
+    findPublic: true,
+    findOnePublic: true,
   },
 
   KategorieController: {

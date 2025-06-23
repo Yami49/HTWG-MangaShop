@@ -8,6 +8,7 @@ const BlogService = require('../services/BlogService');
 const errors = require('../utils/errors');
 
 module.exports = {
+
   /**
    * Gibt alle Blogeinträge zurück
    * Admins sehen alle, normale Nutzer nur aktive
@@ -24,7 +25,7 @@ module.exports = {
   },
 
   /**
-   * Einzelnen Blogeintrag laden
+   * Einzelnen Blogeintrag laden (Admin + Nutzer)
    */
   findOne: async function (req, res) {
     try {
@@ -32,6 +33,48 @@ module.exports = {
       return res.json(blog);
     } catch (err) {
       sails.log.error('❌ Fehler beim Laden eines Blogeintrags:', err);
+      return res.status(err.status || 500).json({ error: err.message || 'Fehler beim Laden.' });
+    }
+  },
+
+  /**
+   * Öffentliche Liste aller aktiven Blogeinträge
+   */
+  findPublic: async function (req, res) {
+    try {
+      const blogs = await BlogService.findAll({ includeInactive: false });
+      return res.json(blogs);
+    } catch (err) {
+      sails.log.error('❌ Fehler beim Laden öffentlicher Blogeinträge:', err);
+      return res.serverError({ error: 'Fehler beim Laden öffentlicher Blogeinträge.' });
+    }
+  },
+
+  /**
+   * Admin-only: Alle Blogeinträge
+   */
+  findAll: async function (req, res) {
+    try {
+      const blogs = await BlogService.findAll({ includeInactive: true });
+      return res.json(blogs);
+    } catch (err) {
+      sails.log.error('❌ Fehler beim Admin-Zugriff auf Blogeinträge:', err);
+      return res.serverError({ error: 'Fehler beim Admin-Zugriff auf Blogeinträge.' });
+    }
+  },
+
+  /**
+   * Öffentlichen Blogeintrag einzeln abrufen (nur wenn aktiv)
+   */
+  findOnePublic: async function (req, res) {
+    try {
+      const blog = await BlogService.findById(req.params.id);
+      if (!blog || !blog.aktiv) {
+        return res.notFound({ error: 'Blogeintrag nicht gefunden.' });
+      }
+      return res.json(blog);
+    } catch (err) {
+      sails.log.error('❌ Fehler beim Laden eines öffentlichen Blogeintrags:', err);
       return res.status(err.status || 500).json({ error: err.message || 'Fehler beim Laden.' });
     }
   },
@@ -85,4 +128,5 @@ module.exports = {
       return res.status(err.status || 500).json({ error: err.message || 'Fehler beim Löschen.' });
     }
   }
+
 };

@@ -99,7 +99,7 @@ module.exports = {
      * @type {string}
      */
     benutzer: {
-      model: 'user',
+      model: 'Benutzer',
       required: true,
       description: 'Der Benutzer, dem diese Zahlungsart gehört.'
     },
@@ -107,11 +107,11 @@ module.exports = {
     /**
      * @description Verknüpfte Bestellung (optional, wenn isForOrder = true)
      * @type {string}
-     */
+     
     bestellung: {
       model: 'bestellung',
       unique: true,
       description: 'Verknüpfte Bestellung, falls diese Zahlung zu einer spezifischen Order gehört.'
-    }
+    }*/
   }
 };

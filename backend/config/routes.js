@@ -67,7 +67,6 @@ module.exports.routes = {
   // Blog-API für normale Nutzer (nur aktive Beiträge sichtbar)
   'GET /blog': 'BlogController.findPublic',
   'GET /blog/:id': 'BlogController.findOnePublic',
-  'POST /blog': 'BlogController.create',
 
   // Blog-API für Admins
   'GET /admin/blog': 'BlogController.findAll',

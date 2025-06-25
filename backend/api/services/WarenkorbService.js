@@ -7,9 +7,6 @@
 const errors = require('../utils/errors');
 
 module.exports = {
-  /**
-   * Ruft den Warenkorb eines Benutzers ab oder erstellt ihn, wenn nicht vorhanden.
-   */
   getOrCreateCartForUser: async (benutzerId) => {
     if (!benutzerId) throw new errors.BadRequestError('Benutzer nicht angemeldet.');
 
@@ -17,22 +14,26 @@ module.exports = {
 
     if (!cart) {
       cart = await Warenkorb.create({ benutzer: benutzerId }).fetch();
+      cart.produkte = [];
+      return cart;
     }
 
-    return await Warenkorb.findOne({ id: cart.id }).populate('produkte');
+    cart.produkte = await Promise.all(cart.produkte.map(async (item) => {
+      const produkt = await Produkt.findOne({ id: item.produkt });
+      return {
+        ...item,
+        produkt
+      };
+    }));
+
+    return cart;
   },
 
-  /**
-   * Gibt den Warenkorb für einen Request zurück.
-   */
   getCart: async (req) => {
     const benutzerId = req.session.userId;
     return await module.exports.getOrCreateCartForUser(benutzerId);
   },
 
-  /**
-   * Fügt ein Produkt zum Warenkorb hinzu oder erhöht die Menge.
-   */
   addItem: async (req) => {
     const benutzerId = req.session.userId;
     const { produkt, menge } = req.body;
@@ -60,12 +61,10 @@ module.exports = {
     return await module.exports.getOrCreateCartForUser(benutzerId);
   },
 
-  /**
-   * Aktualisiert die Menge eines Items im Warenkorb.
-   */
   updateQuantity: async (req) => {
     const benutzerId = req.session.userId;
-    const { itemId, menge } = req.body;
+    const itemId = req.params.itemId; // WICHTIG: Jetzt aus req.params
+    const { menge } = req.body;
 
     if (!benutzerId || !itemId || menge < 1) {
       throw new errors.BadRequestError('Ungültige Daten.');
@@ -83,9 +82,6 @@ module.exports = {
     return await module.exports.getOrCreateCartForUser(benutzerId);
   },
 
-  /**
-   * Entfernt ein Item aus dem Warenkorb.
-   */
   removeItem: async (req) => {
     const benutzerId = req.session.userId;
     const { itemId } = req.params;
@@ -102,9 +98,6 @@ module.exports = {
     return await module.exports.getOrCreateCartForUser(benutzerId);
   },
 
-  /**
-   * Leert den gesamten Warenkorb eines Benutzers.
-   */
   clearCart: async (req) => {
     const benutzerId = req.session.userId;
     const cart = await Warenkorb.findOne({ benutzer: benutzerId });

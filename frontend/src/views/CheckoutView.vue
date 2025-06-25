@@ -72,7 +72,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useWarenkorbStore } from '@/stores/warenkorb'
-import { useBenutzerStore } from '@/stores/benutzer' // falls du den User brauchst
+import { useBenutzerStore } from '@/stores/user' // falls du den User brauchst
 
 const router = useRouter()
 const warenkorb = useWarenkorbStore()

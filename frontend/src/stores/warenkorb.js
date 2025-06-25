@@ -25,7 +25,7 @@ export const useWarenkorbStore = defineStore('warenkorb', {
       try {
         const res = await axios.get('/warenkorb', { withCredentials: true })
         this.items = (res.data.produkte || []).map(item => ({
-          id: item.id, // CartItem ID
+          id: item.id,
           produktId: item.produkt?.id,
           name: item.produkt?.titel || 'Unbekannt',
           preis: item.produkt?.preis || 0,
@@ -33,14 +33,14 @@ export const useWarenkorbStore = defineStore('warenkorb', {
           menge: item.menge
         }))
       } catch (err) {
-        console.error('❌ Fehler beim Laden des Warenkorbs:', err)
+        console.error('❌ Fehler beim Laden des Warenkorbs:', err?.response?.data || err.message || err)
         this.items = []
       }
     },
 
     async addToCart(produktId, menge = 1) {
       try {
-        await axios.post('/warenkorb/item', {
+        await axios.post('/warenkorb', {
           produkt: produktId,
           menge
         }, { withCredentials: true })
@@ -53,8 +53,7 @@ export const useWarenkorbStore = defineStore('warenkorb', {
 
     async updateQuantity(itemId, menge) {
       try {
-        await axios.put('/warenkorb/item', {
-          itemId,
+        await axios.patch(`/warenkorb/${itemId}`, {
           menge
         }, { withCredentials: true })
         await this.loadFromServer()
@@ -65,7 +64,7 @@ export const useWarenkorbStore = defineStore('warenkorb', {
 
     async removeFromCart(itemId) {
       try {
-        await axios.delete(`/warenkorb/item/${itemId}`, { withCredentials: true })
+        await axios.delete(`/warenkorb/${itemId}`, { withCredentials: true })
         await this.loadFromServer()
       } catch (err) {
         console.error('❌ Fehler beim Entfernen aus dem Warenkorb:', err)

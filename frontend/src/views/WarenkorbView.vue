@@ -11,16 +11,27 @@
       <table class="cart-table" role="table">
         <thead>
           <tr>
-            <th scope="col">Produkt</th>
-            <th scope="col">Menge</th>
-            <th scope="col">Einzelpreis (€)</th>
-            <th scope="col">Gesamt (€)</th>
-            <th scope="col">Aktion</th>
+            <th>Bild</th>
+            <th>Produkt</th>
+            <th>Menge</th>
+            <th>Einzelpreis (€)</th>
+            <th>Gesamt (€)</th>
+            <th>Aktion</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in warenkorb.items" :key="item.id">
-            <td>{{ item.name }}</td>
+            <td>
+              <img :src="item.image" alt="Produktbild" class="thumbnail" />
+            </td>
+            <td>
+              <div class="produkt-info">
+                <strong>{{ item.name }}</strong>
+                <p class="beschreibung">{{ item.beschreibung }}</p>
+                <p class="kategorie" v-if="item.kategorie">Kategorie: {{ item.kategorie }}</p>
+                <router-link :to="`/produkt/${item.produktId}`" class="link">Details ansehen</router-link>
+              </div>
+            </td>
             <td>
               <input
                 type="number"
@@ -29,13 +40,12 @@
                 max="1000"
                 @change="handleQuantityChange(item)"
                 class="quantity-input"
-                aria-label="Menge ändern"
               />
             </td>
-            <td>{{ (item.preis ?? 0).toFixed(2) }}</td>
-            <td>{{ ((item.preis ?? 0) * item.menge).toFixed(2) }}</td>
+            <td>{{ item.preis.toFixed(2) }}</td>
+            <td>{{ (item.preis * item.menge).toFixed(2) }}</td>
             <td>
-              <button class="btn btn-secondary" @click="remove(item.id)" aria-label="Entfernen">Entfernen</button>
+              <button class="btn btn-secondary" @click="remove(item.id)">Entfernen</button>
             </td>
           </tr>
         </tbody>
@@ -44,45 +54,65 @@
       <div class="cart-summary">
         <p>Gesamt: <strong>{{ totalAmount.toFixed(2) }} €</strong></p>
         <button class="btn btn-primary" @click="goToCheckout" :disabled="totalAmount <= 0">Zur Kasse</button>
-        <button
-          class="btn btn-danger"
-          @click="confirm('Warenkorb wirklich leeren?') && warenkorb.clearCart()"
-        >
-          Warenkorb leeren
-        </button>
+        <button class="btn btn-danger" @click="leeren()">Warenkorb leeren</button>
       </div>
+      <router-link to="/checkout" class="btn btn-primary">co</router-link>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useWarenkorbStore } from '@/stores/warenkorb'
 import { useRouter } from 'vue-router'
 
 const warenkorb = useWarenkorbStore()
 const router = useRouter()
 
-const remove = (id) => {
-  warenkorb.removeFromCart(id)
+onMounted(async () => {
+  try {
+    await warenkorb.loadFromServer()
+  } catch (err) {
+    alert('❌ Fehler beim Laden des Warenkorbs.')
+    console.error(err)
+  }
+})
+
+const handleQuantityChange = async (item) => {
+  if (!item.menge || item.menge < 1) item.menge = 1
+  if (item.menge > 1000) item.menge = 1000
+
+  try {
+    await warenkorb.updateQuantity(item.id, item.menge)
+    console.log(`🔁 Menge von "${item.name}" auf ${item.menge} aktualisiert`)
+  } catch (err) {
+    alert('❌ Fehler beim Aktualisieren der Menge.')
+    console.error(err)
+  }
 }
 
-const handleQuantityChange = (item) => {
-  if (!item.menge || item.menge < 1) {
-    item.menge = 1
-  } else if (item.menge > 1000) {
-    item.menge = 1000
+const remove = async (id) => {
+  try {
+    await warenkorb.removeFromCart(id)
+    console.log('🗑️ Produkt wurde aus dem Warenkorb entfernt.')
+  } catch (err) {
+    alert('❌ Fehler beim Entfernen des Produkts.')
+    console.error(err)
   }
-  warenkorb.updateQuantity(item.id, item.menge)
+}
+
+const leeren = () => {
+  if (confirm('Warenkorb wirklich leeren?')) {
+    warenkorb.clearCart()
+  }
 }
 
 const goToCheckout = () => {
   router.push('/checkout')
 }
 
-// Fallback falls warenkorb.totalAmount im Store nicht vorhanden ist
 const totalAmount = computed(() =>
-  warenkorb.items.reduce((sum, item) => sum + (item.preis ?? 0) * item.menge, 0)
+  warenkorb.items.reduce((sum, item) => sum + (item.preis || 0) * item.menge, 0)
 )
 </script>
 
@@ -116,14 +146,47 @@ const totalAmount = computed(() =>
   padding: 10px;
   border: 1px solid #ccc;
   text-align: center;
+  vertical-align: middle;
+}
+
+.thumbnail {
+  width: 60px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 4px;
 }
 
 .quantity-input {
-  width: 80px;
-  padding: 6px;
+  width: 70px;
+  padding: 5px;
   text-align: center;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+.produkt-info {
+  text-align: left;
+  max-width: 200px;
+}
+
+.beschreibung {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 4px 0;
+}
+
+.kategorie {
+  font-size: 0.8rem;
+  color: #999;
+  font-style: italic;
+}
+
+.link {
+  font-size: 0.8rem;
+  color: #3498db;
+  text-decoration: underline;
+  display: inline-block;
+  margin-top: 4px;
 }
 
 .cart-summary {
@@ -137,6 +200,7 @@ const totalAmount = computed(() =>
 
 .cart-summary p {
   font-size: 1.4rem;
+  margin: 0;
 }
 
 .btn {

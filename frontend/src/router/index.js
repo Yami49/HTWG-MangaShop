@@ -143,6 +143,11 @@ const routes = [
     component: () => import('@/views/OrderSuccess.vue')
   },
   {
+    path: '/checkout',
+    name: 'CheckoutView',
+    component: () => import('@/views/CheckoutView.vue')
+  },
+  {
     path: '/:pathMatch(.*)*',
     redirect: '/',
   },

@@ -85,6 +85,9 @@ module.exports.routes = {
   'PATCH /warenkorb/:produktId': 'WarenkorbController.updateItem',
   'DELETE /warenkorb/:produktId': 'WarenkorbController.removeItem',
   'DELETE /warenkorb': 'WarenkorbController.clearCart',
+  'PATCH /warenkorb': 'WarenkorbController.updateItem',
+  'PATCH /warenkorb/:itemId': 'WarenkorbController.updateItem',
+  'DELETE /warenkorb/:itemId': 'WarenkorbController.removeItem',
 
 
   /***************************************************************************

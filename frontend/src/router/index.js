@@ -54,11 +54,13 @@ const routes = [
     path: '/nachrichten',
     name: 'NachrichtenListe',
     component: () => import('@/views/NachrichtenListeView.vue'),
+    meta: { requiresAuth: true, requiresAdmin: true },
   },
   {
     path: '/nachrichten/:id',
     name: 'NachrichtDetail',
     component: () => import('@/views/NachrichtDetailView.vue'),
+    meta: { requiresAuth: true, requiresAdmin: true },
   },
   {
     path: '/login',
@@ -154,19 +156,15 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore()
 
-  // Nutzer ggf. nachladen
-  if (!userStore.user && to.meta.requiresAuth) {
-    await userStore.fetchUser()
+  if (to.meta.requiresAuth && !userStore.user) {
+    const user = await userStore.fetchUser()
+    if (!user) {
+      return next('/login')
+    }
   }
 
   const user = userStore.user
 
-  // Authentifizierung erforderlich
-  if (to.meta.requiresAuth && !user) {
-    return next('/login')
-  }
-
-  // Adminrechte erforderlich
   if (to.meta.requiresAdmin && !user?.istAdmin) {
     return next('/profil')
   }

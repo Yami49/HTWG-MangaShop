@@ -3,7 +3,7 @@
     <!-- Hero Section -->
     <section class="hero">
       <h2 class="hero-title">Entdecke Manga-Welten<br />wie nie zuvor</h2>
-      <button class="cta-button">Jetzt stöbern</button>
+      <router-link to="/produkt" class="cta-button">Jetzt stöbern</router-link>
       <img :src="heroGirl" alt="Anime Girl" class="hero-image" />
     </section>
 
@@ -26,13 +26,6 @@
       </div>
     </section>
 
-    <!-- API Test Section -->
-    <section class="api-test">
-      <h3 class="section-title">Backend API Test</h3>
-      <button class="cta-button" @click="fetchApiData">API testen</button>
-      <pre v-if="apiResponse">{{ apiResponse }}</pre>
-    </section>
-
     <!-- Features -->
     <section class="features">
       <p>✅ Große Auswahl</p>
@@ -45,7 +38,7 @@
     <section class="call-to-action">
       <h3 class="section-title">Noch kein Konto?</h3>
       <p>Jetzt registrieren & Lieblingsmanga sichern!</p>
-      <button class="cta-button">Konto erstellen</button>
+      <router-link to="/register" class="cta-button">Konto erstellen</router-link>
     </section>
   </div>
 </template>

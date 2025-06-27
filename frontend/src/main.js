@@ -6,12 +6,8 @@ import router from './router'
 import axios from 'axios'
 
 // ✅ API-Base konfigurieren
-axios.defaults.baseURL =
-  import.meta.env.PROD ? '/' : 'https://mangashop-backend.onrender.com'
-axios.defaults.withCredentials = true
-
-// (Optional) in globalProperties verfügbar machen
-// app.config.globalProperties.$axios = axios
+axios.defaults.baseURL = 'https://mangashop-backend.onrender.com';
+axios.defaults.withCredentials = true;
 
 console.log(`>> Mode: ${import.meta.env.MODE}`)
 

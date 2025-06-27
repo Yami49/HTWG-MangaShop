@@ -7,6 +7,11 @@
 module.exports = {
     attributes: {
   
+      id: {
+  type: 'string',
+  columnName: '_id'
+},
+
       /**
        * @description Titel des Manga-Produkts.
        * @type {string}
@@ -65,7 +70,8 @@ module.exports = {
        */
       kategorie: {
         model: 'kategorie',
-        required: true
+        required: true,
+        description: 'Die Kategorie, zu der dieses Produkt gehört.'
       },
   
       /**

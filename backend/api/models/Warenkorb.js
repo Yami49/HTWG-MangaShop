@@ -2,23 +2,19 @@
  * Warenkorb.js
  *
  * @description :: Datenmodell für aktive Warenkörbe im MangaShop.
- *                 Jeder Benutzer kann genau einen Warenkorb mit mehreren Produkten haben.
- * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
+ *                 Jeder Benutzer hat genau einen Warenkorb mit mehreren Produkten.
  */
 
 module.exports = {
   attributes: {
-    /**
-     * @description MongoDB-kompatibler Primärschlüssel
-     */
+
     id: {
-      type: 'string',
-      columnName: '_id'
-    },
+  type: 'string',
+  columnName: '_id'
+},
 
     /**
-     * @description Verknüpfter Benutzer
-     * @type {ref}
+     * @description Verknüpfter Benutzer (1:1).
      */
     benutzer: {
       model: 'benutzer',
@@ -28,8 +24,7 @@ module.exports = {
     },
 
     /**
-     * @description Zugehörige Produkte im Warenkorb (Relation)
-     * @type {collection}
+     * @description Zugehörige Produkte im Warenkorb (n:m via CartItem).
      */
     produkte: {
       collection: 'cartitem',
@@ -38,25 +33,12 @@ module.exports = {
     },
 
     /**
-     * @description Zeitpunkt der letzten Aktualisierung
-     * @type {ref}
+     * @description Verknüpfte Zahlungsmethode (optional).
      */
-    aktualisiertAm: {
-      type: 'ref',
-      columnType: 'datetime',
-      autoUpdatedAt: true,
-      description: 'Zuletzt bearbeitet am.'
-    },
-
-    /**
-     * @description Zeitpunkt der Erstellung
-     * @type {ref}
-     */
-    erstelltAm: {
-      type: 'ref',
-      columnType: 'datetime',
-      autoCreatedAt: true,
-      description: 'Zeitpunkt, zu dem der Warenkorb erstellt wurde.'
+    zahlung: {
+      model: 'zahlung',
+      description: 'Vom Benutzer gewählte Zahlungsmethode für diesen Warenkorb (optional).'
     }
+
   }
 };

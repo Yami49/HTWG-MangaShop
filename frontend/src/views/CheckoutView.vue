@@ -112,6 +112,7 @@ const absendenBestellung = async () => {
   alert('❌ Es gab ein Problem beim Abschicken der Bestellung.')
 }
 }
+
 </script>
 
 <style scoped>

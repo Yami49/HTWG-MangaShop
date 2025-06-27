@@ -8,10 +8,6 @@
 module.exports = {
   attributes: {
 
-    id: {
-  type: 'string',
-  columnName: '_id'
-},
     /**
      * @description Zahlungsart (Kreditkarte, Überweisung, PayPal)
      * @type {string}

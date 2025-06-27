@@ -20,6 +20,11 @@ module.exports.session = {
   ***************************************************************************/
   secret: '23ae1886589ca7af7ae03131809dcbfa',
 
+  cookie: {
+    secure: true,            // Nur über HTTPS senden
+    httpOnly: true,          // Vom JS nicht lesbar
+    sameSite: 'None'         // Wichtig für Cross-Origin
+  },
 
   /***************************************************************************
   *                                                                          *

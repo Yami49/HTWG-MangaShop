@@ -44,7 +44,7 @@ const absenden = async () => {
   errorMessage.value = ''
 
   try {
-    await axios.post('http://localhost:1337/kontakt', {
+    await axios.post('https://mangashop-backend.onrender.com/kontakt', {
       name: form.name,
       email: form.email,
       nachricht: form.nachricht

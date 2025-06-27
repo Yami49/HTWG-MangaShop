@@ -6,9 +6,12 @@
     </div>
 
     <nav class="nav-icons">
-      <button title="Suchen">🔍</button>
-      <button title="Warenkorb">🛒</button>
-      <button title="Benutzerkonto">👤</button>
+      <router-link to="/warenkorb" class="btn-cart" title="Warenkorb">
+        🛒
+      </router-link>
+      <router-link to="/login" class="btn-cart" title="Login">
+        👤
+      </router-link>
     </nav>
   </header>
 </template>

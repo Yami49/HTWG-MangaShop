@@ -78,54 +78,93 @@ const deleteBlog = async () => {
 <style scoped>
 .blog-bearbeiten {
   max-width: 700px;
-  margin: auto;
-  padding: 2rem;
+  margin: 4rem auto;
+  padding: 2.5rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #333;
 }
 
 label {
   display: block;
-  margin-top: 1rem;
-  font-weight: bold;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #444;
 }
 
 input[type='text'],
 textarea {
   width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 6px;
+  padding: 12px;
+  border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type='text']:focus,
+textarea:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+input[type='checkbox'] {
+  margin-right: 8px;
+  transform: scale(1.2);
 }
 
 .actions {
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   display: flex;
   gap: 1rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 .btn {
-  padding: 10px 16px;
-  background-color: #4a5043;
+  padding: 10px 18px;
+  background-color: #3498db;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
 }
 
 .btn:hover {
-  background-color: #3d4438;
+  background-color: #2980b9;
 }
 
 .btn-secondary {
-  background-color: #ccc;
-  color: #333;
+  background-color: #e74c3c;
+  color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .btn-secondary:hover {
-  background-color: #bbb;
+  background-color: #c0392b;
+}
+
+p {
+  text-align: center;
+  color: #666;
 }
 </style>

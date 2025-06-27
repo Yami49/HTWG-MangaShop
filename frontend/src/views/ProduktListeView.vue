@@ -55,7 +55,7 @@ async function inWarenkorb(produkt) {
     }, { withCredentials: true })
 
     await warenkorb.loadFromServer() // Server-Warenkorb neu laden
-    console.log(`✅ "${produkt.titel}" wurde zum Warenkorb hinzugefügt`)
+    alert(`✅ "${produkt.titel}" wurde zum Warenkorb hinzugefügt`)
   } catch (err) {
     console.error('❌ Fehler beim Hinzufügen zum Warenkorb:', err)
     alert('Fehler beim Hinzufügen zum Warenkorb.')

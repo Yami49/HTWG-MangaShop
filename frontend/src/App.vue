@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <Navigation />
     <Header />
     <main>
       <router-view />
@@ -10,8 +9,7 @@
 </template>
 
 <script setup>
-  import Navigation from '@/components/Navigation.vue'
-  import Header from '@/components/HeaderComponente.vue'
+import Header from '@/components/HeaderComponente.vue'
 import Footer from '@/components/FooterComponente.vue'
 </script>
 

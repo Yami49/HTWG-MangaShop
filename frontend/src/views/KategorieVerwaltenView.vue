@@ -44,12 +44,12 @@
               </td>
               <td>
                 <template v-if="editId === k.id">
-                  <button class="btn btn-save" @click="saveEdit(k.id)">💾</button>
-                  <button class="btn btn-cancel" @click="cancelEdit">✖️</button>
+                  <button class="btn btn-save" @click="saveEdit(k.id)">Speichern</button>
+                  <button class="btn btn-cancel" @click="cancelEdit">Abbrechen</button>
                 </template>
                 <template v-else>
-                  <button class="btn btn-edit" @click="startEdit(k)">✏️</button>
-                  <button class="btn btn-delete" @click="deleteKategorie(k.id)">🗑</button>
+                  <button class="btn btn-edit" @click="startEdit(k)">Bearbeiten</button>
+                  <button class="btn btn-delete" @click="deleteKategorie(k.id)">Löschen</button>
                 </template>
               </td>
             </tr>
@@ -201,40 +201,52 @@ const deleteKategorie = async (id) => {
     color: #333;
   }
   
-  .btn {
-    padding: 6px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .btn-edit {
-    background: #3498db;
-    color: white;
-  }
-  
-  .btn-delete {
-    background: #e74c3c;
-    color: white;
-    margin-left: 8px;
-  }
-  
-  .btn-save {
-    background: #2ecc71;
-    color: white;
-  }
-  
-  .btn-cancel {
-    background: #95a5a6;
-    color: white;
-    margin-left: 8px;
-  }
-  
-  .no-kategorie {
-    text-align: center;
-    color: #666;
-    font-style: italic;
-    padding: 20px;
-  }
+.btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 500;
+}
+
+.btn-edit {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.btn-edit:hover {
+  background-color: #2980b9;
+}
+
+.btn-delete {
+  background-color: #e74c3c;
+  color: #fff;
+  margin-left: 8px;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+}
+
+.btn-save {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+.btn-save:hover {
+  background-color: #27ae60;
+}
+
+.btn-cancel {
+  background-color: #95a5a6;
+  color: #fff;
+  margin-left: 8px;
+}
+
+.btn-cancel:hover {
+  background-color: #7f8c8d;
+}
   </style>
   

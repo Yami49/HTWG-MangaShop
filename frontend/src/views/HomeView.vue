@@ -12,6 +12,7 @@
       <div class="info-card">
         <img :src="boyImage" alt="Anime Boy" class="info-image" />
         <p>MangaShop ist dein Ort für Originale,<br>Fanartikel und vieles mehr.</p>
+        <router-link to="/blog" class="cta-button">Blogbeiträge</router-link>
       </div>
     </section>
 

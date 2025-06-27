@@ -38,6 +38,26 @@ export const useWarenkorbStore = defineStore('warenkorb', {
       }
     },
 
+    async abschicken({ adresse, zahlung }) {
+  try {
+    const response = await axios.post('/bestellung', {
+      adresse,
+      zahlung,
+      produkte: this.items.map(item => ({
+        produkt: item.produktId,
+        menge: item.menge
+      }))
+    }, { withCredentials: true })
+
+    // Nach erfolgreicher Bestellung Warenkorb leeren
+    this.items = []
+    return response.data
+  } catch (err) {
+    console.error('❌ Fehler beim Abschicken der Bestellung:', err?.response?.data || err)
+    throw err
+  }
+},
+
     async addToCart(produktId, menge = 1) {
       try {
         await axios.post('/warenkorb', {

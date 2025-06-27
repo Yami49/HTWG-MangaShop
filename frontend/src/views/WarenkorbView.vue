@@ -56,7 +56,6 @@
         <button class="btn btn-primary" @click="goToCheckout" :disabled="totalAmount <= 0">Zur Kasse</button>
         <button class="btn btn-danger" @click="leeren()">Warenkorb leeren</button>
       </div>
-      <router-link to="/checkout" class="btn btn-primary">co</router-link>
     </div>
   </div>
 </template>
@@ -118,55 +117,72 @@ const totalAmount = computed(() =>
 
 <style scoped>
 .cart {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 0 20px;
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .cart-title {
+  font-size: 2rem;
   text-align: center;
-  font-size: 2.2rem;
-  margin-bottom: 30px;
-  color: #4a5043;
+  color: #333;
+  margin-bottom: 2rem;
 }
 
 .empty-cart {
   text-align: center;
-  margin-top: 50px;
+  font-size: 1.1rem;
+  color: #777;
+  margin-top: 60px;
 }
 
 .cart-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  background-color: #fafafa;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .cart-table th,
 .cart-table td {
-  padding: 10px;
-  border: 1px solid #ccc;
+  padding: 16px;
   text-align: center;
-  vertical-align: middle;
+  border-bottom: 1px solid #eee;
+  color:#333;
+}
+
+.cart-table th {
+  background-color: #f2f2f2;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #555;
+  text-transform: uppercase;
 }
 
 .thumbnail {
   width: 60px;
   height: auto;
+  border-radius: 6px;
   object-fit: cover;
-  border-radius: 4px;
 }
 
 .quantity-input {
   width: 70px;
-  padding: 5px;
-  text-align: center;
+  padding: 6px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 1rem;
+  text-align: center;
 }
 
 .produkt-info {
   text-align: left;
-  max-width: 200px;
+  max-width: 220px;
 }
 
 .beschreibung {
@@ -182,7 +198,7 @@ const totalAmount = computed(() =>
 }
 
 .link {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: #3498db;
   text-decoration: underline;
   display: inline-block;
@@ -190,39 +206,73 @@ const totalAmount = computed(() =>
 }
 
 .cart-summary {
+  margin-top: 2rem;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
   gap: 1rem;
-  margin-top: 20px;
+  padding: 1rem 0;
+  border-top: 1px solid #eee;
 }
 
 .cart-summary p {
   font-size: 1.4rem;
   margin: 0;
-}
-
-.btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.btn-primary {
-  background-color: #4a5043;
-  color: white;
-}
-
-.btn-secondary {
-  background-color: #dcdcdc;
   color: #333;
 }
 
-.btn-danger {
-  background-color: #c0392b;
+.btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #27ae60;
   color: white;
 }
+
+.btn-primary:hover {
+  background-color: #1e874c;
+}
+
+.btn-secondary {
+  background-color: #bdc3c7;
+  color: #2c3e50;
+}
+
+.btn-secondary:hover {
+  background-color: #a7b1b5;
+}
+
+.btn-danger {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
+}
+
+@media (max-width: 768px) {
+  .cart-table th, .cart-table td {
+    font-size: 0.85rem;
+    padding: 10px;
+  }
+
+  .cart-summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .produkt-info {
+    max-width: 100%;
+  }
+}
+
 </style>

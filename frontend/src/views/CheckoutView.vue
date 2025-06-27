@@ -72,11 +72,11 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useWarenkorbStore } from '@/stores/warenkorb'
-import { useBenutzerStore } from '@/stores/user' // falls du den User brauchst
+import { useUserStore } from '@/stores/user'
 
 const router = useRouter()
 const warenkorb = useWarenkorbStore()
-const benutzerStore = useBenutzerStore()
+const benutzerStore = useUserStore()
 
 const adresse = ref({
   vorname: '',
@@ -108,74 +108,132 @@ const absendenBestellung = async () => {
       }
     })
   } catch (error) {
-    console.error('Fehler beim Abschicken der Bestellung:', error)
-    alert('Es gab ein Problem beim Abschicken der Bestellung.')
-  }
+  console.error('Fehler beim Abschicken der Bestellung:', error?.response?.data || error.message || error)
+  alert('❌ Es gab ein Problem beim Abschicken der Bestellung.')
+}
 }
 </script>
 
 <style scoped>
 .checkout-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 30px 20px;
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h1 {
   text-align: center;
-  margin-bottom: 30px;
-  color: #5a3d85;
+  font-size: 2rem;
+  margin-bottom: 2.5rem;
+  color: #333;
 }
 
 .checkout-form {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 2.5rem;
 }
 
 fieldset {
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 10px;
+  border: none;
+  padding: 0;
+}
+
+legend {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #5a3d85;
 }
 
 label {
   display: block;
-  margin-bottom: 15px;
+  margin-bottom: 1.2rem;
+  color: #333;
+  font-weight: 500;
 }
 
 input[type='text'],
 input[type='email'],
 input[type='number'] {
   width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  border-radius: 4px;
+  padding: 12px;
+  margin-top: 6px;
+  border-radius: 8px;
   border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #5a3d85;
+  outline: none;
+}
+
+input[type='radio'] {
+  margin-right: 8px;
 }
 
 .summary {
-  background-color: #f9f9f9;
+  background-color: #f4f4fa;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+.summary h2 {
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+.summary ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.summary li {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: #333;
 }
 
 .total {
-  margin-top: 15px;
+  margin-top: 1.5rem;
   font-size: 1.2rem;
+  font-weight: 600;
+  color: #000;
 }
 
 .btn-primary {
-  padding: 12px;
+  align-self: flex-start;
+  padding: 14px 24px;
   background-color: #5a3d85;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .btn-primary:hover {
   background-color: #3f2a63;
+}
+
+@media (max-width: 768px) {
+  .checkout-container {
+    padding: 1rem;
+  }
+
+  .btn-primary {
+    width: 100%;
+    text-align: center;
+  }
 }
 </style>

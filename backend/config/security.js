@@ -30,7 +30,7 @@ module.exports.security = {
 
   cors: {
     allRoutes: true,
-    allowOrigins: ['http://localhost:5173'], // Port deines Frontends
+    allowOrigins: ['https://mangashop-frontend.onrender.com'], // Port deines Frontends
     allowCredentials: true,
   },
 

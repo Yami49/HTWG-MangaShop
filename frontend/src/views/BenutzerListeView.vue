@@ -29,7 +29,7 @@ import axios from 'axios'
 const benutzer = ref([])
 
 const laden = async () => {
-  const res = await axios.get('http://localhost:1337/benutzer')
+  const res = await axios.get('https://mangashop-backend.onrender.com/benutzer')
   benutzer.value = res.data.benutzer
 }
 

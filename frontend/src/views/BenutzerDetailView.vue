@@ -16,7 +16,7 @@ const benutzer = ref(null)
 const route = useRoute()
 
 onMounted(async () => {
-  const res = await axios.get(`http://localhost:1337/benutzer/${route.params.id}`)
+  const res = await axios.get(`https://mangashop-backend.onrender.com/benutzer/${route.params.id}`)
   benutzer.value = res.data
 })
 </script>

@@ -1,7 +1,9 @@
 <template>
   <header class="header">
     <div class="logo-container">
-      <img src="@/components/icons/MangashopIcon.png" alt="MangaShop Logo" class="logo-image" />
+      <router-link to="/">
+  <img src="@/components/icons/MangashopIcon.png" alt="MangaShop Logo" class="logo-image" />
+</router-link>
       <h1 class="logo-text">MangaShop</h1>
     </div>
 
@@ -12,6 +14,8 @@
       <router-link to="/login" class="btn-cart" title="Login">
         👤
       </router-link>
+      
+      <button @click="logout" class="logout-button">Logout</button>
     </nav>
   </header>
 </template>
@@ -28,6 +32,21 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.logout-button {
+  background: none;
+  border: none;
+  color: #444;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 8px 12px;
+  transition: color 0.2s ease;
+}
+
+.logout-button:hover {
+  color: #e74c3c;
+}
+
 
 .logo-container {
   display: flex;

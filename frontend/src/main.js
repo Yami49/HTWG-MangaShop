@@ -7,7 +7,7 @@ import axios from 'axios'
 
 // ✅ API-Base konfigurieren
 axios.defaults.baseURL =
-  import.meta.env.PROD ? '/' : 'http://localhost:1337'
+  import.meta.env.PROD ? '/' : 'https://mangashop-backend.onrender.com'
 axios.defaults.withCredentials = true
 
 // (Optional) in globalProperties verfügbar machen

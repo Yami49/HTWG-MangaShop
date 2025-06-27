@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
+require('dotenv').config();
 
 module.exports.bootstrap = async function () {
   sails.log.info('🔧 MangaShop: Bootstrap läuft...');

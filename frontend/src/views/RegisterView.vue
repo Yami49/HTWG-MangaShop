@@ -32,7 +32,7 @@ const form = reactive({
 
 const register = async () => {
   try {
-    await axios.post('http://localhost:1337/register', form)
+    await axios.post('https://mangashop-backend.onrender.com/register', form)
     router.push('/login')
   } catch (err) {
     fehler.value = 'Registrierung fehlgeschlagen'

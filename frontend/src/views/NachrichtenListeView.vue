@@ -35,7 +35,7 @@ const nachrichten = ref([])
 
 const laden = async () => {
   try {
-    const res = await axios.get('http://localhost:1337/nachrichten')
+    const res = await axios.get('https://mangashop-backend.onrender.com/nachrichten')
     nachrichten.value = res.data.data
   } catch (err) {
     console.error('❌ Fehler beim Laden:', err)

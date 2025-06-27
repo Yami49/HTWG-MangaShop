@@ -25,7 +25,7 @@ const router = useRouter()
 
 const login = async () => {
   try {
-    await axios.post('http://localhost:1337/login', { email: email.value, passwort: passwort.value })
+    await axios.post('https://mangashop-backend.onrender.com/login', { email: email.value, passwort: passwort.value })
     router.push('/profil')
   } catch (err) {
     fehler.value = 'Login fehlgeschlagen'

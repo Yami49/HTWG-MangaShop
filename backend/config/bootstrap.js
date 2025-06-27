@@ -1,5 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
+console.log('MONGO_URL:', process.env.MONGO_URL);
+
 
 module.exports.bootstrap = async function () {
   sails.log.info('🔧 MangaShop: Bootstrap läuft...');

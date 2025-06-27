@@ -2,6 +2,7 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: 'https://mangashop-backend.onrender.com', // URL deines Sails-Backends
+  baseURL: 'https://mangashop-backend.onrender.com',
+  withCredentials: true,
   timeout: 10000,
 });

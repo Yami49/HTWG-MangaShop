@@ -20,8 +20,8 @@ export default defineConfig({
     open: true,
     historyApiFallback: true,
     proxy: {
-      '/kategorie': 'http://localhost:1337',
-      '/produkt': 'http://localhost:1337',
+      '/kategorie': 'https://mangashop-backend.onrender.com',
+      '/produkt': 'https://mangashop-backend.onrender.com',
     }
   }
 })

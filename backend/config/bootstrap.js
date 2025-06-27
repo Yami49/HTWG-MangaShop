@@ -63,7 +63,7 @@ module.exports.bootstrap = async function () {
         preis: 6.99,
         kategorie: 'Shonen',
         quantity: 100,
-        bild: 'http://localhost:1337/images/onepiece1.png'
+        bild: 'https://mangashop-backend.onrender.com/images/onepiece1.png'
       },
       {
         titel: 'Attack on Titan Vol. 1',
@@ -71,7 +71,7 @@ module.exports.bootstrap = async function () {
         preis: 7.99,
         kategorie: 'Seinen',
         quantity: 80,
-        bild: 'http://localhost:1337/images/aot1.png'
+        bild: 'https://mangashop-backend.onrender.com/images/aot1.png'
       },
       {
         titel: 'Naruto Vol. 1',
@@ -79,7 +79,7 @@ module.exports.bootstrap = async function () {
         preis: 6.50,
         kategorie: 'Shonen',
         quantity: 90,
-        bild: 'http://localhost:1337/images/naruto1.png'
+        bild: 'https://mangashop-backend.onrender.com/images/naruto1.png'
       },
       {
         titel: 'Death Note Vol. 1',
@@ -87,7 +87,7 @@ module.exports.bootstrap = async function () {
         preis: 8.50,
         kategorie: 'Thriller',
         quantity: 70,
-        bild: 'http://localhost:1337/images/deathnote1.png'
+        bild: 'https://mangashop-backend.onrender.com/images/deathnote1.png'
       },
       {
         titel: 'Demon Slayer Vol. 1',
@@ -95,7 +95,7 @@ module.exports.bootstrap = async function () {
         preis: 7.50,
         kategorie: 'Action',
         quantity: 60,
-        bild: 'http://localhost:1337/images/demonslayer1.png'
+        bild: 'https://mangashop-backend.onrender.com/images/demonslayer1.png'
       },
       {
         titel: 'My Hero Academia Vol. 1',
@@ -103,7 +103,7 @@ module.exports.bootstrap = async function () {
         preis: 6.75,
         kategorie: 'Shonen',
         quantity: 100,
-        bild: 'http://localhost:1337/images/mha1.png'
+        bild: 'https://mangashop-backend.onrender.com/images/mha1.png'
       },
       {
         titel: 'Tokyo Ghoul Vol. 1',
@@ -111,7 +111,7 @@ module.exports.bootstrap = async function () {
         preis: 8.25,
         kategorie: 'Seinen',
         quantity: 50,
-        bild: 'http://localhost:1337/images/tokyoghoul1.png'
+        bild: 'https://mangashop-backend.onrender.com/images/tokyoghoul1.png'
       },
       {
         titel: 'Chainsaw Man Vol. 1',
@@ -119,7 +119,7 @@ module.exports.bootstrap = async function () {
         preis: 7.80,
         kategorie: 'Action',
         quantity: 75,
-        bild: 'http://localhost:1337/images/chainsawman1.png'
+        bild: 'https://mangashop-backend.onrender.com/images/chainsawman1.png'
       }
     ];
 

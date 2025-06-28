@@ -8,10 +8,6 @@
 module.exports = {
   attributes: {
 
-    id: {
-  type: 'string',
-  columnName: '_id'
-},
 
     /**
      * @description Verknüpfter Benutzer (1:1).

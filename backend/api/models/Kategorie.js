@@ -7,10 +7,7 @@
 module.exports = {
     attributes: {
   
-      id: {
-  type: 'string',
-  columnName: '_id'
-},
+
 
       /**
        * @description Der Name der Kategorie (z. B. Shōnen).

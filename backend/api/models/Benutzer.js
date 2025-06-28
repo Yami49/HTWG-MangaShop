@@ -9,13 +9,7 @@
 module.exports = {
   attributes: {
 
-    /**
-     * @description MongoDB-kompatibler Primärschlüssel
-     */
-    id: {
-      type: 'string',
-      columnName: '_id'
-    },
+
 
     /**
      * @description E-Mail-Adresse des Benutzers (Login-Name)

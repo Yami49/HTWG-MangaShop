@@ -9,10 +9,7 @@
 module.exports = {
   attributes: {
 
-    id: {
-  type: 'string',
-  columnName: '_id'
-},
+
     /**
      * @description Zugehöriger Warenkorb
      * @type {model}

@@ -7,10 +7,7 @@
 module.exports = {
     attributes: {
   
-      id: {
-  type: 'string',
-  columnName: '_id'
-},
+
 
       /**
        * @description Titel des Manga-Produkts.

@@ -89,6 +89,7 @@
 </section>
 
 <!-- Bestellübersicht -->
+<!-- Bestellübersicht -->
 <section>
   <h2>Bestellungen</h2>
   <table v-if="bestellungen.length" class="data-table">
@@ -98,14 +99,25 @@
         <th>Benutzer</th>
         <th>Gesamt (€)</th>
         <th>Status</th>
-        <th>Aktion</th>
+        <th>Produkte</th>
+        <th>Adresse</th>
+        <th>Zahlungsart</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="b in bestellungen" :key="b.id">
         <td>{{ b.id }}</td>
-        <td>{{ b.benutzer }}</td>
-        <td>{{ b.gesamtpreis.toFixed(2) }}</td>
+
+        <!-- Benutzer -->
+        <td>
+          {{ b.benutzer?.vorname }} {{ b.benutzer?.nachname }}<br />
+          <small>{{ b.benutzer?.email }}</small>
+        </td>
+
+        <!-- Gesamtpreis -->
+        <td>{{ b.gesamtpreis.toFixed(2) }} €</td>
+
+        <!-- Status -->
         <td>
           <select v-model="b.status" @change="updateStatus(b.id, b.status)">
             <option value="offen">Offen</option>
@@ -114,22 +126,31 @@
             <option value="storniert">Storniert</option>
           </select>
         </td>
+
+        <!-- Produkte -->
         <td>
-          <details>
-            <summary>Artikel anzeigen</summary>
-            <ul>
-              <li v-for="pos in b.artikel" :key="pos.id">
-                {{ pos.menge }}x Produkt-ID: {{ pos.produkt }}
-              </li>
-            </ul>
-          </details>
+          <ul style="padding-left: 1rem; margin: 0;">
+            <li v-for="p in b.artikel" :key="p.id">
+              {{ p.menge }}x Produkt-ID: {{ p.produkt?.titel || p.produkt || 'Unbekannt' }}
+            </li>
+          </ul>
         </td>
+
+        <!-- Adresse -->
+        <td>
+          {{ b.adresse?.vorname }} {{ b.adresse?.nachname }}<br />
+          {{ b.adresse?.strasse }}<br />
+          {{ b.adresse?.plz }} {{ b.adresse?.ort }}<br />
+          {{ b.adresse?.land }}
+        </td>
+
+        <!-- Zahlungsart -->
+        <td>{{ b.zahlung }}</td>
       </tr>
     </tbody>
   </table>
   <p v-else>Keine Bestellungen vorhanden.</p>
 </section>
-
   </div>
 </template>
 

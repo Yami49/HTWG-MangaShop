@@ -147,7 +147,7 @@ const bestellungen = ref([])
 
 const fetchBestellungen = async () => {
   try {
-    const res = await axios.get('/admin/bestellungen')
+    const res = await axios.get('/bestellung')
     bestellungen.value = res.data
   } catch (err) {
     console.error('❌ Fehler beim Laden der Bestellungen:', err)
@@ -251,6 +251,7 @@ h2 {
   padding: 10px;
   border: 1px solid #ddd;
   text-align: left;
+  color: #333;
 }
 
 .data-table th {

@@ -270,7 +270,7 @@ module.exports = {
     //   'https://staging.example.com',
     // ],
     onlyAllowOrigins: [
-      'https://mangashop-frontend.onrender.com/'
+      'https://mangashop-frontend.onrender.com'
     ]
 
 

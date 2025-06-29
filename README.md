@@ -22,7 +22,7 @@ HTWG MangaShop wurde im Rahmen eines Hochschulprojekts realisiert und enthält d
 - 🛒 Warenkorb & Checkout
 - 🔐 Benutzerregistrierung & Rollenverwaltung
 - 🧾 Bestellungen & Zahlungsarten
-- 🧠 Admin-Panel mit Übersicht über Nutzer & Produkte
+- 🧠 Admin-Dashboard mit Übersicht über Nutzer & Produkte
 
 ---
 
@@ -33,8 +33,7 @@ HTWG MangaShop wurde im Rahmen eines Hochschulprojekts realisiert und enthält d
 | Vue.js      | Fortschrittliches JavaScript-Framework für das Frontend     |
 | Pinia       | State Management im Vue-Frontend                            |
 | Sails.js    | API-Framework auf Basis von Node.js für das Backend         |
-| MySQL       | Relationale Datenbank zur Speicherung aller Anwendungsdaten |
-| Cloudinary  | (optional) Externer Cloud-Dienst zur Bildverwaltung         |
+| MongoDB     | Relationale Datenbank zur Speicherung aller Anwendungsdaten |
 
 ---
 
@@ -62,7 +61,7 @@ HTWG MangaShop wurde im Rahmen eines Hochschulprojekts realisiert und enthält d
 
 - Node.js (v16+ empfohlen)
 - npm (Node Package Manager)
-- MySQL-Datenbank (lokal oder remote)
+- MongoDB-Datenbank (lokal oder remote)
 - (Optional) Cloudinary-Zugangsdaten, wenn externe Bilder verwendet werden
 
 ### Frontend starten

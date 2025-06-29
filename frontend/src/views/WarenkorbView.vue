@@ -21,31 +21,31 @@
         </thead>
         <tbody>
           <tr v-for="item in warenkorb.items" :key="item.id">
-            <td>
-              <img :src="`https://mangashop-backend.onrender.com${item.image}`" alt="Produktbild" class="thumbnail" />
-            </td>
-            <td>
-              <div class="produkt-info">
-                <strong>{{ item.name }}</strong>
-                <p class="beschreibung">{{ item.beschreibung }}</p>
-                <p class="kategorie" v-if="item.kategorie">Kategorie: {{ item.kategorie }}</p>
-              </div>
-            </td>
-            <td>
-              <input
-                type="number"
-                v-model.number="item.menge"
-                min="1"
-                max="1000"
-                @change="handleQuantityChange(item)"
-                class="quantity-input"
-              />
-            </td>
-            <td>{{ item.preis.toFixed(2) }}</td>
-            <td>{{ (item.preis * item.menge).toFixed(2) }}</td>
-            <td>
-              <button class="btn btn-secondary" @click="remove(item.id)">Entfernen</button>
-            </td>
+            <td :data-label="'Bild'">
+  <img :src="`https://mangashop-backend.onrender.com${item.image}`" alt="Produktbild" class="thumbnail" />
+</td>
+<td :data-label="'Produkt'">
+  <div class="produkt-info">
+    <strong>{{ item.name }}</strong>
+    <p class="beschreibung">{{ item.beschreibung }}</p>
+    <p class="kategorie" v-if="item.kategorie">Kategorie: {{ item.kategorie }}</p>
+  </div>
+</td>
+<td :data-label="'Menge'">
+  <input
+    type="number"
+    v-model.number="item.menge"
+    min="1"
+    max="1000"
+    @change="handleQuantityChange(item)"
+    class="quantity-input"
+  />
+</td>
+<td :data-label="'Einzelpreis (€)'">{{ item.preis.toFixed(2) }}</td>
+<td :data-label="'Gesamt (€)'">{{ (item.preis * item.menge).toFixed(2) }}</td>
+<td :data-label="'Aktion'">
+  <button class="btn btn-secondary" @click="remove(item.id)">Entfernen</button>
+</td>
           </tr>
         </tbody>
       </table>
@@ -274,4 +274,69 @@ const totalAmount = computed(() =>
   }
 }
 
+@media (max-width: 600px) {
+  .cart-table,
+  .cart-table thead,
+  .cart-table tbody,
+  .cart-table th,
+  .cart-table td,
+  .cart-table tr {
+    display: block;
+    width: 100%;
+  }
+
+  .cart-table thead {
+    display: none;
+  }
+
+  .cart-table tr {
+    margin-bottom: 1.5rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .cart-table td {
+    text-align: right;
+    position: relative;
+    padding-left: 50%;
+    border: none;
+  }
+
+  .cart-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-weight: bold;
+    text-align: left;
+    white-space: nowrap;
+    color: #555;
+  }
+
+  .thumbnail {
+    width: 100px;
+    margin-bottom: 10px;
+  }
+
+  .quantity-input {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .btn {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .cart-summary {
+    align-items: stretch;
+  }
+
+  .cart-summary p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+}
 </style>

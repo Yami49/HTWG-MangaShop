@@ -18,13 +18,13 @@
         </thead>
         <tbody>
           <tr v-for="user in users" :key="user.id">
-            <td>{{ user.email }}</td>
-            <td>{{ user.vorname }}</td>
-            <td>{{ user.nachname }}</td>
-            <td>{{ user.istAdmin ? '✅' : '❌' }}</td>
-            <td>
-              <router-link :to="`/admin/benutzer/${user.id}`" class="btn">Bearbeiten</router-link>
-            </td>
+            <td :data-label="'E-Mail'">{{ user.email }}</td>
+<td :data-label="'Vorname'">{{ user.vorname }}</td>
+<td :data-label="'Nachname'">{{ user.nachname }}</td>
+<td :data-label="'Admin'">{{ user.istAdmin ? '✅' : '❌' }}</td>
+<td :data-label="'Aktion'">
+  <router-link :to="`/admin/benutzer/${user.id}`" class="btn">Bearbeiten</router-link>
+</td>
           </tr>
         </tbody>
       </table>
@@ -44,9 +44,9 @@
         </thead>
         <tbody>
           <tr v-for="p in produkte" :key="p.id">
-            <td>{{ p.titel }}</td>
-            <td>{{ p.preis }} €</td>
-            <td>{{ p.quantity }}</td>
+            <td :data-label="'Titel'">{{ p.titel }}</td>
+<td :data-label="'Preis'">{{ p.preis }} €</td>
+<td :data-label="'Menge'">{{ p.quantity }}</td>
           </tr>
         </tbody>
       </table>
@@ -76,12 +76,12 @@
     </thead>
     <tbody>
       <tr v-for="b in blogs" :key="b.id">
-        <td>{{ b.titel }}</td>
-        <td>{{ b.aktiv ? '✅' : '❌' }}</td>
-        <td>{{ new Date(b.erstelltAm).toLocaleDateString() }}</td>
-        <td>
-          <router-link :to="`/admin/blog/${b.id}`" class="btn">Bearbeiten</router-link>
-        </td>
+        <td :data-label="'Titel'">{{ b.titel }}</td>
+<td :data-label="'Aktiv'">{{ b.aktiv ? '✅' : '❌' }}</td>
+<td :data-label="'Erstellt am'">{{ new Date(b.erstelltAm).toLocaleDateString() }}</td>
+<td :data-label="'Aktion'">
+  <router-link :to="`/admin/blog/${b.id}`" class="btn">Bearbeiten</router-link>
+</td>
       </tr>
     </tbody>
   </table>
@@ -105,46 +105,40 @@
     </thead>
     <tbody>
       <tr v-for="b in bestellungen" :key="b.id">
-        <td>{{ b.id }}</td>
+        <td :data-label="'Bestell-ID'">{{ b.id }}</td>
 
-        <!-- Benutzer -->
-        <td>
-          {{ b.benutzer?.vorname }} {{ b.benutzer?.nachname }}<br />
-          <small>{{ b.benutzer?.email }}</small>
-        </td>
+<td :data-label="'Benutzer'">
+  {{ b.benutzer?.vorname }} {{ b.benutzer?.nachname }}<br />
+  <small>{{ b.benutzer?.email }}</small>
+</td>
 
-        <!-- Gesamtpreis -->
-        <td>{{ b.gesamtpreis.toFixed(2) }} €</td>
+<td :data-label="'Gesamt (€)'">{{ b.gesamtpreis.toFixed(2) }} €</td>
 
-        <!-- Status -->
-        <td>
-          <select v-model="b.status" @change="updateStatus(b.id, b.status)">
-            <option value="offen">Offen</option>
-            <option value="bezahlt">Bezahlt</option>
-            <option value="versendet">Versendet</option>
-            <option value="storniert">Storniert</option>
-          </select>
-        </td>
+<td :data-label="'Status'">
+  <select v-model="b.status" @change="updateStatus(b.id, b.status)">
+    <option value="offen">Offen</option>
+    <option value="bezahlt">Bezahlt</option>
+    <option value="versendet">Versendet</option>
+    <option value="storniert">Storniert</option>
+  </select>
+</td>
 
-        <!-- Produkte -->
-        <td>
-          <ul style="padding-left: 1rem; margin: 0;">
-            <li v-for="p in b.artikel" :key="p.id">
-  {{ p.menge }}x {{ p.produkt?.titel || 'Unbekannt' }}
-</li>
-          </ul>
-        </td>
+<td :data-label="'Produkte'">
+  <ul style="padding-left: 1rem; margin: 0;">
+    <li v-for="p in b.artikel" :key="p.id">
+      {{ p.menge }}x {{ p.produkt?.titel || 'Unbekannt' }}
+    </li>
+  </ul>
+</td>
 
-        <!-- Adresse -->
-        <td>
-          {{ b.adresse?.vorname }} {{ b.adresse?.nachname }}<br />
-          {{ b.adresse?.strasse }}<br />
-          {{ b.adresse?.plz }} {{ b.adresse?.ort }}<br />
-          {{ b.adresse?.land }}
-        </td>
+<td :data-label="'Adresse'">
+  {{ b.adresse?.vorname }} {{ b.adresse?.nachname }}<br />
+  {{ b.adresse?.strasse }}<br />
+  {{ b.adresse?.plz }} {{ b.adresse?.ort }}<br />
+  {{ b.adresse?.land }}
+</td>
 
-        <!-- Zahlungsart -->
-        <td>{{ b.zahlung }}</td>
+<td :data-label="'Zahlungsart'">{{ b.zahlung }}</td>
       </tr>
     </tbody>
   </table>
@@ -234,72 +228,51 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.admin-dashboard {
-  max-width: 1000px;
-  margin: auto;
-  padding: 2rem;
-  background-color: #fff;
-}
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 1rem;
+  }
 
-section {
-  margin-bottom: 3rem;
-}
+  .data-table,
+  .data-table thead,
+  .data-table tbody,
+  .data-table th,
+  .data-table td,
+  .data-table tr {
+    display: block;
+    width: 100%;
+  }
 
-h2 {
-  margin-bottom: 1rem;
-  color: #333;
-}
+  .data-table thead {
+    display: none;
+  }
 
-.form-control {
-  padding: 10px;
-  width: 100%;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
+  .data-table tr {
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    background-color: #fafafa;
+  }
 
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 0.5rem;
-  color: #333;
-}
+  .data-table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
 
-.data-table th,
-.data-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: left;
-  color: #333;
-}
+  .data-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-weight: bold;
+    text-align: left;
+    white-space: nowrap;
+  }
 
-.data-table th {
-  background-color: #f8f9fa;
-}
-
-.btn {
-  display: inline-block;
-  padding: 6px 12px;
-  background-color: #4a5043;
-  color: #fff;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: background-color 0.2s;
-}
-
-.btn:hover {
-  background-color: #3b3f34;
-}
-
-.simple-list {
-  padding: 0;
-  list-style: none;
-  color: #333;
-}
-
-.simple-list li {
-  padding: 6px 0;
-  border-bottom: 1px solid #eee;
+  .form-control {
+    font-size: 1rem;
+  }
 }
 </style>

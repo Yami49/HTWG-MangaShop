@@ -92,4 +92,32 @@ h1 {
 .btn-secondary:hover {
   background-color: #c2c2c2;
 }
+
+@media (max-width: 600px) {
+  .success-box {
+    padding: 20px 16px;
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .message {
+    font-size: 1rem;
+  }
+
+  .order-info p {
+    font-size: 0.95rem;
+  }
+
+  .btn {
+    font-size: 1rem;
+    padding: 10px 16px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
 </style>

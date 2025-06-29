@@ -176,7 +176,7 @@ const fetchBestellungen = async () => {
 
 const updateStatus = async (id, neuerStatus) => {
   try {
-    await axios.patch(`/admin/bestellung/${id}/status`, { status: neuerStatus })
+    await axios.patch(`/bestellung/${id}/status`, { status: neuerStatus })
     await fetchBestellungen()
   } catch (err) {
     console.error('❌ Fehler beim Aktualisieren des Status:', err)

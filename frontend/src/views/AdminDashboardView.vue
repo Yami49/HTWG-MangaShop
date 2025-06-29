@@ -88,6 +88,48 @@
   <p v-else>Keine Blogeinträge gefunden.</p>
 </section>
 
+<!-- Bestellübersicht -->
+<section>
+  <h2>Bestellungen</h2>
+  <table v-if="bestellungen.length" class="data-table">
+    <thead>
+      <tr>
+        <th>Bestell-ID</th>
+        <th>Benutzer</th>
+        <th>Gesamt (€)</th>
+        <th>Status</th>
+        <th>Aktion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="b in bestellungen" :key="b.id">
+        <td>{{ b.id }}</td>
+        <td>{{ b.benutzer }}</td>
+        <td>{{ b.gesamtpreis.toFixed(2) }}</td>
+        <td>
+          <select v-model="b.status" @change="updateStatus(b.id, b.status)">
+            <option value="offen">Offen</option>
+            <option value="bezahlt">Bezahlt</option>
+            <option value="versendet">Versendet</option>
+            <option value="storniert">Storniert</option>
+          </select>
+        </td>
+        <td>
+          <details>
+            <summary>Artikel anzeigen</summary>
+            <ul>
+              <li v-for="pos in b.artikel" :key="pos.id">
+                {{ pos.menge }}x Produkt-ID: {{ pos.produkt }}
+              </li>
+            </ul>
+          </details>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p v-else>Keine Bestellungen vorhanden.</p>
+</section>
+
   </div>
 </template>
 
@@ -101,6 +143,26 @@ const kategorien = ref([])
 const search = ref('')
 const blogs = ref([])
 const blogSearch = ref('')
+const bestellungen = ref([])
+
+const fetchBestellungen = async () => {
+  try {
+    const res = await axios.get('/admin/bestellungen')
+    bestellungen.value = res.data
+  } catch (err) {
+    console.error('❌ Fehler beim Laden der Bestellungen:', err)
+  }
+}
+
+const updateStatus = async (id, neuerStatus) => {
+  try {
+    await axios.patch(`/admin/bestellung/${id}/status`, { status: neuerStatus })
+    await fetchBestellungen()
+  } catch (err) {
+    console.error('❌ Fehler beim Aktualisieren des Status:', err)
+  }
+}
+
 
 const fetchBlogs = async () => {
   try {
@@ -147,6 +209,7 @@ onMounted(() => {
   fetchProdukte()
   fetchKategorien()
   fetchBlogs()
+  fetchBestellungen()
 })
 </script>
 

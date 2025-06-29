@@ -88,6 +88,8 @@ module.exports.routes = {
 
   // Checkout-Routen
   'POST /checkout': 'BestellungController.checkout',
+  'GET /admin/bestellungen': 'BestellungController.adminList',
+  'PATCH /admin/bestellung/:id/status': 'BestellungController.updateStatus',
 
   /***************************************************************************
   *                                                                          *

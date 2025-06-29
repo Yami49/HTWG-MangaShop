@@ -9,17 +9,9 @@
 
       <div v-if="orderId" class="order-info">
         <p><strong>Bestellnummer:</strong> {{ orderId }}</p>
-        <p><strong>E-Mail:</strong> {{ email }}</p>
+        <router-link to="/" class="btn">Zur Startseite</router-link>
       </div>
 
-      <div class="actions">
-        <RouterLink :to="{ name: 'ViewOrders' }" class="btn btn-primary">
-          Meine Bestellungen ansehen
-        </RouterLink>
-        <RouterLink :to="{ name: 'LandingPage' }" class="btn btn-secondary">
-          Zur Startseite
-        </RouterLink>
-      </div>
     </div>
   </div>
 </template>

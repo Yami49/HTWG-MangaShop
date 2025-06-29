@@ -29,7 +29,7 @@
                 <strong>{{ item.name }}</strong>
                 <p class="beschreibung">{{ item.beschreibung }}</p>
                 <p class="kategorie" v-if="item.kategorie">Kategorie: {{ item.kategorie }}</p>
-                <router-link :to="`/produkt/${item.produktId}`" class="link">Details ansehen</router-link>
+                <router-link :to="`/produkt/${item.produkt.produktId}`" class="link">Details ansehen</router-link>
               </div>
             </td>
             <td>

@@ -7,34 +7,34 @@
         <legend>Lieferadresse</legend>
 
         <label>
-          Vorname:
-          <input v-model="adresse.vorname" required />
-        </label>
+  Vorname:
+  <input v-model="adresse.vorname" required pattern="^[A-Za-zÄÖÜäöüß\s\-]{2,40}$" title="Nur Buchstaben, Leerzeichen und Bindestrich erlaubt." />
+</label>
 
-        <label>
-          Nachname:
-          <input v-model="adresse.nachname" required />
-        </label>
+<label>
+  Nachname:
+  <input v-model="adresse.nachname" required pattern="^[A-Za-zÄÖÜäöüß\s\-]{2,40}$" title="Nur Buchstaben, Leerzeichen und Bindestrich erlaubt." />
+</label>
 
-        <label>
-          Straße & Hausnummer:
-          <input v-model="adresse.strasse" required />
-        </label>
+<label>
+  Straße & Hausnummer:
+  <input v-model="adresse.strasse" required pattern="^[A-Za-zÄÖÜäöüß0-9\s\.,\-]{3,60}$" title="Buchstaben, Zahlen, Leerzeichen und ,.- erlaubt." />
+</label>
 
-        <label>
-          PLZ:
-          <input v-model="adresse.plz" required />
-        </label>
+<label>
+  PLZ:
+  <input v-model="adresse.plz" required pattern="^\d{4,6}$" title="4–6-stellige Postleitzahl." />
+</label>
 
-        <label>
-          Ort:
-          <input v-model="adresse.ort" required />
-        </label>
+<label>
+  Ort:
+  <input v-model="adresse.ort" required pattern="^[A-Za-zÄÖÜäöüß\s\-]{2,50}$" title="Nur Buchstaben, Leerzeichen und Bindestrich erlaubt." />
+</label>
 
-        <label>
-          Land:
-          <input v-model="adresse.land" required />
-        </label>
+<label>
+  Land:
+  <input v-model="adresse.land" required pattern="^[A-Za-zÄÖÜäöüß\s\-]{2,50}$" title="Nur Buchstaben, Leerzeichen und Bindestrich erlaubt." />
+</label>
       </fieldset>
 
       <fieldset>
@@ -63,7 +63,7 @@
         <p class="total">Gesamt: <strong>{{ totalAmount.toFixed(2) }} €</strong></p>
       </div>
 
-      <button type="submit" class="btn btn-primary">Jetzt bestellen</button>
+      <button type="submit" class="btn btn-primary" :disabled="!istAdresseGueltig">Jetzt bestellen</button>
     </form>
   </div>
 </template>
@@ -92,6 +92,21 @@ const zahlungsmethode = ref('paypal')
 const totalAmount = computed(() =>
   warenkorb.items.reduce((sum, item) => sum + item.preis * item.menge, 0)
 )
+
+const istAdresseGueltig = computed(() => {
+  const name = /^[A-Za-zÄÖÜäöüß\s\-]{2,40}$/
+  const strasse = /^[A-Za-zÄÖÜäöüß0-9\s\.,\-]{3,60}$/
+  const plz = /^\d{4,6}$/
+
+  return (
+    name.test(adresse.value.vorname) &&
+    name.test(adresse.value.nachname) &&
+    strasse.test(adresse.value.strasse) &&
+    plz.test(adresse.value.plz) &&
+    name.test(adresse.value.ort) &&
+    name.test(adresse.value.land)
+  )
+})
 
 const absendenBestellung = async () => {
   try {

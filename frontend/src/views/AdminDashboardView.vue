@@ -228,11 +228,77 @@ onMounted(() => {
 </script>
 
 <style scoped>
-@media (max-width: 768px) {
-  .admin-dashboard {
-    padding: 1rem;
-  }
+.admin-dashboard {
+  max-width: 1000px;
+  margin: auto;
+  padding: 2rem;
+  background-color: #fff;
+}
 
+section {
+  margin-bottom: 3rem;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.form-control {
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+  color: #333;
+}
+
+.data-table th,
+.data-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+  color: #333;
+}
+
+.data-table th {
+  background-color: #f8f9fa;
+}
+
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #4a5043;
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.btn:hover {
+  background-color: #3b3f34;
+}
+
+.simple-list {
+  padding: 0;
+  list-style: none;
+  color: #333;
+}
+
+.simple-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* ✅ Responsive Tabellenansicht nur unter 600px */
+@media (max-width: 600px) {
   .data-table,
   .data-table thead,
   .data-table tbody,
@@ -259,6 +325,8 @@ onMounted(() => {
     text-align: right;
     padding-left: 50%;
     position: relative;
+    border: none;
+    border-bottom: 1px solid #eee;
   }
 
   .data-table td::before {
@@ -269,6 +337,7 @@ onMounted(() => {
     font-weight: bold;
     text-align: left;
     white-space: nowrap;
+    color: #555;
   }
 
   .form-control {

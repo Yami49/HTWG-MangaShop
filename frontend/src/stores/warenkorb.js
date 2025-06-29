@@ -40,6 +40,21 @@ export const useWarenkorbStore = defineStore('warenkorb', {
 
     async abschicken({ adresse, zahlung }) {
   try {
+    const response = await axios.post('https://mangashop-backend.onrender.com/checkout', {
+      adresse,
+      zahlung
+    }, { withCredentials: true })
+
+    this.items = [] // oder await this.loadFromServer()
+    return response.data
+  } catch (err) {
+    console.error('❌ Fehler beim Abschicken der Bestellung:', err?.response?.data || err)
+    throw err
+  }
+},
+    /*
+    async abschicken({ adresse, zahlung }) {
+  try {
     const response = await axios.post('https://mangashop-backend.onrender.com/bestellung', {
       adresse,
       zahlung,
@@ -57,6 +72,7 @@ export const useWarenkorbStore = defineStore('warenkorb', {
     throw err
   }
 },
+*/
 
     async addToCart(produktId, menge = 1) {
       try {

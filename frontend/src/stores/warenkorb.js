@@ -40,7 +40,7 @@ export const useWarenkorbStore = defineStore('warenkorb', {
 
     async abschicken({ adresse, zahlung }) {
   try {
-    const response = await axios.post('/bestellung', {
+    const response = await axios.post('https://mangashop-backend.onrender.com/bestellung', {
       adresse,
       zahlung,
       produkte: this.items.map(item => ({

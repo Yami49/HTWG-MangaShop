@@ -1,3 +1,6 @@
+const Bestellung = require('../models/Bestellung')
+const Produkt = require('../models/Produkt')
+
 // BestellungController.js
 module.exports = {
   checkout: async (req, res) => {
@@ -9,24 +12,26 @@ module.exports = {
     }
   },
   adminList: async (req, res) => {
-  if (!req.session.isAdmin) {
-    return res.status(403).json({ error: 'Zugriff verweigert' })
-  }
-
-  // Bestellungen inkl. Benutzer & Artikel holen
-  const bestellungen = await Bestellung.find()
-    .populate('benutzer')
-    .populate('artikel')
-
-  // Artikel → Produkt referenzen auflösen
-  for (const bestellung of bestellungen) {
-    for (const artikel of bestellung.artikel) {
-      artikel.produkt = await Produkt.findOne({ id: artikel.produkt })
+    if (!req.session.isAdmin) {
+      return res.status(403).json({ error: 'Zugriff verweigert' })
     }
-  }
 
-  return res.json(bestellungen)
-},
+    const bestellungen = await Bestellung.find()
+      .populate('benutzer')
+      .populate('artikel') // enthält jetzt artikel[i].produkt als ID
+
+    // PRODUKT-DETAILS HOLEN:
+    for (const bestellung of bestellungen) {
+      for (const pos of bestellung.artikel) {
+        if (typeof pos.produkt === 'string') {
+          const produkt = await Produkt.findOne({ id: pos.produkt })
+          pos.produkt = produkt || { titel: 'Nicht gefunden' }
+        }
+      }
+    }
+
+    return res.json(bestellungen)
+  },
 
   updateStatus: async (req, res) => {
     const { id } = req.params

@@ -126,7 +126,7 @@
 <td :data-label="'Produkte'">
   <ul style="padding-left: 1rem; margin: 0;">
     <li v-for="p in b.artikel" :key="p.id">
-      {{ p.menge }}x {{ p.produkt?.titel || 'Unbekannt' }}
+      {{ p.menge }}x {{ getProduktTitelById(p.produkt) }}
     </li>
   </ul>
 </td>
@@ -216,6 +216,11 @@ const fetchKategorien = async () => {
   } catch (err) {
     console.error('❌ Fehler beim Laden der Kategorien:', err)
   }
+}
+
+const getProduktTitelById = (id) => {
+  const produkt = produkte.value.find(p => p.id === id)
+  return produkt?.titel || 'Unbekannt'
 }
 
 onMounted(() => {

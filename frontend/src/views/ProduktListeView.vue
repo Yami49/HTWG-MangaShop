@@ -4,7 +4,7 @@
 
     <div v-if="produkte.length" class="produkt-grid">
       <div v-for="p in produkte" :key="p.id" class="produkt-card">
-        <img :src="p.bild" class="produkt-image" alt="Produktbild" />
+        <img :src="`https://mangashop-backend.onrender.com${p.bild}`" class="produkt-image" alt="Produktbild" />
         <div class="produkt-details">
           <h3>{{ p.titel }}</h3>
           <p class="preis">{{ Number(p.preis).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }) }}</p>

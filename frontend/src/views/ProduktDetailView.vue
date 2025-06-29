@@ -10,7 +10,7 @@
         <p><strong>Lagerbestand:</strong> {{ produkt.quantity ?? '–' }}</p>
       </div>
       <div class="product-image" v-if="produkt.bild">
-        <img :src="produkt.bild" :alt="produkt.titel" />
+        <img :src="`https://mangashop-backend.onrender.com${produkt.bild}`" :alt="produkt.titel" />
       </div>
     </div>
   </div>

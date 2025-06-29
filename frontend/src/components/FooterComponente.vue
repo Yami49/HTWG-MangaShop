@@ -1,8 +1,7 @@
 <template>
   <footer class="footer">
     <p>
-      © 2025 <strong>MangaShop</strong> –
-      <router-link to="/impressum">Impressum</router-link> –
+      © 2025 <strong>MangaShop</strong> – <router-link to="/impressum">Impressum</router-link> –
       <router-link to="/datenschutz">Datenschutz</router-link> –
       <router-link to="/kontakt">Kontakt</router-link>
     </p>
@@ -15,7 +14,7 @@
 
 <style scoped>
 .footer {
-  background-color: #6B21A8;
+  background-color: #6b21a8;
   color: white;
   text-align: center;
   padding: 1.5rem 1rem;

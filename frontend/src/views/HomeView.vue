@@ -11,7 +11,7 @@
     <section class="info-section">
       <div class="info-card">
         <img :src="boyImage" alt="Anime Boy" class="info-image" />
-        <p>MangaShop ist dein Ort für Originale,<br>Fanartikel und vieles mehr.</p>
+        <p>MangaShop ist dein Ort für Originale,<br />Fanartikel und vieles mehr.</p>
         <router-link to="/blog" class="cta-button">Blogbeiträge</router-link>
       </div>
     </section>
@@ -45,23 +45,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import api from '@/api';
-import '@/assets/main.css';
-import heroGirl from '@/assets/images/girl.png';
-import boyImage from '@/assets/images/boy.png';
+import { ref } from 'vue'
+import api from '@/api'
+import '@/assets/main.css'
+import heroGirl from '@/assets/images/girl.png'
+import boyImage from '@/assets/images/boy.png'
 
-const apiResponse = ref(null);
+const apiResponse = ref(null)
 
 async function fetchApiData() {
   try {
-    const response = await api.get('/api'); // << API-Route hier korrigiert!
-    apiResponse.value = response.data;
+    const response = await api.get('/api') // << API-Route hier korrigiert!
+    apiResponse.value = response.data
   } catch (error) {
-    apiResponse.value = error.message;
+    apiResponse.value = error.message
   }
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

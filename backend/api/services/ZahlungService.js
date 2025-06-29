@@ -3,10 +3,9 @@
  *
  * @description :: Service zum Verwalten von Zahlungsmethoden für Benutzer.
  */
-const errors = require('../utils/errors');
+const errors = require("../utils/errors");
 
 module.exports = {
-
   /**
    * Zahlung erstellen
    */
@@ -23,35 +22,41 @@ module.exports = {
     const sessionUserId = req.session.userId;
 
     if (!sessionUserId) {
-      return errors.UnauthorizedError('Nicht authentifiziert.');
+      return errors.UnauthorizedError("Nicht authentifiziert.");
     }
 
     // Validierung
     if (!zahlungsart) {
-      return errors.BadRequestError('Zahlungsart ist erforderlich.');
+      return errors.BadRequestError("Zahlungsart ist erforderlich.");
     }
 
-    if (zahlungsart === 'bank transfer' && !iban) {
-      return errors.BadRequestError('IBAN ist für Banküberweisungen erforderlich.');
+    if (zahlungsart === "bank transfer" && !iban) {
+      return errors.BadRequestError(
+        "IBAN ist für Banküberweisungen erforderlich.",
+      );
     }
 
-    if (zahlungsart === 'credit card' && (!kreditkartennummer || !ablaufdatum || !cvc)) {
-      return errors.BadRequestError('Kreditkartendaten sind unvollständig.');
+    if (
+      zahlungsart === "credit card" &&
+      (!kreditkartennummer || !ablaufdatum || !cvc)
+    ) {
+      return errors.BadRequestError("Kreditkartendaten sind unvollständig.");
     }
 
-    if (zahlungsart === 'paypal' && !paypalEmail) {
-      return errors.BadRequestError('PayPal E-Mail ist erforderlich.');
+    if (zahlungsart === "paypal" && !paypalEmail) {
+      return errors.BadRequestError("PayPal E-Mail ist erforderlich.");
     }
 
     const neueZahlung = await Zahlung.create({
       zahlungsart,
-      iban: zahlungsart === 'bank transfer' ? iban : null,
-      kreditkartennummer: zahlungsart === 'credit card' ? kreditkartennummer : null,
-      ablaufdatum: zahlungsart === 'credit card' ? ablaufdatum : null,
-      cvc: zahlungsart === 'credit card' ? cvc : null,
-      paypalEmail: zahlungsart === 'paypal' ? paypalEmail : null,
+      iban: zahlungsart === "bank transfer" ? iban : null,
+      kreditkartennummer:
+        zahlungsart === "credit card" ? kreditkartennummer : null,
+      ablaufdatum: zahlungsart === "credit card" ? ablaufdatum : null,
+      cvc: zahlungsart === "credit card" ? cvc : null,
+      paypalEmail: zahlungsart === "paypal" ? paypalEmail : null,
       istFuerBestellung: false,
-      benutzer: sessionUserId
+      benutzer: sessionUserId,
     }).fetch();
 
     return neueZahlung;
@@ -64,13 +69,13 @@ module.exports = {
     const sessionUserId = req.session.userId;
 
     if (!sessionUserId) {
-      return errors.UnauthorizedError('Nicht authentifiziert.');
+      return errors.UnauthorizedError("Nicht authentifiziert.");
     }
 
     const zahlungen = await Zahlung.find({ benutzer: sessionUserId });
 
     if (!zahlungen || zahlungen.length === 0) {
-      return errors.NotFoundError('Keine Zahlungen gefunden.');
+      return errors.NotFoundError("Keine Zahlungen gefunden.");
     }
 
     return zahlungen;
@@ -94,24 +99,32 @@ module.exports = {
 
     const zahlung = await Zahlung.findOne({ id });
     if (!zahlung) {
-      return errors.NotFoundError('Zahlung nicht gefunden.');
+      return errors.NotFoundError("Zahlung nicht gefunden.");
     }
 
     if (zahlung.benutzer !== sessionUserId && !req.session.user.isAdmin) {
-      return errors.ForbiddenError('Keine Berechtigung zur Änderung dieser Zahlung.');
+      return errors.ForbiddenError(
+        "Keine Berechtigung zur Änderung dieser Zahlung.",
+      );
     }
 
     const aktualisierteZahlung = await Zahlung.updateOne({ id }).set({
       zahlungsart,
-      iban: zahlungsart === 'bank transfer' ? iban : zahlung.iban,
-      kreditkartennummer: zahlungsart === 'credit card' ? kreditkartennummer : zahlung.kreditkartennummer,
-      ablaufdatum: zahlungsart === 'credit card' ? ablaufdatum : zahlung.ablaufdatum,
-      cvc: zahlungsart === 'credit card' ? cvc : zahlung.cvc,
-      paypalEmail: zahlungsart === 'paypal' ? paypalEmail : zahlung.paypalEmail
+      iban: zahlungsart === "bank transfer" ? iban : zahlung.iban,
+      kreditkartennummer:
+        zahlungsart === "credit card"
+          ? kreditkartennummer
+          : zahlung.kreditkartennummer,
+      ablaufdatum:
+        zahlungsart === "credit card" ? ablaufdatum : zahlung.ablaufdatum,
+      cvc: zahlungsart === "credit card" ? cvc : zahlung.cvc,
+      paypalEmail: zahlungsart === "paypal" ? paypalEmail : zahlung.paypalEmail,
     });
 
     if (!aktualisierteZahlung) {
-      throw new errors.NotFoundError('Zahlung konnte nicht aktualisiert werden.');
+      throw new errors.NotFoundError(
+        "Zahlung konnte nicht aktualisiert werden.",
+      );
     }
 
     return aktualisierteZahlung;
@@ -126,19 +139,21 @@ module.exports = {
 
     const zahlung = await Zahlung.findOne({ id });
     if (!zahlung) {
-      return errors.NotFoundError('Zahlung nicht gefunden.');
+      return errors.NotFoundError("Zahlung nicht gefunden.");
     }
 
     if (zahlung.benutzer !== sessionUserId && !req.session.user.isAdmin) {
-      return errors.ForbiddenError('Keine Berechtigung zum Löschen dieser Zahlung.');
+      return errors.ForbiddenError(
+        "Keine Berechtigung zum Löschen dieser Zahlung.",
+      );
     }
 
     const geloeschteZahlung = await Zahlung.destroy({ id }).fetch();
 
     if (!geloeschteZahlung) {
-      throw new errors.NotFoundError('Zahlung konnte nicht gelöscht werden.');
+      throw new errors.NotFoundError("Zahlung konnte nicht gelöscht werden.");
     }
 
     return geloeschteZahlung;
-  }
+  },
 };

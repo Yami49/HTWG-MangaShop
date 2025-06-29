@@ -34,20 +34,20 @@ onMounted(() => {
       id: 1,
       titel: 'One Piece Vol. 1',
       cover: '/images/onepiece1.jpg',
-      beschreibung: 'Das legendäre Abenteuer von Monkey D. Ruffy beginnt!'
+      beschreibung: 'Das legendäre Abenteuer von Monkey D. Ruffy beginnt!',
     },
     {
       id: 2,
       titel: 'Attack on Titan',
       cover: '/images/aot.jpg',
-      beschreibung: 'Eine düstere Zukunft. Eine letzte Hoffnung. Titanen greifen an.'
+      beschreibung: 'Eine düstere Zukunft. Eine letzte Hoffnung. Titanen greifen an.',
     },
     {
       id: 3,
       titel: 'Demon Slayer',
       cover: '/images/demonslayer.jpg',
-      beschreibung: 'Ein Junge, ein Schwert und ein düsteres Schicksal.'
-    }
+      beschreibung: 'Ein Junge, ein Schwert und ein düsteres Schicksal.',
+    },
   ]
 })
 </script>

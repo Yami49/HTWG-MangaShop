@@ -8,16 +8,14 @@
 
 module.exports = {
   attributes: {
-
-
     /**
      * @description Zugehöriger Warenkorb
      * @type {model}
      */
     warenkorb: {
-      model: 'warenkorb',
+      model: "warenkorb",
       required: true,
-      description: 'Referenz auf den zugehörigen Warenkorb.'
+      description: "Referenz auf den zugehörigen Warenkorb.",
     },
 
     /**
@@ -25,9 +23,9 @@ module.exports = {
      * @type {model}
      */
     produkt: {
-      model: 'produkt',
+      model: "produkt",
       required: true,
-      description: 'Referenz auf das Produkt im Warenkorb.'
+      description: "Referenz auf das Produkt im Warenkorb.",
     },
 
     /**
@@ -36,12 +34,12 @@ module.exports = {
      * @example 2
      */
     menge: {
-      type: 'number',
+      type: "number",
       required: true,
       min: 1,
       max: 1000,
       custom: (value) => Number.isInteger(value),
-      description: 'Anzahl des Produkts im Warenkorb.'
+      description: "Anzahl des Produkts im Warenkorb.",
     },
 
     /**
@@ -49,9 +47,9 @@ module.exports = {
      * @type {ref}
      */
     erstelltAm: {
-      type: 'ref',
-      columnType: 'datetime',
-      autoCreatedAt: true
+      type: "ref",
+      columnType: "datetime",
+      autoCreatedAt: true,
     },
 
     /**
@@ -59,9 +57,9 @@ module.exports = {
      * @type {ref}
      */
     aktualisiertAm: {
-      type: 'ref',
-      columnType: 'datetime',
-      autoUpdatedAt: true
-    }
-  }
+      type: "ref",
+      columnType: "datetime",
+      autoUpdatedAt: true,
+    },
+  },
 };

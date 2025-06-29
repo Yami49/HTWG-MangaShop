@@ -4,22 +4,10 @@
 
     <form @submit.prevent="createBlog">
       <label for="titel">Titel*</label>
-      <input
-        id="titel"
-        v-model="titel"
-        type="text"
-        maxlength="100"
-        required
-      />
+      <input id="titel" v-model="titel" type="text" maxlength="100" required />
 
       <label for="inhalt">Inhalt*</label>
-      <textarea
-        id="inhalt"
-        v-model="inhalt"
-        maxlength="1000"
-        rows="10"
-        required
-      ></textarea>
+      <textarea id="inhalt" v-model="inhalt" maxlength="1000" rows="10" required></textarea>
 
       <label>
         <input type="checkbox" v-model="aktiv" />
@@ -46,7 +34,7 @@ const createBlog = async () => {
     await axios.post('/blog', {
       titel: titel.value,
       inhalt: inhalt.value,
-      aktiv: aktiv.value
+      aktiv: aktiv.value,
     })
     router.push('/admin/blog')
   } catch (err) {

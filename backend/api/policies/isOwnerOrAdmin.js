@@ -8,12 +8,12 @@ module.exports = async function (req, res, proceed) {
   const targetId = req.params.id;
 
   if (!sessionUser) {
-    return res.forbidden('⚠️ Zugriff verweigert: Nicht eingeloggt.');
+    return res.forbidden("⚠️ Zugriff verweigert: Nicht eingeloggt.");
   }
 
   if (sessionUser.istAdmin || String(sessionUser.id) === String(targetId)) {
     return proceed();
   }
 
-  return res.forbidden('🚫 Zugriff verweigert: Nur eigene Daten oder Admin.');
+  return res.forbidden("🚫 Zugriff verweigert: Nur eigene Daten oder Admin.");
 };

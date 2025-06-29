@@ -8,21 +8,18 @@
 
 module.exports = {
   attributes: {
-
-
-
     /**
      * @description E-Mail-Adresse des Benutzers (Login-Name)
      * @type {string}
      * @example lisa@example.com
      */
     email: {
-      type: 'string',
+      type: "string",
       required: true,
       unique: true,
       isEmail: true,
       maxLength: 100,
-      example: 'lisa@example.com'
+      example: "lisa@example.com",
     },
 
     /**
@@ -31,11 +28,11 @@ module.exports = {
      * @example $2a$10$7Xb... (bcrypt Hash)
      */
     passwort: {
-      type: 'string',
+      type: "string",
       required: true,
       protect: true,
-      description: 'Gehashtes Passwort (z. B. via bcrypt).',
-      example: '$2a$10$7Xb...'
+      description: "Gehashtes Passwort (z. B. via bcrypt).",
+      example: "$2a$10$7Xb...",
     },
 
     /**
@@ -44,10 +41,10 @@ module.exports = {
      * @example Lisa
      */
     vorname: {
-      type: 'string',
+      type: "string",
       required: true,
       maxLength: 50,
-      example: 'Lisa'
+      example: "Lisa",
     },
 
     /**
@@ -56,10 +53,10 @@ module.exports = {
      * @example Sakamoto
      */
     nachname: {
-      type: 'string',
+      type: "string",
       required: true,
       maxLength: 50,
-      example: 'Sakamoto'
+      example: "Sakamoto",
     },
 
     /**
@@ -68,11 +65,11 @@ module.exports = {
      * @example true
      */
     istAdmin: {
-      type: 'boolean',
+      type: "boolean",
       defaultsTo: false,
-      description: 'Flag, ob der Benutzer Administrator ist.'
-    }
+      description: "Flag, ob der Benutzer Administrator ist.",
+    },
 
     // TODO: Relationen (Bestellungen, Adresse, Zahlungen) kannst du später ergänzen
-  }
+  },
 };

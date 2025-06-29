@@ -4,13 +4,16 @@
  * @description :: Geschäftslogik für die Verwaltung von Warenkörben.
  */
 
-const errors = require('../utils/errors');
+const errors = require("../utils/errors");
 
 module.exports = {
   getOrCreateCartForUser: async (benutzerId) => {
-    if (!benutzerId) throw new errors.BadRequestError('Benutzer nicht angemeldet.');
+    if (!benutzerId)
+      throw new errors.BadRequestError("Benutzer nicht angemeldet.");
 
-    let cart = await Warenkorb.findOne({ benutzer: benutzerId }).populate('produkte');
+    let cart = await Warenkorb.findOne({ benutzer: benutzerId }).populate(
+      "produkte",
+    );
 
     if (!cart) {
       cart = await Warenkorb.create({ benutzer: benutzerId }).fetch();
@@ -18,13 +21,15 @@ module.exports = {
       return cart;
     }
 
-    cart.produkte = await Promise.all(cart.produkte.map(async (item) => {
-      const produkt = await Produkt.findOne({ id: item.produkt });
-      return {
-        ...item,
-        produkt
-      };
-    }));
+    cart.produkte = await Promise.all(
+      cart.produkte.map(async (item) => {
+        const produkt = await Produkt.findOne({ id: item.produkt });
+        return {
+          ...item,
+          produkt,
+        };
+      }),
+    );
 
     return cart;
   },
@@ -39,7 +44,9 @@ module.exports = {
     const { produkt, menge } = req.body;
 
     if (!benutzerId || !produkt || !menge || menge <= 0) {
-      throw new errors.BadRequestError('Ungültige Daten für Warenkorbposition.');
+      throw new errors.BadRequestError(
+        "Ungültige Daten für Warenkorbposition.",
+      );
     }
 
     const cart = await module.exports.getOrCreateCartForUser(benutzerId);
@@ -48,13 +55,13 @@ module.exports = {
 
     if (item) {
       item = await CartItem.updateOne({ id: item.id }).set({
-        menge: item.menge + menge
+        menge: item.menge + menge,
       });
     } else {
       item = await CartItem.create({
         warenkorb: cart.id,
         produkt,
-        menge
+        menge,
       }).fetch();
     }
 
@@ -67,14 +74,14 @@ module.exports = {
     const { menge } = req.body;
 
     if (!benutzerId || !itemId || menge < 1) {
-      throw new errors.BadRequestError('Ungültige Daten.');
+      throw new errors.BadRequestError("Ungültige Daten.");
     }
 
     const cart = await Warenkorb.findOne({ benutzer: benutzerId });
     const item = await CartItem.findOne({ id: itemId });
 
     if (!cart || !item || String(item.warenkorb) !== String(cart.id)) {
-      throw new errors.ForbiddenError('Zugriff verweigert.');
+      throw new errors.ForbiddenError("Zugriff verweigert.");
     }
 
     await CartItem.updateOne({ id: item.id }).set({ menge });
@@ -90,7 +97,7 @@ module.exports = {
     const item = await CartItem.findOne({ id: itemId });
 
     if (!cart || !item || String(item.warenkorb) !== String(cart.id)) {
-      throw new errors.ForbiddenError('Nicht gefunden oder nicht berechtigt.');
+      throw new errors.ForbiddenError("Nicht gefunden oder nicht berechtigt.");
     }
 
     await CartItem.destroyOne({ id: item.id });
@@ -103,9 +110,9 @@ module.exports = {
     const cart = await Warenkorb.findOne({ benutzer: benutzerId });
 
     if (!cart) {
-      throw new errors.NotFoundError('Warenkorb nicht gefunden.');
+      throw new errors.NotFoundError("Warenkorb nicht gefunden.");
     }
 
     await CartItem.destroy({ warenkorb: cart.id });
-  }
+  },
 };

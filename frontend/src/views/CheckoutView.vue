@@ -7,34 +7,64 @@
         <legend>Lieferadresse</legend>
 
         <label>
-  Vorname:
-  <input v-model="adresse.vorname" required pattern="^[A-Za-zÄÖÜäöüß\s\-]{2,40}$" title="Nur Buchstaben, Leerzeichen und Bindestrich erlaubt." />
-</label>
+          Vorname:
+          <input
+            v-model="adresse.vorname"
+            required
+            pattern="^[A-Za-zÄÖÜäöüß\s\-]{2,40}$"
+            title="Nur Buchstaben, Leerzeichen und Bindestrich erlaubt."
+          />
+        </label>
 
-<label>
-  Nachname:
-  <input v-model="adresse.nachname" required pattern="^[A-Za-zÄÖÜäöüß\s\-]{2,40}$" title="Nur Buchstaben, Leerzeichen und Bindestrich erlaubt." />
-</label>
+        <label>
+          Nachname:
+          <input
+            v-model="adresse.nachname"
+            required
+            pattern="^[A-Za-zÄÖÜäöüß\s\-]{2,40}$"
+            title="Nur Buchstaben, Leerzeichen und Bindestrich erlaubt."
+          />
+        </label>
 
-<label>
-  Straße & Hausnummer:
-  <input v-model="adresse.strasse" required pattern="^[A-Za-zÄÖÜäöüß0-9\s\.,\-]{3,60}$" title="Buchstaben, Zahlen, Leerzeichen und ,.- erlaubt." />
-</label>
+        <label>
+          Straße & Hausnummer:
+          <input
+            v-model="adresse.strasse"
+            required
+            pattern="^[A-Za-zÄÖÜäöüß0-9\s\.,\-]{3,60}$"
+            title="Buchstaben, Zahlen, Leerzeichen und ,.- erlaubt."
+          />
+        </label>
 
-<label>
-  PLZ:
-  <input v-model="adresse.plz" required pattern="^\d{4,6}$" title="4–6-stellige Postleitzahl." />
-</label>
+        <label>
+          PLZ:
+          <input
+            v-model="adresse.plz"
+            required
+            pattern="^\d{4,6}$"
+            title="4–6-stellige Postleitzahl."
+          />
+        </label>
 
-<label>
-  Ort:
-  <input v-model="adresse.ort" required pattern="^[A-Za-zÄÖÜäöüß\s\-]{2,50}$" title="Nur Buchstaben, Leerzeichen und Bindestrich erlaubt." />
-</label>
+        <label>
+          Ort:
+          <input
+            v-model="adresse.ort"
+            required
+            pattern="^[A-Za-zÄÖÜäöüß\s\-]{2,50}$"
+            title="Nur Buchstaben, Leerzeichen und Bindestrich erlaubt."
+          />
+        </label>
 
-<label>
-  Land:
-  <input v-model="adresse.land" required pattern="^[A-Za-zÄÖÜäöüß\s\-]{2,50}$" title="Nur Buchstaben, Leerzeichen und Bindestrich erlaubt." />
-</label>
+        <label>
+          Land:
+          <input
+            v-model="adresse.land"
+            required
+            pattern="^[A-Za-zÄÖÜäöüß\s\-]{2,50}$"
+            title="Nur Buchstaben, Leerzeichen und Bindestrich erlaubt."
+          />
+        </label>
       </fieldset>
 
       <fieldset>
@@ -60,10 +90,14 @@
             {{ item.name }} x{{ item.menge }} – {{ (item.preis * item.menge).toFixed(2) }} €
           </li>
         </ul>
-        <p class="total">Gesamt: <strong>{{ totalAmount.toFixed(2) }} €</strong></p>
+        <p class="total">
+          Gesamt: <strong>{{ totalAmount.toFixed(2) }} €</strong>
+        </p>
       </div>
 
-      <button type="submit" class="btn btn-primary" :disabled="!istAdresseGueltig">Jetzt bestellen</button>
+      <button type="submit" class="btn btn-primary" :disabled="!istAdresseGueltig">
+        Jetzt bestellen
+      </button>
     </form>
   </div>
 </template>
@@ -84,13 +118,13 @@ const adresse = ref({
   strasse: '',
   plz: '',
   ort: '',
-  land: ''
+  land: '',
 })
 
 const zahlungsmethode = ref('paypal')
 
 const totalAmount = computed(() =>
-  warenkorb.items.reduce((sum, item) => sum + item.preis * item.menge, 0)
+  warenkorb.items.reduce((sum, item) => sum + item.preis * item.menge, 0),
 )
 
 const istAdresseGueltig = computed(() => {
@@ -112,22 +146,24 @@ const absendenBestellung = async () => {
   try {
     const bestellung = await warenkorb.abschicken({
       adresse: adresse.value,
-      zahlung: zahlungsmethode.value
+      zahlung: zahlungsmethode.value,
     })
 
     router.push({
       name: 'OrderSuccess',
       query: {
         orderId: bestellung.id,
-        email: benutzerStore.email
-      }
+        email: benutzerStore.email,
+      },
     })
   } catch (error) {
-  console.error('Fehler beim Abschicken der Bestellung:', error?.response?.data || error.message || error)
-  alert('❌ Es gab ein Problem beim Abschicken der Bestellung.')
+    console.error(
+      'Fehler beim Abschicken der Bestellung:',
+      error?.response?.data || error.message || error,
+    )
+    alert('❌ Es gab ein Problem beim Abschicken der Bestellung.')
+  }
 }
-}
-
 </script>
 
 <style scoped>

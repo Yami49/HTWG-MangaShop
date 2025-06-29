@@ -6,19 +6,17 @@
 
 module.exports = {
   attributes: {
-
-
     /**
      * @description Name des Absenders
      * @type {string}
      * @example Max Mustermann
      */
     name: {
-      type: 'string',
+      type: "string",
       required: true,
       maxLength: 60,
-      description: 'Der Name der Person, die das Kontaktformular ausfüllt',
-      example: 'Max Mustermann'
+      description: "Der Name der Person, die das Kontaktformular ausfüllt",
+      example: "Max Mustermann",
     },
 
     /**
@@ -27,12 +25,12 @@ module.exports = {
      * @example max@beispiel.de
      */
     email: {
-      type: 'string',
+      type: "string",
       required: true,
       isEmail: true,
       maxLength: 100,
-      description: 'Die E-Mail-Adresse des Absenders',
-      example: 'max@beispiel.de'
+      description: "Die E-Mail-Adresse des Absenders",
+      example: "max@beispiel.de",
     },
 
     /**
@@ -41,13 +39,12 @@ module.exports = {
      * @example Ich interessiere mich für Ihr Manga-Angebot...
      */
     nachricht: {
-      type: 'string',
+      type: "string",
       required: true,
-      columnType: 'varchar(1000)',
+      columnType: "varchar(1000)",
       maxLength: 1000,
-      description: 'Die vom Benutzer verfasste Nachricht',
-      example: 'Ich habe eine Frage zu meiner Bestellung...'
-    }
-
-  }
+      description: "Die vom Benutzer verfasste Nachricht",
+      example: "Ich habe eine Frage zu meiner Bestellung...",
+    },
+  },
 };

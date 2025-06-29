@@ -7,7 +7,9 @@
     <div v-else class="order-content">
       <section class="section">
         <h2>Status</h2>
-        <p><strong>{{ bestellung.status }}</strong> – bestellt am {{ formatDate(bestellung.datum) }}</p>
+        <p>
+          <strong>{{ bestellung.status }}</strong> – bestellt am {{ formatDate(bestellung.datum) }}
+        </p>
       </section>
 
       <section class="section">
@@ -45,7 +47,9 @@
             </tr>
           </tbody>
         </table>
-        <p class="total">Gesamtbetrag: <strong>{{ bestellung.gesamt.toFixed(2) }} €</strong></p>
+        <p class="total">
+          Gesamtbetrag: <strong>{{ bestellung.gesamt.toFixed(2) }} €</strong>
+        </p>
       </section>
     </div>
   </div>
@@ -64,7 +68,7 @@ const formatDate = (dateStr) => {
   return d.toLocaleDateString('de-DE', {
     day: '2-digit',
     month: '2-digit',
-    year: 'numeric'
+    year: 'numeric',
   })
 }
 

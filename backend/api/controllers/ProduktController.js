@@ -6,10 +6,9 @@
  *
  * @help        :: https://sailsjs.com/docs/concepts/actions
  */
-const errors = require('../utils/errors');
+const errors = require("../utils/errors");
 
 module.exports = {
-
   /**
    * `ProduktController.create()`
    *
@@ -20,12 +19,12 @@ module.exports = {
       const produkt = await ProduktService.createProdukt(req);
       return res.status(201).json(produkt);
     } catch (err) {
-      sails.log.error('Error:', err.message);
+      sails.log.error("Error:", err.message);
 
       if (err instanceof errors.CustomError) {
         return res.status(err.status).json({ error: err.message });
       }
-      return res.serverError('Ein unerwarteter Fehler ist aufgetreten.');
+      return res.serverError("Ein unerwarteter Fehler ist aufgetreten.");
     }
   },
 
@@ -39,11 +38,11 @@ module.exports = {
       const produkt = await ProduktService.findProduktById(req);
       return res.json(produkt);
     } catch (err) {
-      sails.log.error('Error:', err.message);
+      sails.log.error("Error:", err.message);
       if (err instanceof errors.CustomError) {
         return res.status(err.status).json({ error: err.message });
       }
-      return res.serverError('Ein unerwarteter Fehler ist aufgetreten.');
+      return res.serverError("Ein unerwarteter Fehler ist aufgetreten.");
     }
   },
 
@@ -57,11 +56,11 @@ module.exports = {
       const result = await ProduktService.findProdukte(req);
       return res.json(result);
     } catch (err) {
-      sails.log.error('Error:', err.message);
+      sails.log.error("Error:", err.message);
       if (err instanceof errors.CustomError) {
         return res.status(err.status).json({ error: err.message });
       }
-      return res.serverError('Ein unerwarteter Fehler ist aufgetreten.');
+      return res.serverError("Ein unerwarteter Fehler ist aufgetreten.");
     }
   },
 
@@ -75,11 +74,11 @@ module.exports = {
       await ProduktService.deleteProdukt(req);
       return res.ok();
     } catch (err) {
-      sails.log.error('Error:', err.message);
+      sails.log.error("Error:", err.message);
       if (err instanceof errors.CustomError) {
         return res.status(err.status).json({ error: err.message });
       }
-      return res.serverError('Ein unerwarteter Fehler ist aufgetreten.');
+      return res.serverError("Ein unerwarteter Fehler ist aufgetreten.");
     }
   },
 
@@ -93,11 +92,11 @@ module.exports = {
       const updatedProdukt = await ProduktService.updateProdukt(req);
       return res.json(updatedProdukt);
     } catch (err) {
-      sails.log.error('Error:', err.message);
+      sails.log.error("Error:", err.message);
       if (err instanceof errors.CustomError) {
         return res.status(err.status).json({ error: err.message });
       }
-      return res.serverError('Ein unerwarteter Fehler ist aufgetreten.');
+      return res.serverError("Ein unerwarteter Fehler ist aufgetreten.");
     }
   },
 
@@ -111,12 +110,11 @@ module.exports = {
       const produktCount = await ProduktService.countProdukte();
       return res.json(produktCount);
     } catch (err) {
-      sails.log.error('Error:', err.message);
+      sails.log.error("Error:", err.message);
       if (err instanceof errors.CustomError) {
         return res.status(err.status).json({ error: err.message });
       }
-      return res.serverError('Ein unerwarteter Fehler ist aufgetreten.');
+      return res.serverError("Ein unerwarteter Fehler ist aufgetreten.");
     }
-  }
-
+  },
 };

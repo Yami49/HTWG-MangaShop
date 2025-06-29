@@ -17,7 +17,9 @@
           <td>{{ formatDate(blog.createdAt) }}</td>
           <td>{{ blog.aktiv ? 'Aktiv' : 'Inaktiv' }}</td>
           <td>
-            <router-link :to="`/admin/blog/${blog.id}`" class="btn btn-edit">Bearbeiten</router-link>
+            <router-link :to="`/admin/blog/${blog.id}`" class="btn btn-edit"
+              >Bearbeiten</router-link
+            >
             <button class="btn btn-toggle" @click="toggleStatus(blog)">
               {{ blog.aktiv ? 'Deaktivieren' : 'Aktivieren' }}
             </button>
@@ -91,7 +93,8 @@ table {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-th, td {
+th,
+td {
   padding: 14px 18px;
   text-align: left;
   border-bottom: 1px solid #eee;
@@ -163,5 +166,4 @@ p {
   color: #777;
   font-style: italic;
 }
-
 </style>

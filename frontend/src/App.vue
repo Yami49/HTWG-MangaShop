@@ -17,7 +17,7 @@ import Footer from '@/components/FooterComponente.vue'
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: #2D0E46;
+  background-color: #2d0e46;
   color: white;
 }
 </style>

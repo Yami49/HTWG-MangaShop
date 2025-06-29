@@ -33,7 +33,7 @@ import axios from 'axios'
 const form = reactive({
   name: '',
   email: '',
-  nachricht: ''
+  nachricht: '',
 })
 
 const successMessage = ref('')
@@ -47,7 +47,7 @@ const absenden = async () => {
     await axios.post('https://mangashop-backend.onrender.com/kontakt', {
       name: form.name,
       email: form.email,
-      nachricht: form.nachricht
+      nachricht: form.nachricht,
     })
 
     successMessage.value = `Danke für Ihre Nachricht, ${form.name}!`

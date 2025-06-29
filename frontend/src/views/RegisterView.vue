@@ -27,7 +27,7 @@ const form = reactive({
   vorname: '',
   nachname: '',
   email: '',
-  passwort: ''
+  passwort: '',
 })
 
 const register = async () => {
@@ -66,7 +66,9 @@ input {
   border: 1px solid #ccc;
   border-radius: 0.5rem;
   font-size: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 input:focus {
@@ -97,4 +99,3 @@ button:hover {
   font-weight: 500;
 }
 </style>
-

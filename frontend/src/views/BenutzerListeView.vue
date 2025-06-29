@@ -37,7 +37,18 @@ onMounted(laden)
 </script>
 
 <style scoped>
-    .admin-container { max-width: 900px; margin: auto; padding: 2rem }
-    table { width: 100%; border-collapse: collapse }
-    th, td { padding: 10px; border-bottom: 1px solid #ccc }
+.admin-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
 </style>

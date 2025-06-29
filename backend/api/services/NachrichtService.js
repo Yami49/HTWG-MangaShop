@@ -7,10 +7,9 @@
  * @help        :: Siehe Sails.js-Dokumentation unter https://sailsjs.com/docs/concepts/services
  */
 
-const errors = require('../utils/errors');
+const errors = require("../utils/errors");
 
 module.exports = {
-
   /**
    * `NachrichtService.create()`
    *
@@ -26,21 +25,21 @@ module.exports = {
     const { name, email, nachricht } = req.body;
 
     if (!name) {
-      throw new errors.BadRequestError('Name ist erforderlich.');
+      throw new errors.BadRequestError("Name ist erforderlich.");
     }
 
     if (!email) {
-      throw new errors.BadRequestError('E-Mail ist erforderlich.');
+      throw new errors.BadRequestError("E-Mail ist erforderlich.");
     }
 
     if (!nachricht) {
-      throw new errors.BadRequestError('Nachricht ist erforderlich.');
+      throw new errors.BadRequestError("Nachricht ist erforderlich.");
     }
 
     return await Nachricht.create({
       name,
       email,
-      nachricht
+      nachricht,
     }).fetch();
   },
 
@@ -71,7 +70,7 @@ module.exports = {
     const nachricht = await Nachricht.findOne({ id });
 
     if (!nachricht) {
-      throw new errors.NotFoundError('Nachricht nicht gefunden.');
+      throw new errors.NotFoundError("Nachricht nicht gefunden.");
     }
 
     return nachricht;
@@ -92,8 +91,9 @@ module.exports = {
     const deleted = await Nachricht.destroyOne({ id });
 
     if (!deleted) {
-      throw new errors.NotFoundError('Nachricht konnte nicht gelöscht werden (nicht gefunden).');
+      throw new errors.NotFoundError(
+        "Nachricht konnte nicht gelöscht werden (nicht gefunden).",
+      );
     }
-  }
-
+  },
 };

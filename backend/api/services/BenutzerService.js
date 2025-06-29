@@ -1,4 +1,4 @@
-const errors = require('../utils/errors');
+const errors = require("../utils/errors");
 
 /**
  * BenutzerService
@@ -6,7 +6,6 @@ const errors = require('../utils/errors');
  * @description :: Server-side Funktionen zur Verwaltung von Benutzern.
  */
 module.exports = {
-
   /**
    * Registrierung eines neuen Benutzers
    */
@@ -14,12 +13,12 @@ module.exports = {
     const { email, passwort, vorname, nachname } = req.body;
 
     if (!email || !passwort || !vorname || !nachname) {
-      throw new errors.BadRequestError('Alle Felder sind erforderlich.');
+      throw new errors.BadRequestError("Alle Felder sind erforderlich.");
     }
 
     const existiert = await Benutzer.findOne({ email });
     if (existiert) {
-      throw new errors.ConflictError('E-Mail wird bereits verwendet.');
+      throw new errors.ConflictError("E-Mail wird bereits verwendet.");
     }
 
     const hashed = await sails.helpers.passwords.hashPassword(passwort);
@@ -29,7 +28,7 @@ module.exports = {
       passwort: hashed,
       vorname,
       nachname,
-      istAdmin: false
+      istAdmin: false,
     }).fetch();
 
     delete neuerBenutzer.passwort;
@@ -43,13 +42,13 @@ module.exports = {
     const id = req.params.id;
 
     if (!id) {
-      throw new errors.BadRequestError('Benutzer-ID ist erforderlich.');
+      throw new errors.BadRequestError("Benutzer-ID ist erforderlich.");
     }
 
     const benutzer = await Benutzer.findOne({ id });
 
     if (!benutzer) {
-      throw new errors.NotFoundError('Benutzer nicht gefunden.');
+      throw new errors.NotFoundError("Benutzer nicht gefunden.");
     }
 
     delete benutzer.passwort;
@@ -64,14 +63,14 @@ module.exports = {
 
     const criteria = {
       where: {},
-      sort: 'id ASC'
+      sort: "id ASC",
     };
 
     if (search) {
       criteria.where.or = [
         { vorname: { contains: search } },
         { nachname: { contains: search } },
-        { email: { contains: search } }
+        { email: { contains: search } },
       ];
     }
 
@@ -81,7 +80,7 @@ module.exports = {
     }
 
     const benutzer = await Benutzer.find(criteria);
-    const bereinigt = benutzer.map(b => {
+    const bereinigt = benutzer.map((b) => {
       delete b.passwort;
       return b;
     });
@@ -93,7 +92,7 @@ module.exports = {
         total,
         totalPages: Math.ceil(total / size),
         currentPage: page,
-        hasMore: page < Math.ceil(total / size)
+        hasMore: page < Math.ceil(total / size),
       };
     }
 
@@ -107,27 +106,21 @@ module.exports = {
     const id = req.params.id;
 
     if (!id) {
-      throw new errors.BadRequestError('Benutzer-ID ist erforderlich.');
+      throw new errors.BadRequestError("Benutzer-ID ist erforderlich.");
     }
 
     const existierenderBenutzer = await Benutzer.findOne({ id });
     if (!existierenderBenutzer) {
-      throw new errors.NotFoundError('Benutzer nicht gefunden.');
+      throw new errors.NotFoundError("Benutzer nicht gefunden.");
     }
 
-    const {
-      email,
-      passwort,
-      vorname,
-      nachname,
-      istAdmin
-    } = req.body;
+    const { email, passwort, vorname, nachname, istAdmin } = req.body;
 
     // E-Mail-Check (wenn geändert)
     if (email && email !== existierenderBenutzer.email) {
       const duplicate = await Benutzer.findOne({ email });
       if (duplicate) {
-        throw new errors.ConflictError('E-Mail wird bereits verwendet.');
+        throw new errors.ConflictError("E-Mail wird bereits verwendet.");
       }
     }
 
@@ -141,7 +134,10 @@ module.exports = {
       passwort: neuesPasswort,
       vorname: vorname || existierenderBenutzer.vorname,
       nachname: nachname || existierenderBenutzer.nachname,
-      istAdmin: typeof istAdmin === 'boolean' ? istAdmin : existierenderBenutzer.istAdmin
+      istAdmin:
+        typeof istAdmin === "boolean"
+          ? istAdmin
+          : existierenderBenutzer.istAdmin,
     });
 
     delete aktualisiert.passwort;
@@ -155,12 +151,12 @@ module.exports = {
     const id = req.params.id;
 
     if (!id) {
-      throw new errors.BadRequestError('Benutzer-ID ist erforderlich.');
+      throw new errors.BadRequestError("Benutzer-ID ist erforderlich.");
     }
 
     const existiert = await Benutzer.findOne({ id });
     if (!existiert) {
-      throw new errors.NotFoundError('Benutzer nicht gefunden.');
+      throw new errors.NotFoundError("Benutzer nicht gefunden.");
     }
 
     await Benutzer.destroyOne({ id });
@@ -173,30 +169,34 @@ module.exports = {
     return await Benutzer.count();
   },
 
-    /**
+  /**
    * Meldet einen Benutzer mit E-Mail und Passwort an
    */
   login: async function (req) {
     const { email, passwort } = req.body;
 
     if (!email || !passwort) {
-      throw new errors.BadRequestError('E-Mail und Passwort sind erforderlich.');
+      throw new errors.BadRequestError(
+        "E-Mail und Passwort sind erforderlich.",
+      );
     }
 
     const benutzer = await Benutzer.findOne({ email });
     if (!benutzer) {
-      throw new errors.NotFoundError('Benutzer nicht gefunden.');
+      throw new errors.NotFoundError("Benutzer nicht gefunden.");
     }
 
-    const korrekt = await sails.helpers.passwords.checkPassword(passwort, benutzer.passwort);
+    const korrekt = await sails.helpers.passwords.checkPassword(
+      passwort,
+      benutzer.passwort,
+    );
     if (!korrekt) {
-      throw new errors.UnauthorizedError('Ungültige Anmeldedaten.');
+      throw new errors.UnauthorizedError("Ungültige Anmeldedaten.");
     }
 
     delete benutzer.passwort;
     return benutzer;
   },
-
 };
 
 /**

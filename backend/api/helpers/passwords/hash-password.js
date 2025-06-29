@@ -4,23 +4,23 @@
  * @description :: Helper zum Hashen von Passwörtern mit bcrypt
  */
 
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 module.exports = {
-  friendlyName: 'Hash password',
+  friendlyName: "Hash password",
 
-  description: 'Hash ein Klartextpasswort sicher mit bcrypt.',
+  description: "Hash ein Klartextpasswort sicher mit bcrypt.",
 
   inputs: {
     password: {
-      type: 'string',
+      type: "string",
       required: true,
-      description: 'Das Klartextpasswort, das gehasht werden soll.'
-    }
+      description: "Das Klartextpasswort, das gehasht werden soll.",
+    },
   },
 
   fn: async function (inputs) {
     const saltRounds = 10;
     return await bcrypt.hash(inputs.password, saltRounds);
-  }
+  },
 };

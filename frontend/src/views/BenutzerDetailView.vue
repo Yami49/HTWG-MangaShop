@@ -22,9 +22,9 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-    .detail-container { 
-      max-width: 600px; 
-      margin: auto; 
-      padding: 2rem;
-    }
+.detail-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 2rem;
+}
 </style>

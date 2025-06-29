@@ -4,15 +4,23 @@
 
     <div v-if="produkte.length" class="produkt-grid">
       <div v-for="p in produkte" :key="p.id" class="produkt-card">
-        <img :src="`https://mangashop-backend.onrender.com${p.bild}`" class="produkt-image" alt="Produktbild" />
+        <img
+          :src="`https://mangashop-backend.onrender.com${p.bild}`"
+          class="produkt-image"
+          alt="Produktbild"
+        />
         <div class="produkt-details">
           <h3>{{ p.titel }}</h3>
-          <p class="preis">{{ Number(p.preis).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }) }}</p>
+          <p class="preis">
+            {{ Number(p.preis).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }) }}
+          </p>
           <p class="beschreibung">{{ p.beschreibung }}</p>
           <p class="kategorie">{{ p.kategorie?.name || '-' }}</p>
 
           <div class="button-group">
-            <router-link :to="`/produkt/${p.produktId}`" class="btn anschauen-btn">Anschauen</router-link>
+            <router-link :to="`/produkt/${p.produktId}`" class="btn anschauen-btn"
+              >Anschauen</router-link
+            >
             <button class="btn warenkorb-btn" @click="inWarenkorb(p)">In den Warenkorb</button>
           </div>
         </div>
@@ -49,10 +57,14 @@ async function inWarenkorb(produkt) {
   }
 
   try {
-    await axios.post('/warenkorb', {
-      produkt: produkt.id,
-      menge: 1
-    }, { withCredentials: true })
+    await axios.post(
+      '/warenkorb',
+      {
+        produkt: produkt.id,
+        menge: 1,
+      },
+      { withCredentials: true },
+    )
 
     await warenkorb.loadFromServer() // Server-Warenkorb neu laden
     alert(`✅ "${produkt.titel}" wurde zum Warenkorb hinzugefügt`)

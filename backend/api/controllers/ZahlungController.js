@@ -4,10 +4,9 @@
  * @description :: Server-side actions für Zahlungsmanagement (erstellen, finden, aktualisieren, löschen).
  * @help        :: Siehe Sails.js Dokumentation: https://sailsjs.com/docs/concepts/actions
  */
-const errors = require('../utils/errors');
+const errors = require("../utils/errors");
 
 module.exports = {
-
   /**
    * Zahlung erstellen
    *
@@ -23,11 +22,13 @@ module.exports = {
       const neueZahlung = await ZahlungService.erstelleZahlung(req);
       return res.status(201).json(neueZahlung);
     } catch (err) {
-      sails.log.error('Fehler beim Erstellen der Zahlung:', err);
+      sails.log.error("Fehler beim Erstellen der Zahlung:", err);
       if (err instanceof errors.CustomError) {
         return res.status(err.status).json({ error: err.message });
       }
-      return res.serverError({ error: 'Beim Erstellen der Zahlung ist ein Fehler aufgetreten.' });
+      return res.serverError({
+        error: "Beim Erstellen der Zahlung ist ein Fehler aufgetreten.",
+      });
     }
   },
 
@@ -46,11 +47,11 @@ module.exports = {
       const zahlungen = await ZahlungService.findeZahlungenVonBenutzer(req);
       return res.ok(zahlungen);
     } catch (err) {
-      sails.log.error('Fehler beim Laden der Zahlungen:', err);
+      sails.log.error("Fehler beim Laden der Zahlungen:", err);
       if (err instanceof errors.CustomError) {
         return res.status(err.status).json({ error: err.message });
       }
-      return res.serverError({ error: 'Fehler beim Abrufen der Zahlungen.' });
+      return res.serverError({ error: "Fehler beim Abrufen der Zahlungen." });
     }
   },
 
@@ -65,14 +66,17 @@ module.exports = {
    */
   patch: async function (req, res) {
     try {
-      const aktualisierteZahlung = await ZahlungService.aktualisiereZahlung(req);
+      const aktualisierteZahlung =
+        await ZahlungService.aktualisiereZahlung(req);
       return res.ok(aktualisierteZahlung);
     } catch (err) {
-      sails.log.error('Fehler beim Aktualisieren der Zahlung:', err);
+      sails.log.error("Fehler beim Aktualisieren der Zahlung:", err);
       if (err instanceof errors.CustomError) {
         return res.status(err.status).json({ error: err.message });
       }
-      return res.serverError({ error: 'Fehler beim Aktualisieren der Zahlung.' });
+      return res.serverError({
+        error: "Fehler beim Aktualisieren der Zahlung.",
+      });
     }
   },
 
@@ -90,11 +94,11 @@ module.exports = {
       const geloeschteZahlung = await ZahlungService.loescheZahlung(req);
       return res.ok(geloeschteZahlung);
     } catch (err) {
-      sails.log.error('Fehler beim Löschen der Zahlung:', err);
+      sails.log.error("Fehler beim Löschen der Zahlung:", err);
       if (err instanceof errors.CustomError) {
         return res.status(err.status).json({ error: err.message });
       }
-      return res.serverError({ error: 'Fehler beim Löschen der Zahlung.' });
+      return res.serverError({ error: "Fehler beim Löschen der Zahlung." });
     }
-  }
+  },
 };

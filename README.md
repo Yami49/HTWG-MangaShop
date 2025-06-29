@@ -6,10 +6,10 @@ Willkommen beim **HTWG MangaShop** – einer vollständigen Webanwendung zur Pr�
 
 ## 🔐 Login-Daten für Demozugang
 
-| Rolle   | E-Mail               | Passwort  |
-|---------|----------------------|-----------|
-| Admin   | admin@admin.com      | admin     |
-| Benutzer  | user@user.com        | user      |
+| Rolle    | E-Mail          | Passwort |
+| -------- | --------------- | -------- |
+| Admin    | admin@admin.com | admin    |
+| Benutzer | user@user.com   | user     |
 
 ---
 
@@ -28,13 +28,13 @@ HTWG MangaShop wurde im Rahmen eines Hochschulprojekts realisiert und enthält d
 
 ## ⚙️ Technologien im Einsatz
 
-| Technologie    | Beschreibung                                                                 |
-|----------------|------------------------------------------------------------------------------|
-| Vue.js         | Fortschrittliches JavaScript-Framework für das Frontend                     |
-| Pinia          | State Management im Vue-Frontend                                             |
-| Sails.js       | API-Framework auf Basis von Node.js für das Backend                         |
-| MySQL          | Relationale Datenbank zur Speicherung aller Anwendungsdaten                 |
-| Cloudinary     | (optional) Externer Cloud-Dienst zur Bildverwaltung                         |
+| Technologie | Beschreibung                                                |
+| ----------- | ----------------------------------------------------------- |
+| Vue.js      | Fortschrittliches JavaScript-Framework für das Frontend     |
+| Pinia       | State Management im Vue-Frontend                            |
+| Sails.js    | API-Framework auf Basis von Node.js für das Backend         |
+| MySQL       | Relationale Datenbank zur Speicherung aller Anwendungsdaten |
+| Cloudinary  | (optional) Externer Cloud-Dienst zur Bildverwaltung         |
 
 ---
 

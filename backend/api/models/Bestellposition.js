@@ -1,21 +1,21 @@
 module.exports = {
   attributes: {
     bestellung: {
-      model: 'bestellung',
-      required: true
+      model: "bestellung",
+      required: true,
     },
     produkt: {
-      model: 'produkt',
-      required: true
+      model: "produkt",
+      required: true,
     },
     menge: {
-      type: 'number',
-      required: true
+      type: "number",
+      required: true,
     },
     einzelpreis: {
-      type: 'number',
-      columnType: 'float',
-      required: true
-    }
-  }
-}
+      type: "number",
+      columnType: "float",
+      required: true,
+    },
+  },
+};

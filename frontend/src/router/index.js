@@ -99,53 +99,53 @@ const routes = [
   {
     path: '/blog',
     name: 'BlogListe',
-    component: () => import('@/views/BlogListeView.vue')
+    component: () => import('@/views/BlogListeView.vue'),
   },
   {
     path: '/blog/:id',
     name: 'BlogDetail',
     component: () => import('@/views/BlogDetailView.vue'),
-    props: true
+    props: true,
   },
   {
     path: '/admin/blog',
     name: 'BlogAdminListe',
     component: () => import('@/views/BlogAdminListeView.vue'),
-    meta: { requiresAuth: true, requiresAdmin: true }
+    meta: { requiresAuth: true, requiresAdmin: true },
   },
   {
     path: '/admin/blog/neu',
     name: 'BlogErstellen',
     component: () => import('@/views/BlogErstellenView.vue'),
-    meta: { requiresAuth: true, requiresAdmin: true }
+    meta: { requiresAuth: true, requiresAdmin: true },
   },
   {
     path: '/admin/blog/:id',
     name: 'BlogBearbeiten',
     component: () => import('@/views/BlogBearbeitenView.vue'),
     meta: { requiresAuth: true, requiresAdmin: true },
-    props: true
+    props: true,
   },
   {
     path: '/warenkorb',
     name: 'Warenkorb',
     component: () => import('@/views/WarenkorbView.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
   },
   {
     path: '/versand-und-zahlung',
     name: 'VersandUndZahlung',
-    component: () => import('@/views/VersandUndZahlungView.vue')
+    component: () => import('@/views/VersandUndZahlungView.vue'),
   },
   {
     path: '/bestellung-erfolgreich',
     name: 'OrderSuccess',
-    component: () => import('@/views/OrderSuccess.vue')
+    component: () => import('@/views/OrderSuccess.vue'),
   },
   {
     path: '/checkout',
     name: 'Checkout',
-    component: () => import('@/views/CheckoutView.vue')
+    component: () => import('@/views/CheckoutView.vue'),
   },
   {
     path: '/:pathMatch(.*)*',

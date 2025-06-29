@@ -36,7 +36,7 @@ const formatDate = (dateStr) => {
   return d.toLocaleDateString('de-DE', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
   })
 }
 </script>

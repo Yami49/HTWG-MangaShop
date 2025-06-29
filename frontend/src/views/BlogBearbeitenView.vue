@@ -5,22 +5,10 @@
     <div v-if="blog">
       <form @submit.prevent="updateBlog">
         <label for="titel">Titel*</label>
-        <input
-          id="titel"
-          v-model="blog.titel"
-          type="text"
-          maxlength="100"
-          required
-        />
+        <input id="titel" v-model="blog.titel" type="text" maxlength="100" required />
 
         <label for="inhalt">Inhalt*</label>
-        <textarea
-          id="inhalt"
-          v-model="blog.inhalt"
-          maxlength="1000"
-          rows="10"
-          required
-        ></textarea>
+        <textarea id="inhalt" v-model="blog.inhalt" maxlength="1000" rows="10" required></textarea>
 
         <label>
           <input type="checkbox" v-model="blog.aktiv" />
@@ -108,7 +96,9 @@ textarea {
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 input[type='text']:focus,

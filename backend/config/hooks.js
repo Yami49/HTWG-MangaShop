@@ -1,3 +1,3 @@
 module.exports.hooks = {
-  grunt: false
+  grunt: false,
 };

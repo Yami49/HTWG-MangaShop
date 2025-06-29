@@ -11,7 +11,6 @@
         <p><strong>Bestellnummer:</strong> {{ orderId }}</p>
         <router-link to="/" class="btn">Zur Startseite</router-link>
       </div>
-
     </div>
   </div>
 </template>

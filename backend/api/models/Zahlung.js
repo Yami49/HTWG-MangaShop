@@ -7,17 +7,16 @@
 
 module.exports = {
   attributes: {
-
     /**
      * @description Zahlungsart (Kreditkarte, Überweisung, PayPal)
      * @type {string}
      * @example 'credit card', 'paypal', 'bank transfer'
      */
     zahlungsart: {
-      type: 'string',
+      type: "string",
       required: true,
-      isIn: ['credit card', 'bank transfer', 'paypal'],
-      example: 'credit card'
+      isIn: ["credit card", "bank transfer", "paypal"],
+      example: "credit card",
     },
 
     /**
@@ -26,11 +25,11 @@ module.exports = {
      * @example 'DE89370400440532013000'
      */
     iban: {
-      type: 'string',
+      type: "string",
       allowNull: true,
       minLength: 15,
       maxLength: 34,
-      description: 'IBAN bei Banküberweisung. Beispiel: DE89370400440532013000'
+      description: "IBAN bei Banküberweisung. Beispiel: DE89370400440532013000",
     },
 
     /**
@@ -39,11 +38,11 @@ module.exports = {
      * @example '1234567890123456'
      */
     kreditkartennummer: {
-      type: 'string',
+      type: "string",
       allowNull: true,
       minLength: 13,
       maxLength: 19,
-      description: 'Nur bei Kreditkartenzahlung, z. B. 1234567890123456'
+      description: "Nur bei Kreditkartenzahlung, z. B. 1234567890123456",
     },
 
     /**
@@ -52,9 +51,9 @@ module.exports = {
      * @example '2025-12-31'
      */
     ablaufdatum: {
-      type: 'ref',
-      columnType: 'date',
-      description: 'Ablaufdatum im Format YYYY-MM-DD'
+      type: "ref",
+      columnType: "date",
+      description: "Ablaufdatum im Format YYYY-MM-DD",
     },
 
     /**
@@ -63,11 +62,11 @@ module.exports = {
      * @example '123'
      */
     cvc: {
-      type: 'string',
+      type: "string",
       allowNull: true,
       minLength: 3,
       maxLength: 4,
-      description: 'Nur bei Kreditkartenzahlung, z. B. 123'
+      description: "Nur bei Kreditkartenzahlung, z. B. 123",
     },
 
     /**
@@ -76,11 +75,11 @@ module.exports = {
      * @example 'user@paypal.com'
      */
     paypalEmail: {
-      type: 'string',
+      type: "string",
       allowNull: true,
       isEmail: true,
       maxLength: 100,
-      description: 'Nur bei PayPal-Zahlung, z. B. user@paypal.com'
+      description: "Nur bei PayPal-Zahlung, z. B. user@paypal.com",
     },
 
     /**
@@ -89,9 +88,10 @@ module.exports = {
      * @example true
      */
     istFuerBestellung: {
-      type: 'boolean',
+      type: "boolean",
       required: true,
-      description: 'Ob dieser Eintrag zur Bestellung (true) oder zur Benutzereinstellung (false) gehört.'
+      description:
+        "Ob dieser Eintrag zur Bestellung (true) oder zur Benutzereinstellung (false) gehört.",
     },
 
     /**
@@ -99,9 +99,9 @@ module.exports = {
      * @type {string}
      */
     benutzer: {
-      model: 'Benutzer',
+      model: "Benutzer",
       required: true,
-      description: 'Der Benutzer, dem diese Zahlungsart gehört.'
+      description: "Der Benutzer, dem diese Zahlungsart gehört.",
     },
 
     /**
@@ -113,5 +113,5 @@ module.exports = {
       unique: true,
       description: 'Verknüpfte Bestellung, falls diese Zahlung zu einer spezifischen Order gehört.'
     }*/
-  }
+  },
 };

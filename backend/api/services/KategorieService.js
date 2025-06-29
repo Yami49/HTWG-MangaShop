@@ -1,4 +1,4 @@
-const errors = require('../utils/errors');
+const errors = require("../utils/errors");
 
 /**
  * KategorieService
@@ -6,7 +6,6 @@ const errors = require('../utils/errors');
  * @description :: Verwaltung der Manga-Kategorien.
  */
 module.exports = {
-
   /**
    * Erstellt eine neue Kategorie
    */
@@ -14,7 +13,7 @@ module.exports = {
     const { name, beschreibung } = req.body;
 
     if (!name) {
-      throw new errors.BadRequestError('Kategoriename ist erforderlich.');
+      throw new errors.BadRequestError("Kategoriename ist erforderlich.");
     }
 
     return await Kategorie.create({ name, beschreibung }).fetch();
@@ -24,7 +23,7 @@ module.exports = {
    * Lädt alle Kategorien
    */
   findAllKategorien: async function () {
-    return await Kategorie.find().sort('name ASC');
+    return await Kategorie.find().sort("name ASC");
   },
 
   /**
@@ -35,16 +34,16 @@ module.exports = {
     const { name, beschreibung } = req.body;
 
     if (!id) {
-      throw new errors.BadRequestError('Kategorie-ID ist erforderlich.');
+      throw new errors.BadRequestError("Kategorie-ID ist erforderlich.");
     }
 
     if (!name) {
-      throw new errors.BadRequestError('Name ist erforderlich.');
+      throw new errors.BadRequestError("Name ist erforderlich.");
     }
 
     const kategorie = await Kategorie.findOne({ id });
     if (!kategorie) {
-      throw new errors.NotFoundError('Kategorie nicht gefunden.');
+      throw new errors.NotFoundError("Kategorie nicht gefunden.");
     }
 
     return await Kategorie.updateOne({ id }).set({ name, beschreibung });
@@ -56,15 +55,16 @@ module.exports = {
   deleteKategorie: async function (req) {
     const id = req.params.id;
 
-  if (!id) throw new Error('ID fehlt');
+    if (!id) throw new Error("ID fehlt");
 
-  const deleted = await Kategorie.destroyOne({ id });
+    const deleted = await Kategorie.destroyOne({ id });
 
-  if (!deleted) {
-    throw new Error('Kategorie nicht gefunden oder konnte nicht gelöscht werden');
-  }
+    if (!deleted) {
+      throw new Error(
+        "Kategorie nicht gefunden oder konnte nicht gelöscht werden",
+      );
+    }
 
-  return deleted;
-  }
-
+    return deleted;
+  },
 };

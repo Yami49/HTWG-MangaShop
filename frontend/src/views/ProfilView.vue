@@ -20,5 +20,9 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-    .profil-container { max-width: 600px; margin: auto; padding: 2rem }
+.profil-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 2rem;
+}
 </style>

@@ -8,14 +8,11 @@ export const useWarenkorbStore = defineStore('warenkorb', {
   }),
 
   getters: {
-    totalAmount: (state) =>
-      state.items.reduce((total, item) => total + item.preis * item.menge, 0),
+    totalAmount: (state) => state.items.reduce((total, item) => total + item.preis * item.menge, 0),
 
-    totalItems: (state) =>
-      state.items.reduce((total, item) => total + item.menge, 0),
+    totalItems: (state) => state.items.reduce((total, item) => total + item.menge, 0),
 
-    isInCart: (state) => (produktId) =>
-      state.items.some((item) => item.produktId === produktId),
+    isInCart: (state) => (produktId) => state.items.some((item) => item.produktId === produktId),
 
     cartIsEmpty: (state) => state.items.length === 0,
   },
@@ -24,34 +21,41 @@ export const useWarenkorbStore = defineStore('warenkorb', {
     async loadFromServer() {
       try {
         const res = await axios.get('/warenkorb', { withCredentials: true })
-        this.items = (res.data.produkte || []).map(item => ({
+        this.items = (res.data.produkte || []).map((item) => ({
           id: item.id,
           produktId: item.produkt?.id,
           name: item.produkt?.titel || 'Unbekannt',
           preis: item.produkt?.preis || 0,
           image: item.produkt?.bild || '',
-          menge: item.menge
+          menge: item.menge,
         }))
       } catch (err) {
-        console.error('❌ Fehler beim Laden des Warenkorbs:', err?.response?.data || err.message || err)
+        console.error(
+          '❌ Fehler beim Laden des Warenkorbs:',
+          err?.response?.data || err.message || err,
+        )
         this.items = []
       }
     },
 
     async abschicken({ adresse, zahlung }) {
-  try {
-    const response = await axios.post('https://mangashop-backend.onrender.com/checkout', {
-      adresse,
-      zahlung
-    }, { withCredentials: true })
+      try {
+        const response = await axios.post(
+          'https://mangashop-backend.onrender.com/checkout',
+          {
+            adresse,
+            zahlung,
+          },
+          { withCredentials: true },
+        )
 
-    this.items = [] // oder await this.loadFromServer()
-    return response.data
-  } catch (err) {
-    console.error('❌ Fehler beim Abschicken der Bestellung:', err?.response?.data || err)
-    throw err
-  }
-},
+        this.items = [] // oder await this.loadFromServer()
+        return response.data
+      } catch (err) {
+        console.error('❌ Fehler beim Abschicken der Bestellung:', err?.response?.data || err)
+        throw err
+      }
+    },
     /*
     async abschicken({ adresse, zahlung }) {
   try {
@@ -76,10 +80,14 @@ export const useWarenkorbStore = defineStore('warenkorb', {
 
     async addToCart(produktId, menge = 1) {
       try {
-        await axios.post('/warenkorb', {
-          produkt: produktId,
-          menge
-        }, { withCredentials: true })
+        await axios.post(
+          '/warenkorb',
+          {
+            produkt: produktId,
+            menge,
+          },
+          { withCredentials: true },
+        )
         await this.loadFromServer()
       } catch (err) {
         console.error('❌ Fehler beim Hinzufügen zum Warenkorb:', err)
@@ -89,9 +97,13 @@ export const useWarenkorbStore = defineStore('warenkorb', {
 
     async updateQuantity(itemId, menge) {
       try {
-        await axios.patch(`/warenkorb/${itemId}`, {
-          menge
-        }, { withCredentials: true })
+        await axios.patch(
+          `/warenkorb/${itemId}`,
+          {
+            menge,
+          },
+          { withCredentials: true },
+        )
         await this.loadFromServer()
       } catch (err) {
         console.error('❌ Fehler beim Aktualisieren der Menge:', err)
@@ -114,6 +126,6 @@ export const useWarenkorbStore = defineStore('warenkorb', {
       } catch (err) {
         console.error('❌ Fehler beim Leeren des Warenkorbs:', err)
       }
-    }
-  }
+    },
+  },
 })

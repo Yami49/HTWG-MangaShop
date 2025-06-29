@@ -44,12 +44,16 @@ export const useUserStore = defineStore('user', {
 
     async signUp(userData) {
       try {
-        const response = await axios.post('/register', {
-          email: userData.email,
-          passwort: userData.passwort,
-          vorname: userData.vorname,
-          nachname: userData.nachname,
-        }, { withCredentials: true })
+        const response = await axios.post(
+          '/register',
+          {
+            email: userData.email,
+            passwort: userData.passwort,
+            vorname: userData.vorname,
+            nachname: userData.nachname,
+          },
+          { withCredentials: true },
+        )
 
         this.user = response.data?.data || null
 
@@ -58,7 +62,10 @@ export const useUserStore = defineStore('user', {
 
         router.push('/profil')
       } catch (error) {
-        console.error('❌ Registrierung fehlgeschlagen:', error.response?.data?.error || error.message)
+        console.error(
+          '❌ Registrierung fehlgeschlagen:',
+          error.response?.data?.error || error.message,
+        )
       }
     },
 

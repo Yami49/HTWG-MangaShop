@@ -8,20 +8,17 @@
 
 module.exports = {
   attributes: {
-
-
-
     /**
      * @description Titel des Blogbeitrags
      * @type {string}
      * @example Neue Manga-Reihe im Shop!
      */
     titel: {
-      type: 'string',
+      type: "string",
       required: true,
       maxLength: 150,
-      description: 'Kurzer Titel des Blogbeitrags.',
-      example: 'One Piece jetzt im Sortiment'
+      description: "Kurzer Titel des Blogbeitrags.",
+      example: "One Piece jetzt im Sortiment",
     },
 
     /**
@@ -30,11 +27,11 @@ module.exports = {
      * @example Wir freuen uns, euch mitteilen zu können...
      */
     inhalt: {
-      type: 'string',
+      type: "string",
       required: true,
       maxLength: 1000,
-      description: 'Hauptinhalt des Beitrags, begrenzt auf 1000 Zeichen.',
-      example: 'Wir freuen uns, euch mitteilen zu können, dass...'
+      description: "Hauptinhalt des Beitrags, begrenzt auf 1000 Zeichen.",
+      example: "Wir freuen uns, euch mitteilen zu können, dass...",
     },
 
     /**
@@ -43,9 +40,9 @@ module.exports = {
      * @default true
      */
     aktiv: {
-      type: 'boolean',
+      type: "boolean",
       defaultsTo: true,
-      description: 'Nur aktive Beiträge sind für Nutzer sichtbar.'
+      description: "Nur aktive Beiträge sind für Nutzer sichtbar.",
     },
 
     /**
@@ -54,10 +51,10 @@ module.exports = {
      * @example 2025-06-01T12:34:56Z
      */
     erstelltAm: {
-      type: 'ref',
-      columnType: 'datetime',
+      type: "ref",
+      columnType: "datetime",
       required: true,
-      description: 'Zeitpunkt der Erstellung des Blogeintrags.'
-    }
-  }
+      description: "Zeitpunkt der Erstellung des Blogeintrags.",
+    },
+  },
 };

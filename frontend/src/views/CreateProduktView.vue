@@ -34,7 +34,7 @@
       </div>
 
       <button type="submit" class="btn btn-primary w-100" :disabled="ladevorgang">
-        {{ ladevorgang ? 'Speichern...' : (editId ? 'Änderungen speichern' : 'Produkt erstellen') }}
+        {{ ladevorgang ? 'Speichern...' : editId ? 'Änderungen speichern' : 'Produkt erstellen' }}
       </button>
     </form>
 
@@ -76,7 +76,9 @@
             <td>{{ p.kategorie?.name || '—' }}</td>
             <td>
               <button class="btn btn-small btn-edit" @click="startEdit(p)">✏️</button>
-              <button class="btn btn-small btn-delete" @click="deleteProdukt(p.produktId)">🗑</button>
+              <button class="btn btn-small btn-delete" @click="deleteProdukt(p.produktId)">
+                🗑
+              </button>
             </td>
           </tr>
         </tbody>

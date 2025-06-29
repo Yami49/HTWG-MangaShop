@@ -22,37 +22,45 @@
         <tbody>
           <tr v-for="item in warenkorb.items" :key="item.id">
             <td :data-label="'Bild'">
-  <img :src="`https://mangashop-backend.onrender.com${item.image}`" alt="Produktbild" class="thumbnail" />
-</td>
-<td :data-label="'Produkt'">
-  <div class="produkt-info">
-    <strong>{{ item.name }}</strong>
-    <p class="beschreibung">{{ item.beschreibung }}</p>
-    <p class="kategorie" v-if="item.kategorie">Kategorie: {{ item.kategorie }}</p>
-  </div>
-</td>
-<td :data-label="'Menge'">
-  <input
-    type="number"
-    v-model.number="item.menge"
-    min="1"
-    max="1000"
-    @change="handleQuantityChange(item)"
-    class="quantity-input"
-  />
-</td>
-<td :data-label="'Einzelpreis (€)'">{{ item.preis.toFixed(2) }}</td>
-<td :data-label="'Gesamt (€)'">{{ (item.preis * item.menge).toFixed(2) }}</td>
-<td :data-label="'Aktion'">
-  <button class="btn btn-secondary" @click="remove(item.id)">Entfernen</button>
-</td>
+              <img
+                :src="`https://mangashop-backend.onrender.com${item.image}`"
+                alt="Produktbild"
+                class="thumbnail"
+              />
+            </td>
+            <td :data-label="'Produkt'">
+              <div class="produkt-info">
+                <strong>{{ item.name }}</strong>
+                <p class="beschreibung">{{ item.beschreibung }}</p>
+                <p class="kategorie" v-if="item.kategorie">Kategorie: {{ item.kategorie }}</p>
+              </div>
+            </td>
+            <td :data-label="'Menge'">
+              <input
+                type="number"
+                v-model.number="item.menge"
+                min="1"
+                max="1000"
+                @change="handleQuantityChange(item)"
+                class="quantity-input"
+              />
+            </td>
+            <td :data-label="'Einzelpreis (€)'">{{ item.preis.toFixed(2) }}</td>
+            <td :data-label="'Gesamt (€)'">{{ (item.preis * item.menge).toFixed(2) }}</td>
+            <td :data-label="'Aktion'">
+              <button class="btn btn-secondary" @click="remove(item.id)">Entfernen</button>
+            </td>
           </tr>
         </tbody>
       </table>
 
       <div class="cart-summary">
-        <p>Gesamt: <strong>{{ totalAmount.toFixed(2) }} €</strong></p>
-        <button class="btn btn-primary" @click="goToCheckout" :disabled="totalAmount <= 0">Zur Kasse</button>
+        <p>
+          Gesamt: <strong>{{ totalAmount.toFixed(2) }} €</strong>
+        </p>
+        <button class="btn btn-primary" @click="goToCheckout" :disabled="totalAmount <= 0">
+          Zur Kasse
+        </button>
         <button class="btn btn-danger" @click="leeren()">Warenkorb leeren</button>
       </div>
     </div>
@@ -110,7 +118,7 @@ const goToCheckout = () => {
 }
 
 const totalAmount = computed(() =>
-  warenkorb.items.reduce((sum, item) => sum + (item.preis || 0) * item.menge, 0)
+  warenkorb.items.reduce((sum, item) => sum + (item.preis || 0) * item.menge, 0),
 )
 </script>
 
@@ -152,7 +160,7 @@ const totalAmount = computed(() =>
   padding: 16px;
   text-align: center;
   border-bottom: 1px solid #eee;
-  color:#333;
+  color: #333;
 }
 
 .cart-table th {
@@ -259,7 +267,8 @@ const totalAmount = computed(() =>
 }
 
 @media (max-width: 768px) {
-  .cart-table th, .cart-table td {
+  .cart-table th,
+  .cart-table td {
     font-size: 0.85rem;
     padding: 10px;
   }

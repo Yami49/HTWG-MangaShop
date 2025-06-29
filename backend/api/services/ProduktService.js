@@ -1,6 +1,6 @@
-const uuid = require('uuid');
-const errors = require('../utils/errors');
-const { v2: cloudinary } = require('cloudinary');
+const uuid = require("uuid");
+const errors = require("../utils/errors");
+const { v2: cloudinary } = require("cloudinary");
 
 // Cloudinary Konfiguration
 cloudinary.config(sails.config.custom.cloudinary);
@@ -18,21 +18,23 @@ module.exports = {
     const { titel, beschreibung, preis, kategorie } = req.body;
 
     if (!titel || !preis || !kategorie) {
-      throw new errors.BadRequestError('Titel, Preis und Kategorie sind erforderlich.');
+      throw new errors.BadRequestError(
+        "Titel, Preis und Kategorie sind erforderlich.",
+      );
     }
 
     // Bild (optional) hochladen zu Cloudinary
     let imageUrl = null;
     const uploadResult = await new Promise((resolve) => {
-      req.file('image').upload(async (err, files) => {
+      req.file("image").upload(async (err, files) => {
         if (err || !files.length) return resolve(null);
         try {
           const upload = await cloudinary.uploader.upload(files[0].fd, {
-            folder: 'mangashop',
+            folder: "mangashop",
           });
           return resolve(upload.secure_url);
         } catch (e) {
-          sails.log.warn('⚠️ Cloudinary-Upload fehlgeschlagen:', e.message);
+          sails.log.warn("⚠️ Cloudinary-Upload fehlgeschlagen:", e.message);
           return resolve(null);
         }
       });
@@ -57,13 +59,16 @@ module.exports = {
     const produktId = req.params.id;
 
     if (!produktId) {
-      throw new errors.BadRequestError('Produkt-ID erforderlich.');
+      throw new errors.BadRequestError("Produkt-ID erforderlich.");
     }
 
-    const produkt = await Produkt.findOne({ produktId, isDeleted: false }).populate('kategorie');
+    const produkt = await Produkt.findOne({
+      produktId,
+      isDeleted: false,
+    }).populate("kategorie");
 
     if (!produkt) {
-      throw new errors.NotFoundError('Produkt nicht gefunden.');
+      throw new errors.NotFoundError("Produkt nicht gefunden.");
     }
 
     return produkt;
@@ -81,7 +86,7 @@ module.exports = {
     }
 
     if (preis) {
-      where.preis = { '<=': parseFloat(preis) };
+      where.preis = { "<=": parseFloat(preis) };
     }
 
     const total = await Produkt.count(where);
@@ -89,7 +94,7 @@ module.exports = {
       where,
       skip: (page - 1) * size,
       limit: size,
-    }).populate('kategorie');
+    }).populate("kategorie");
 
     return {
       produkte,
@@ -107,7 +112,7 @@ module.exports = {
     const produktId = req.params.id;
 
     if (!produktId) {
-      throw new errors.BadRequestError('Produkt-ID erforderlich.');
+      throw new errors.BadRequestError("Produkt-ID erforderlich.");
     }
 
     await Produkt.updateOne({ produktId }).set({ isDeleted: true });
@@ -120,7 +125,7 @@ module.exports = {
     const produktId = req.params.id;
 
     if (!produktId) {
-      throw new errors.BadRequestError('Produkt-ID erforderlich.');
+      throw new errors.BadRequestError("Produkt-ID erforderlich.");
     }
 
     const { titel, beschreibung, preis, kategorie } = req.body;
@@ -128,7 +133,7 @@ module.exports = {
     const produkt = await Produkt.findOne({ produktId });
 
     if (!produkt) {
-      throw new errors.NotFoundError('Produkt nicht gefunden.');
+      throw new errors.NotFoundError("Produkt nicht gefunden.");
     }
 
     return await Produkt.updateOne({ produktId }).set({

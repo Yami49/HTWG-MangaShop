@@ -4,11 +4,10 @@
  * @description :: Controller für Blogeinträge
  */
 
-const BlogService = require('../services/BlogService');
-const errors = require('../utils/errors');
+const BlogService = require("../services/BlogService");
+const errors = require("../utils/errors");
 
 module.exports = {
-
   /**
    * Gibt alle Blogeinträge zurück
    * Admins sehen alle, normale Nutzer nur aktive
@@ -19,8 +18,8 @@ module.exports = {
       const blogs = await BlogService.findAll({ includeInactive: isAdmin });
       return res.json(blogs);
     } catch (err) {
-      sails.log.error('❌ Fehler beim Laden der Blogeinträge:', err);
-      return res.serverError({ error: 'Fehler beim Laden der Blogeinträge.' });
+      sails.log.error("❌ Fehler beim Laden der Blogeinträge:", err);
+      return res.serverError({ error: "Fehler beim Laden der Blogeinträge." });
     }
   },
 
@@ -32,8 +31,10 @@ module.exports = {
       const blog = await BlogService.findById(req.params.id);
       return res.json(blog);
     } catch (err) {
-      sails.log.error('❌ Fehler beim Laden eines Blogeintrags:', err);
-      return res.status(err.status || 500).json({ error: err.message || 'Fehler beim Laden.' });
+      sails.log.error("❌ Fehler beim Laden eines Blogeintrags:", err);
+      return res
+        .status(err.status || 500)
+        .json({ error: err.message || "Fehler beim Laden." });
     }
   },
 
@@ -45,8 +46,10 @@ module.exports = {
       const blogs = await BlogService.findAll({ includeInactive: false });
       return res.json(blogs);
     } catch (err) {
-      sails.log.error('❌ Fehler beim Laden öffentlicher Blogeinträge:', err);
-      return res.serverError({ error: 'Fehler beim Laden öffentlicher Blogeinträge.' });
+      sails.log.error("❌ Fehler beim Laden öffentlicher Blogeinträge:", err);
+      return res.serverError({
+        error: "Fehler beim Laden öffentlicher Blogeinträge.",
+      });
     }
   },
 
@@ -58,8 +61,10 @@ module.exports = {
       const blogs = await BlogService.findAll({ includeInactive: true });
       return res.json(blogs);
     } catch (err) {
-      sails.log.error('❌ Fehler beim Admin-Zugriff auf Blogeinträge:', err);
-      return res.serverError({ error: 'Fehler beim Admin-Zugriff auf Blogeinträge.' });
+      sails.log.error("❌ Fehler beim Admin-Zugriff auf Blogeinträge:", err);
+      return res.serverError({
+        error: "Fehler beim Admin-Zugriff auf Blogeinträge.",
+      });
     }
   },
 
@@ -70,12 +75,17 @@ module.exports = {
     try {
       const blog = await BlogService.findById(req.params.id);
       if (!blog || !blog.aktiv) {
-        return res.notFound({ error: 'Blogeintrag nicht gefunden.' });
+        return res.notFound({ error: "Blogeintrag nicht gefunden." });
       }
       return res.json(blog);
     } catch (err) {
-      sails.log.error('❌ Fehler beim Laden eines öffentlichen Blogeintrags:', err);
-      return res.status(err.status || 500).json({ error: err.message || 'Fehler beim Laden.' });
+      sails.log.error(
+        "❌ Fehler beim Laden eines öffentlichen Blogeintrags:",
+        err,
+      );
+      return res
+        .status(err.status || 500)
+        .json({ error: err.message || "Fehler beim Laden." });
     }
   },
 
@@ -87,19 +97,21 @@ module.exports = {
       const { titel, inhalt, aktiv } = req.body;
 
       if (!titel || !inhalt) {
-        return res.badRequest({ error: 'Titel und Inhalt sind erforderlich.' });
+        return res.badRequest({ error: "Titel und Inhalt sind erforderlich." });
       }
 
       const newBlog = await BlogService.create({
         titel,
         inhalt,
-        aktiv: aktiv !== undefined ? aktiv : true
+        aktiv: aktiv !== undefined ? aktiv : true,
       });
 
       return res.status(201).json(newBlog);
     } catch (err) {
-      sails.log.error('❌ Fehler beim Erstellen des Blogeintrags:', err);
-      return res.status(err.status || 500).json({ error: err.message || 'Fehler beim Erstellen.' });
+      sails.log.error("❌ Fehler beim Erstellen des Blogeintrags:", err);
+      return res
+        .status(err.status || 500)
+        .json({ error: err.message || "Fehler beim Erstellen." });
     }
   },
 
@@ -111,8 +123,10 @@ module.exports = {
       const updated = await BlogService.update(req.params.id, req.body);
       return res.json(updated);
     } catch (err) {
-      sails.log.error('❌ Fehler beim Aktualisieren des Blogeintrags:', err);
-      return res.status(err.status || 500).json({ error: err.message || 'Fehler beim Aktualisieren.' });
+      sails.log.error("❌ Fehler beim Aktualisieren des Blogeintrags:", err);
+      return res
+        .status(err.status || 500)
+        .json({ error: err.message || "Fehler beim Aktualisieren." });
     }
   },
 
@@ -124,9 +138,10 @@ module.exports = {
       await BlogService.remove(req.params.id);
       return res.ok();
     } catch (err) {
-      sails.log.error('❌ Fehler beim Löschen des Blogeintrags:', err);
-      return res.status(err.status || 500).json({ error: err.message || 'Fehler beim Löschen.' });
+      sails.log.error("❌ Fehler beim Löschen des Blogeintrags:", err);
+      return res
+        .status(err.status || 500)
+        .json({ error: err.message || "Fehler beim Löschen." });
     }
-  }
-
+  },
 };

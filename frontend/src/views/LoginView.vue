@@ -25,7 +25,10 @@ const router = useRouter()
 
 const login = async () => {
   try {
-    await axios.post('https://mangashop-backend.onrender.com/login', { email: email.value, passwort: passwort.value })
+    await axios.post('https://mangashop-backend.onrender.com/login', {
+      email: email.value,
+      passwort: passwort.value,
+    })
     router.push('/profil')
   } catch (err) {
     fehler.value = 'Login fehlgeschlagen'
@@ -63,7 +66,7 @@ input {
 }
 
 input:focus {
-  border-color: #007BFF;
+  border-color: #007bff;
   outline: none;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
 }
@@ -71,7 +74,7 @@ input:focus {
 button {
   width: 100%;
   padding: 0.75rem;
-  background-color: #007BFF;
+  background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 0.5rem;
@@ -90,4 +93,3 @@ button:hover {
   font-weight: 500;
 }
 </style>
-

@@ -58,12 +58,13 @@ table {
   margin-top: 1rem;
 }
 
-th, td {
+th,
+td {
   padding: 12px;
   border-bottom: 1px solid #ddd;
 }
 
 router-link {
-  color: #6B21A8;
+  color: #6b21a8;
 }
 </style>

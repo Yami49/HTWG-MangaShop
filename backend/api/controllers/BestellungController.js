@@ -12,26 +12,27 @@ module.exports = {
     }
   },
   adminList: async (req, res) => {
-    if (!req.session.isAdmin) {
-      return res.status(403).json({ error: 'Zugriff verweigert' })
-    }
+  if (!req.session.isAdmin) {
+    return res.status(403).json({ error: 'Zugriff verweigert' })
+  }
 
-    const bestellungen = await Bestellung.find()
-      .populate('benutzer')
-      .populate('artikel') // enthält jetzt artikel[i].produkt als ID
+  const bestellungen = await Bestellung.find()
+    .populate('benutzer')
+    .populate('artikel')
 
-    // PRODUKT-DETAILS HOLEN:
-    for (const bestellung of bestellungen) {
-      for (const pos of bestellung.artikel) {
-        if (typeof pos.produkt === 'string') {
-          const produkt = await Produkt.findOne({ id: pos.produkt })
-          pos.produkt = produkt || { titel: 'Nicht gefunden' }
-        }
-      }
-    }
+  // Artikel-IDs extrahieren
+  for (const bestellung of bestellungen) {
+    const artikelIds = bestellung.artikel.map(a => a.id)
 
-    return res.json(bestellungen)
-  },
+    // Bestellpositionen inkl. Produkt laden
+    const artikelMitProdukt = await Bestellposition.find({ id: artikelIds })
+      .populate('produkt')
+
+    bestellung.artikel = artikelMitProdukt
+  }
+
+  return res.json(bestellungen)
+},
 
   updateStatus: async (req, res) => {
     const { id } = req.params

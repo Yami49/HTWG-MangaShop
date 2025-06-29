@@ -148,7 +148,7 @@
       </tr>
     </tbody>
   </table>
-  <p v-else>Keine Bestellungen vorhanden.</p>
+  <p v-else style="color: black">Keine Bestellungen vorhanden.</p>
 </section>
   </div>
 </template>

@@ -22,7 +22,7 @@
         <tbody>
           <tr v-for="item in warenkorb.items" :key="item.id">
             <td>
-              <img :src="item.image" alt="Produktbild" class="thumbnail" />
+              <img :src="`https://mangashop-backend.onrender.com${item.image}`" alt="Produktbild" class="thumbnail" />
             </td>
             <td>
               <div class="produkt-info">

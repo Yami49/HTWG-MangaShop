@@ -56,10 +56,7 @@ module.exports.datastores = {
     //user: "user10_test",
     //database: "nicopick_test",
     
-    //adapter: 'sails-mongo',
-    //url: process.env.MONGO_URL,
     adapter: 'sails-mongo',
-    url: 'mongodb://localhost:27017/mangashop',
-
+    url: process.env.MONGO_URL,
   },
 };

@@ -9,10 +9,24 @@ module.exports = {
     }
   },
   adminList: async (req, res) => {
-    if (!req.session.isAdmin) return res.status(403).json({ error: 'Zugriff verweigert' })
-    const bestellungen = await Bestellung.find().populate('artikel')
-    return res.json(bestellungen)
-  },
+  if (!req.session.isAdmin) {
+    return res.status(403).json({ error: 'Zugriff verweigert' })
+  }
+
+  // Bestellungen inkl. Benutzer & Artikel holen
+  const bestellungen = await Bestellung.find()
+    .populate('benutzer')
+    .populate('artikel')
+
+  // Artikel → Produkt referenzen auflösen
+  for (const bestellung of bestellungen) {
+    for (const artikel of bestellung.artikel) {
+      artikel.produkt = await Produkt.findOne({ id: artikel.produkt })
+    }
+  }
+
+  return res.json(bestellungen)
+},
 
   updateStatus: async (req, res) => {
     const { id } = req.params

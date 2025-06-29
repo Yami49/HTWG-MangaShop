@@ -89,7 +89,6 @@
 </section>
 
 <!-- Bestellübersicht -->
-<!-- Bestellübersicht -->
 <section>
   <h2>Bestellungen</h2>
   <table v-if="bestellungen.length" class="data-table">
@@ -131,8 +130,8 @@
         <td>
           <ul style="padding-left: 1rem; margin: 0;">
             <li v-for="p in b.artikel" :key="p.id">
-              {{ p.menge }}x Produkt-ID: {{ p.produkt?.titel || p.produkt || 'Unbekannt' }}
-            </li>
+  {{ p.menge }}x {{ p.produkt?.titel || 'Unbekannt' }}
+</li>
           </ul>
         </td>
 

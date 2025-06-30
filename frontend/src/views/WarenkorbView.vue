@@ -4,7 +4,7 @@
 
     <div v-if="warenkorb.items.length === 0" class="empty-cart">
       <p>Ihr Warenkorb ist leer.</p>
-      <RouterLink to="/" class="btn btn-primary">Zurück zum Shop</RouterLink>
+      <RouterLink to="/" class="cta-button">Zurück zum Shop</RouterLink>
     </div>
 
     <div v-else class="cart-content">
@@ -71,6 +71,7 @@
 import { onMounted, computed } from 'vue'
 import { useWarenkorbStore } from '@/stores/warenkorb'
 import { useRouter } from 'vue-router'
+import '@/assets/main.css'
 
 const warenkorb = useWarenkorbStore()
 const router = useRouter()

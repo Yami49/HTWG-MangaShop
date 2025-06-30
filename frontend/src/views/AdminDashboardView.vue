@@ -28,7 +28,7 @@
             <td :data-label="'Nachname'">{{ user.nachname }}</td>
             <td :data-label="'Admin'">{{ user.istAdmin ? '✅' : '❌' }}</td>
             <td :data-label="'Aktion'">
-              <router-link :to="`/admin/benutzer/${user.id}`" class="btn">Bearbeiten</router-link>
+              <router-link :to="`/admin/benutzer/${user.id}`" class="category-button">Bearbeiten</router-link>
             </td>
           </tr>
         </tbody>
@@ -90,7 +90,7 @@
             <td :data-label="'Aktiv'">{{ b.aktiv ? '✅' : '❌' }}</td>
             <td :data-label="'Erstellt am'">{{ new Date(b.erstelltAm).toLocaleDateString() }}</td>
             <td :data-label="'Aktion'">
-              <router-link :to="`/admin/blog/${b.id}`" class="btn">Bearbeiten</router-link>
+              <router-link :to="`/admin/blog/${b.id}`" class="category-button">Bearbeiten</router-link>
             </td>
           </tr>
         </tbody>
@@ -160,6 +160,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import '@/assets/main.css'
 
 const users = ref([])
 const produkte = ref([])

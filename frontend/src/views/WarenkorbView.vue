@@ -48,7 +48,7 @@
             <td :data-label="'Einzelpreis (€)'">{{ item.preis.toFixed(2) }}</td>
             <td :data-label="'Gesamt (€)'">{{ (item.preis * item.menge).toFixed(2) }}</td>
             <td :data-label="'Aktion'">
-              <button class="btn btn-secondary" @click="remove(item.id)">Entfernen</button>
+              <button class="category-button" @click="remove(item.id)">Entfernen</button>
             </td>
           </tr>
         </tbody>

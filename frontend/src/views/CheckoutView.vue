@@ -95,7 +95,7 @@
         </p>
       </div>
 
-      <button type="submit" class="btn btn-primary" :disabled="!istAdresseGueltig">
+      <button type="submit" class="category-button" :disabled="!istAdresseGueltig">
         Jetzt bestellen
       </button>
     </form>
@@ -107,6 +107,7 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useWarenkorbStore } from '@/stores/warenkorb'
 import { useUserStore } from '@/stores/user'
+import '@/assets/main.css'
 
 const router = useRouter()
 const warenkorb = useWarenkorbStore()

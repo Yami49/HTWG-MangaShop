@@ -6,7 +6,7 @@
       <input v-model="form.nachname" placeholder="Nachname" required />
       <input v-model="form.email" type="email" placeholder="E-Mail" required />
       <input v-model="form.passwort" type="password" placeholder="Passwort" required />
-      <button type="submit">Registrieren</button>
+      <button type="submit" class="category-button">Registrieren</button>
     </form>
     <p class="info">
       <router-link to="/login">Du hast bereits ein Konto? Zum Login</router-link>
@@ -19,6 +19,7 @@
 import { reactive, ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import '@/assets/main.css'
 
 const router = useRouter()
 const fehler = ref('')

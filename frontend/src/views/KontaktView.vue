@@ -18,7 +18,7 @@
         <textarea id="nachricht" v-model="form.nachricht" required></textarea>
       </div>
 
-      <button type="submit">Absenden</button>
+      <button type="submit" class="cta-button">Absenden</button>
     </form>
 
     <p v-if="successMessage" class="success">{{ successMessage }}</p>
@@ -29,6 +29,7 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import axios from 'axios'
+import '@/assets/main.css'
 
 const form = reactive({
   name: '',

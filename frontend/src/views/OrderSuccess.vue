@@ -9,7 +9,7 @@
 
       <div v-if="orderId" class="order-info">
         <p><strong>Bestellnummer:</strong> {{ orderId }}</p>
-        <router-link to="/" class="btn">Zur Startseite</router-link>
+        <router-link to="/" class="cta-button">Zur Startseite</router-link>
       </div>
     </div>
   </div>
@@ -17,6 +17,7 @@
 
 <script setup>
 import { useRoute } from 'vue-router'
+  import '@/assets/main.css'
 
 // Hole z. B. ?orderId=1234&email=user@example.com aus der URL
 const route = useRoute()

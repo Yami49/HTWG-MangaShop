@@ -4,7 +4,7 @@
     <form @submit.prevent="login">
       <input v-model="email" type="email" placeholder="E-Mail" required />
       <input v-model="passwort" type="password" placeholder="Passwort" required />
-      <button type="submit">Einloggen</button>
+      <button type="submit" class="category-button">Einloggen</button>
     </form>
     <p class="info">
       <router-link to="/register">Registriere dich hier</router-link>
@@ -17,6 +17,7 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import '@/assets/main.css'
 
 const email = ref('')
 const passwort = ref('')

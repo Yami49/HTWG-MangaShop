@@ -11,7 +11,6 @@
       <router-link to="/warenkorb" class="btn-cart" title="Warenkorb"> 🛒 </router-link>
       <router-link to="/login" class="btn-cart" title="Login"> 👤 </router-link>
 
-      <button @click="logout" class="logout-button">Logout</button>
     </nav>
   </header>
 </template>

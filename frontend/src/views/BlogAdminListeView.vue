@@ -17,10 +17,10 @@
           <td>{{ formatDate(blog.createdAt) }}</td>
           <td>{{ blog.aktiv ? 'Aktiv' : 'Inaktiv' }}</td>
           <td>
-            <router-link :to="`/admin/blog/${blog.id}`" class="btn btn-edit"
+            <router-link :to="`/admin/blog/${blog.id}`" class="category-button"
               >Bearbeiten</router-link
             >
-            <button class="btn btn-toggle" @click="toggleStatus(blog)">
+            <button class="category-button" @click="toggleStatus(blog)">
               {{ blog.aktiv ? 'Deaktivieren' : 'Aktivieren' }}
             </button>
           </td>
@@ -30,13 +30,14 @@
 
     <p v-else>Keine Blogbeiträge gefunden.</p>
 
-    <router-link to="/admin/blog/neu" class="btn btn-new">➕ Neuer Beitrag</router-link>
+    <router-link to="/admin/blog/neu" class="cta-button">➕ Neuer Beitrag</router-link>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import '@/assets/main.css'
 
 const blogs = ref([])
 

@@ -18,10 +18,10 @@
           <p class="kategorie">{{ p.kategorie?.name || '-' }}</p>
 
           <div class="button-group">
-            <router-link :to="`/produkt/${p.produktId}`" class="btn anschauen-btn"
+            <router-link :to="`/produkt/${p.produktId}`" class="category-button"
               >Anschauen</router-link
             >
-            <button class="btn warenkorb-btn" @click="inWarenkorb(p)">In den Warenkorb</button>
+            <button class="cta-button" @click="inWarenkorb(p)">In den Warenkorb</button>
           </div>
         </div>
       </div>
@@ -36,6 +36,7 @@ import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import { useWarenkorbStore } from '@/stores/warenkorb'
 import { useUserStore } from '@/stores/user'
+import '@/assets/main.css'
 
 const produkte = ref([])
 const warenkorb = useWarenkorbStore()

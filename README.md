@@ -1,6 +1,16 @@
 # HTWG MangaShop 📚
 
-Willkommen beim **HTWG MangaShop** – einer vollständigen Webanwendung zur Präsentation und Verwaltung eines fiktiven Online-Manga-Shops. Das Projekt demonstriert, wie moderne Webtechnologien wie **Vue.js** (Frontend) und **Sails.js** (Backend) kombiniert werden können, um eine skalierbare und funktionale Anwendung zu entwickeln.
+Willkommen beim **HTWG MangaShop** – einer modernen Full-Stack-Webanwendung zur Präsentation und Verwaltung eines fiktiven Online-Manga-Shops. Entwickelt im Rahmen eines Hochschulprojekts an der HTWG Konstanz.
+
+---
+
+## 🎯 Projektziele
+
+- Kunden können gezielt nach Manga-Titeln oder Genres suchen
+- Übersichtlicher Bestellprozess mit Auswahl der Zahlungsmethode
+- Kaufoptionen: digitale und physische Produkte
+- Zugriff auf Blogbeiträge mit Empfehlungen & Neuheiten
+- Admin-Funktionen zur Benutzer-, Produkt- und Inhaltsverwaltung
 
 ---
 
@@ -26,19 +36,41 @@ HTWG MangaShop wurde im Rahmen eines Hochschulprojekts realisiert und enthält d
 
 ---
 
-## ⚙️ Technologien im Einsatz
+## 🧠 Technologien im Einsatz
 
-| Technologie | Beschreibung                                                |
-| ----------- | ----------------------------------------------------------- |
-| Vue.js      | Fortschrittliches JavaScript-Framework für das Frontend     |
-| Pinia       | State Management im Vue-Frontend                            |
-| Sails.js    | API-Framework auf Basis von Node.js für das Backend         |
-| MongoDB     | Relationale Datenbank zur Speicherung aller Anwendungsdaten |
+| Technologie     | Beschreibung                                          |
+|-----------------|-------------------------------------------------------|
+| Vue.js          | Modernes Frontend-Framework für UI-Komponenten        |
+| Pinia           | State Management für globale App-Zustände             |
+| Sails.js        | Backend-Framework auf Node.js-Basis (inkl. Policies)  |
+| MongoDB         | Dokumentenbasierte NoSQL-Datenbank                    |
+| Tailwind CSS    | Utility-First CSS Framework                           |
+| Render.com      | Hosting-Plattform für Frontend und Backend            |
+| MongoDB Atlas   | Cloudbasierter MongoDB-Service                        |
+
+---
+
+## 🚀 Deployments
+
+- **Frontend**: [https://mangashop-frontend.onrender.com](https://mangashop-frontend.onrender.com)
+- **Backend**: [https://mangashop-backend.onrender.com](https://mangashop-backend.onrender.com)
 
 ---
 
 ## ✨ Hauptfunktionen
 
+### 🔹 Für Benutzer
+- Registrierung & Login
+- Produkte durchsuchen, in Warenkorb legen & kaufen
+- Eigene Profilansicht
+- Blogbeiträge lesen
+
+### 🔸 Für Admins
+- Benutzer verwalten (CRUD)
+- Produkte & Kategorien verwalten
+- Blogbeiträge veröffentlichen & moderieren
+- Bestellstatus verwalten
+  
 ### 🔵 Frontend (Vue.js)
 
 - Responsive Design mit Tailwind & Bootstrap-Elementen
@@ -55,15 +87,76 @@ HTWG MangaShop wurde im Rahmen eines Hochschulprojekts realisiert und enthält d
 
 ---
 
+## 📦 Implementierte Use Cases (technisch)
+
+| Use Case                         | Route/API                        | Policy       |
+|----------------------------------|----------------------------------|--------------|
+| Benutzer registrieren            | `POST /register`                | Öffentlich   |
+| Benutzer anmelden                | `POST /login`                   | Öffentlich   |
+| Profil anzeigen                  | `GET /profil`                   | isLoggedIn   |
+| Produkte anzeigen/suchen        | `GET /produkte`                 | Öffentlich   |
+| Blogbeiträge lesen              | `GET /blog/public`              | Öffentlich   |
+| Produkte kaufen (Checkout)      | `POST /checkout`                | isLoggedIn   |
+| Produkte verwalten              | `POST/PATCH/DELETE /produkt`    | isAdmin      |
+| Kategorien verwalten            | `POST/PATCH/DELETE /kategorie`  | isAdmin      |
+| Benutzer verwalten              | `GET/DELETE /benutzer/:id`      | isAdmin      |
+| Blog verwalten                  | `POST/PATCH/DELETE /blog`       | isAdmin      |
+
+---
+
+## 🧠 Architektur
+
+```txt
+Frontend (Vue + Pinia)
+│
+├── REST API (Axios)
+│
+└── Backend (Sails.js)
+     ├── Controller (z. B. Benutzer, Produkt)
+     ├── Services
+     ├── Policies (isLoggedIn, isAdmin)
+     └── MongoDB (User, Produkt, Bestellung, etc.)
+```
+---
+
+## 🛠 Optimierungen
+
+### 🔍 SEO
+- Dynamische `<title>` via [`vue-meta`](https://github.com/nuxt/vue-meta)
+- Sitemap & `robots.txt`
+- Sprechende URLs (z. B. `/produkt/naruto-1` statt `/produkt/123`)
+
+### ⚡ Performance
+- Lazy Loading von Komponenten
+- API-Paging bei Listen
+- Bildoptimierung (z. B. via `loading="lazy"`)
+- Minimiertes JavaScript/CSS-Bundle (via Vite)
+
+### 🔐 Sicherheit
+- Passwort-Hashing mit `bcrypt`
+- Session-Management für Authentifizierung
+- Zugriffskontrolle über Policies (`isAdmin`, `isLoggedIn`, `isOwnerOrAdmin`)
+
+### 📱 Responsiveness & UI/UX
+- Mobile-First Design mit Tailwind CSS & Bootstrap
+- Intuitive Navigation & Benutzerführung
+- Komponentenbasierte UI-Struktur
+
+---
+
+## 🖼 Mockups / Wireflows
+
+- [Figma Wireframes & Design](https://www.figma.com/design/L1eFVP79NdbG1Zg5JfPtdr/Wireflow-User-DB?node-id=3-2)
+
+---
+
 ## 🚀 Projekt starten
 
 ### Voraussetzungen
-
 - Node.js (v16+ empfohlen)
-- npm (Node Package Manager)
-- MongoDB-Datenbank (lokal oder remote)
-- (Optional) Cloudinary-Zugangsdaten, wenn externe Bilder verwendet werden
-
+- npm
+- MongoDB lokal oder remote (z. B. MongoDB Atlas)
+- 
 ### Frontend starten
 
 ```bash

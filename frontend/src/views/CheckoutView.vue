@@ -95,9 +95,20 @@
         </p>
       </div>
 
-      <button type="submit" class="category-button" :disabled="!istAdresseGueltig">
-        Jetzt bestellen
-      </button>
+      <div>
+    <button
+      type="submit"
+      class="category-button"
+      :disabled="!istAdresseGueltig"
+      @click.prevent="zeigeHinweis = !istAdresseGueltig"
+    >
+      Jetzt bestellen
+    </button>
+
+    <p v-if="!istAdresseGueltig && zeigeHinweis" class="text-red-500 mt-2">
+      Bitte fülle alle Adressfelder korrekt aus.
+    </p>
+  </div>
     </form>
   </div>
 </template>
@@ -164,6 +175,20 @@ const absendenBestellung = async () => {
     )
     alert('❌ Es gab ein Problem beim Abschicken der Bestellung.')
   }
+}
+
+export default {
+  data() {
+    return {
+      zeigeHinweis: false,
+    }
+  },
+  props: {
+    istAdresseGueltig: {
+      type: Boolean,
+      required: true,
+    },
+  },
 }
 </script>
 

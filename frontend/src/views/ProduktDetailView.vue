@@ -12,6 +12,9 @@
       <div class="product-image" v-if="produkt.bild">
         <img :src="`https://mangashop-backend.onrender.com${produkt.bild}`" :alt="produkt.titel" />
       </div>
+      <div>
+        <button class="category-button" onclick="history.back()">Zurück</button>
+      </div>
     </div>
   </div>
 
@@ -24,6 +27,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
+import '@/assets/main.css'
 
 const produkt = ref(null)
 const route = useRoute()

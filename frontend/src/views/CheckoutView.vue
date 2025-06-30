@@ -177,21 +177,14 @@ const absendenBestellung = async () => {
   }
 }
 
-export default {
-  data() {
-    return {
-      zeigeHinweis: false,
-    }
-  },
-  props: {
-    istAdresseGueltig: {
-      type: Boolean,
-      required: true,
-    },
-  },
-}
-</script>
+// Props
+defineProps({
+  istAdresseGueltig: Boolean
+})
 
+// Lokaler State
+const zeigeHinweis = ref(false)
+</script>
 <style scoped>
 .checkout-container {
   max-width: 900px;

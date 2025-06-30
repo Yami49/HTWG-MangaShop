@@ -27,8 +27,8 @@
         <label>Neues Passwort (optional)</label>
         <input v-model="newPassword" type="password" />
 
-        <button type="submit">Speichern</button>
-        <button type="button" @click="deleteUser">Löschen</button>
+        <button type="submit" class="cta-button">Speichern</button>
+        <button type="button" class="cta-button" @click="deleteUser">Löschen</button>
       </form>
     </div>
 
@@ -42,6 +42,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
+import '@/assets/main.css'
 
 const route = useRoute()
 const router = useRouter()

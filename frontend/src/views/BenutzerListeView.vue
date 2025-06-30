@@ -15,7 +15,7 @@
           <td>{{ b.vorname }} {{ b.nachname }}</td>
           <td>{{ b.email }}</td>
           <td>{{ b.istAdmin ? 'Admin' : 'User' }}</td>
-          <td><router-link :to="`/admin/benutzer/${b.id}`">Details</router-link></td>
+          <td><router-link :to="`/admin/benutzer/${b.id}`" class="cta-button">Details</router-link></td>
         </tr>
       </tbody>
     </table>
@@ -25,6 +25,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import '@/assets/main.css'
 
 const benutzer = ref([])
 

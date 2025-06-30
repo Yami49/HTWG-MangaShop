@@ -95,20 +95,10 @@
         </p>
       </div>
 
-      <div>
-    <button
-      type="submit"
-      class="category-button"
-      :disabled="!istAdresseGueltig"
-      @click.prevent="zeigeHinweis = !istAdresseGueltig"
-    >
-      Jetzt bestellen
-    </button>
+      <button type="submit" class="category-button" :disabled="!istAdresseGueltig">
+        Jetzt bestellen
+      </button>
 
-    <p v-if="!istAdresseGueltig && zeigeHinweis" class="text-red-500 mt-2">
-      Bitte fülle alle Adressfelder korrekt aus.
-    </p>
-  </div>
     </form>
   </div>
 </template>
@@ -176,14 +166,6 @@ const absendenBestellung = async () => {
     alert('❌ Es gab ein Problem beim Abschicken der Bestellung.')
   }
 }
-
-// Props
-defineProps({
-  istAdresseGueltig: Boolean
-})
-
-// Lokaler State
-const zeigeHinweis = ref(false)
 </script>
 <style scoped>
 .checkout-container {

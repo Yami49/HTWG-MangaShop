@@ -16,8 +16,8 @@
         </label>
 
         <div class="actions">
-          <button type="submit" class="btn">Änderungen speichern</button>
-          <button type="button" class="btn-secondary" @click="deleteBlog">Löschen</button>
+          <button type="submit" class="category-button">Änderungen speichern</button>
+          <button type="button" class="cta-button" @click="deleteBlog">Löschen</button>
         </div>
       </form>
     </div>
@@ -29,6 +29,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
+import '@/assets/main.css'
 
 const blog = ref(null)
 const route = useRoute()
